@@ -157,10 +157,10 @@
   --space-3xl: 6.5rem;
 
   /* Section rhythm — content earns the height, padding never fakes it */
-  --section-py:    clamp(3rem, 6vw, 6rem);
-  --section-py-sm: clamp(2.25rem, 4vw, 3.5rem);
-  --section-py-lg: clamp(3.5rem, 8vw, 7.5rem);
-  --section-gap:   clamp(2rem, 4vw, 3.5rem);
+  --section-py:    clamp(2rem, 4vw, 4rem);
+  --section-py-sm: clamp(1.5rem, 3vw, 2.5rem);
+  --section-py-lg: clamp(2.5rem, 6vw, 5rem);
+  --section-gap:   clamp(1.25rem, 2.8vw, 2.5rem);
 
   /* ----------------------------------------------------------------------
      5. LAYOUT
@@ -180,12 +180,10 @@
      6. TYPOGRAPHY — three families, three jobs.
      Display is only ever used large; below ~1.5rem it loses its point.
      ---------------------------------------------------------------------- */
-  /* Fraunces — an old-style serif with real weight behind it and optical
-     sizing, so it gains authority at display sizes instead of going spindly.
-     Instrument Serif (the previous pick) is beautiful at 5rem but its strokes
-     thin out on a dark ground and its italic is closer to a script than to an
-     editorial italic. This one reads vintage and settled rather than dainty. */
-  --font-display: "Fraunces", "Iowan Old Style", "Hoefler Text", Georgia, serif;
+  /* Cormorant Garamond gives the display typography a more refined editorial
+     feel without going overly decorative. It sits well with the cleaner sans
+     body type and keeps the large headline elegant on dark and light themes. */
+  --font-display: "Cormorant Garamond", "Iowan Old Style", "Georgia", serif;
 
   /* Optical size + weight for the display face, tuned once */
   --display-weight: 600;

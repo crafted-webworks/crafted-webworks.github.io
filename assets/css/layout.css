@@ -59,12 +59,13 @@
    -------------------------------------------------------------------------- */
 .section-header {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  align-items: end;
-  column-gap: var(--grid-gap-lg);
-  row-gap: var(--space-sm);
-  margin-bottom: var(--section-gap);
-  padding-top: var(--space-md);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  row-gap: 0.35rem;
+  margin-bottom: 1rem;
+  padding-top: 0.75rem;
   border-top: 1px solid var(--color-border);
 }
 
@@ -92,29 +93,37 @@
 .section-title {
   grid-column: 1;
   margin: 0;
-  font-size: var(--fs-3xl);
-  max-width: 15ch;
+  font-size: clamp(3rem, 6vw, 7rem);
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  max-width: 12ch;
+  text-align: center;
 }
 
 .section-header-aside {
-  grid-column: 2;
+  grid-column: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-xs);
-  padding-bottom: 0.35rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  padding-bottom: 0.1rem;
 }
 
 .section-description {
   margin: 0;
-  max-width: var(--measure-narrow);
   color: var(--color-muted);
-  font-size: var(--fs-md);
-  line-height: var(--lh-snug);
+  font-size: clamp(1rem, 1.4vw, 1.5rem);
+  line-height: 1.4;
+  max-width: 36ch;
   text-wrap: pretty;
+  text-align: center;
 }
 
-.section-header-link { font-size: var(--fs-sm); }
+.section-header-link {
+  font-size: var(--fs-sm);
+  margin-top: 0.15rem;
+}
 
 /* Centred variant — kept for the sections that genuinely want symmetry, but
    it stays the exception rather than the default. */
@@ -124,10 +133,13 @@
   text-align: center;
   border-top: 0;
   padding-top: 0;
-  row-gap: var(--space-xs);
+  row-gap: 0.35rem;
 }
 
-.section-header--center .section-eyebrow { justify-content: center; }
+.section-header--center .section-eyebrow {
+  justify-content: center;
+  margin-bottom: 0.25rem;
+}
 .section-header--center .section-eyebrow::after { display: none; }
 
 .section-header--center .section-eyebrow::before {
@@ -139,13 +151,22 @@
 
 .section-header--center .section-title {
   grid-column: 1;
-  max-width: 20ch;
+  max-width: 15ch;
+  font-size: clamp(3rem, 5vw, 6rem);
+  line-height: 0.9;
+  margin-bottom: 0.25rem;
 }
 
 .section-header--center .section-header-aside {
   grid-column: 1;
   align-items: center;
+  justify-content: center;
   padding-bottom: 0;
+}
+
+.section-header--center .section-description {
+  max-width: 28ch;
+  margin: 0;
 }
 
 /* --------------------------------------------------------------------------

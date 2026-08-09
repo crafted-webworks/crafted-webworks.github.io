@@ -80,6 +80,8 @@
         var delay = Math.min(index * (settings.stagger / 1000), settings.maxStagger / 1000);
 
         M.inView(el, function () {
+          if (el.classList.contains("is-revealed")) return function () {};
+
           M.animate(
             el,
             Object.assign({ opacity: [0, 1] }, motion),

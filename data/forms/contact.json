@@ -64,22 +64,12 @@
       "validation": { "message": "Please choose a project type." }
     },
     {
-      "name": "budget",
-      "label": "Budget Range",
-      "type": "select",
-      "placeholder": "Select a range",
-      "required": false,
-      "col": 4,
-      "optionsFrom": "budgetOptions",
-      "help": "An honest range helps us scope realistically."
-    },
-    {
       "name": "timeline",
       "label": "Timeline",
       "type": "select",
       "placeholder": "Select a timeline",
       "required": false,
-      "col": 4,
+      "col": 6,
       "optionsFrom": "timelineOptions"
     },
     {

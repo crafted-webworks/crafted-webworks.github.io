@@ -440,7 +440,7 @@
       var intro = App.data.get("homepage", "testimonialsIntro", {}) || {};
       return section({
         id: "testimonials",
-        className: "section--alt",
+        className: "section--alt hidden",
         content:
           C.sectionHeader(intro) +
           '<div class="testimonials-viewport">' +
@@ -745,6 +745,8 @@
     render: function (options, context) {
       var page = (context && context.page) || {};
       var header = page.header || {};
+      var background = header.background || {};
+      var hasVideo = background.type === "video" && background.src;
 
       /* Same composition language as the hero: ruled mono eyebrow, display
          serif title, supporting copy offset into a second column, and the
@@ -754,7 +756,20 @@
          anyway left a 220px void at the top of every one of those pages. */
       var slim = !header.title && !header.eyebrow;
 
+      var backdrop = hasVideo
+        ? '<div class="page-header-bg" aria-hidden="true">' +
+            '<video class="page-header-video" playsinline muted loop autoplay preload="metadata" tabindex="-1" disablepictureinpicture' +
+            (background.poster ? ' poster="' + U.attr(U.url(background.poster)) + '"' : '') +
+            ' style="object-position:' + U.attr(background.objectPosition || "center") + '"' +
+            (background.respectSaveData ? ' data-respect-save-data="true"' : "") + '>' +
+              '<source src="' + U.attr(U.url(background.src)) + '" type="video/mp4">' +
+            '</video>' +
+            '<span class="page-header-video-overlay"></span>' +
+          '</div>'
+        : "";
+
       return '<section class="page-header' + (slim ? " page-header--slim" : "") + '" id="page-header">' +
+               backdrop +
                '<div class="container-wide page-header-shell">' +
                  '<div class="page-header-inner">' +
                    (header.eyebrow
@@ -774,8 +789,39 @@
                    : "") +
                "</div>" +
              "</section>";
+    },
+    mount: function (el) {
+      initPageHeaderVideo(el);
     }
   };
+
+  function initPageHeaderVideo(root) {
+    var video = root.querySelector(".page-header-video");
+    if (!video) return;
+
+    var saveData = navigator.connection && navigator.connection.saveData;
+    if (video.getAttribute("data-respect-save-data") === "true" && saveData) {
+      video.removeAttribute("autoplay");
+      video.preload = "none";
+      root.classList.add("page-header--video-idle");
+      return;
+    }
+
+    if (U.prefersReducedMotion()) {
+      video.removeAttribute("autoplay");
+      video.removeAttribute("loop");
+      video.addEventListener("loadeddata", function () { video.pause(); }, { once: true });
+      video.pause();
+      return;
+    }
+
+    var attempt = video.play();
+    if (attempt && typeof attempt.catch === "function") {
+      attempt.catch(function () {
+        root.classList.add("page-header--video-idle");
+      });
+    }
+  }
 
   /* ==================================================================
      ABOUT STORY + STATS
