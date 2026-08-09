@@ -200,7 +200,7 @@
          full-height beside it. Every card position and the seam itself hang
          off this class, so losing it silently collapses the layout. */
       return '<section class="section hero hero--cinematic' +
-               (hasVideo ? " hero--video hero--split" : "") +
+               (hasVideo ? " hero--video hero--center" : "") +
                (showVisual ? "" : " hero--single") + '" id="hero">' +
                '<div class="hero-bg" aria-hidden="true">' + backdrop + "</div>" +
                (hasVideo && cards ? '<div class="hero-cards">' + cards + "</div>" : "") +
@@ -749,7 +749,12 @@
       /* Same composition language as the hero: ruled mono eyebrow, display
          serif title, supporting copy offset into a second column, and the
          breadcrumb on a rail along the bottom edge. */
-      return '<section class="page-header" id="page-header">' +
+      /* Article, case-study and resource views own their own <h1>, so the
+         header has nothing to show but the trail. Rendering the full block
+         anyway left a 220px void at the top of every one of those pages. */
+      var slim = !header.title && !header.eyebrow;
+
+      return '<section class="page-header' + (slim ? " page-header--slim" : "") + '" id="page-header">' +
                '<div class="container-wide page-header-shell">' +
                  '<div class="page-header-inner">' +
                    (header.eyebrow

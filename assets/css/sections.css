@@ -2075,3 +2075,241 @@ a.contact-info-value:hover { color: var(--color-accent); }
   .hero--split .hero-rail::before { display: none; }
   .hero--split .hero-rail { border-top: 1px solid var(--color-border); }
 }
+
+/* ==========================================================================
+   RESOURCE DETAIL — working documents, not articles about documents
+   ========================================================================== */
+.res-article .article-body > section { margin-block: var(--space-lg); }
+
+.res-check-title {
+  margin: 0 0 var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.res-check-list { list-style: none; margin: 0; padding: 0; }
+
+.res-check-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.res-check-list li:last-child { border-bottom: 0; }
+
+/* Real checkboxes — ticking items off while working through a launch is the
+   point of a checklist. State is deliberately not persisted: a half-ticked
+   list from last month is worse than a clean one. */
+.res-check-list input[type="checkbox"] {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.28rem;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-xs);
+  background: var(--color-surface-2);
+  appearance: none;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.res-check-list input[type="checkbox"]:checked {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E");
+  background-size: 0.85rem;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.res-check-list input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.res-check-list label {
+  font-size: var(--fs-md);
+  line-height: 1.55;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.res-check-list input:checked + label {
+  color: var(--color-faint);
+  text-decoration: line-through;
+}
+
+.res-links ul { list-style: none; margin: 0; padding: 0; }
+.res-links li { margin: 0; border-bottom: 1px solid var(--color-border-subtle); }
+.res-links li:last-child { border-bottom: 0; }
+
+.res-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  color: var(--color-text);
+  font-size: var(--fs-md);
+}
+
+.res-links a:hover { color: var(--color-accent); }
+
+.res-links a .icon {
+  margin-left: auto;
+  color: var(--color-faint);
+  transition: transform var(--dur-base) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.res-links a:hover .icon { color: var(--color-accent); transform: translate(2px, -2px); }
+
+/* ==========================================================================
+   HERO — CENTRED OVER FULL-BLEED VIDEO
+   --------------------------------------------------------------------------
+   The video runs the full width of the frame again rather than being confined
+   to one half, and the type is centred on top of it. The scrim becomes
+   symmetrical to match: strongest top and bottom, lightest through the middle
+   band where the footage reads, so the centre of the frame stays legible
+   without flattening the whole video.
+   ========================================================================== */
+.hero--center .hero-inner {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  text-align: center;
+  max-width: min(90%, 60rem);
+  margin-inline: auto;
+  padding-right: 0;
+  row-gap: clamp(1.25rem, 3vh, 2rem);
+}
+
+.hero--center .hero-eyebrow { justify-content: center; }
+
+/* Rule on both sides so the eyebrow sits centred rather than left-anchored */
+.hero--center .hero-eyebrow::before,
+.hero--center .hero-eyebrow::after {
+  content: "";
+  width: clamp(2rem, 6vw, 5rem);
+  flex: 0 0 auto;
+  max-width: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-accent));
+}
+
+.hero--center .hero-eyebrow::after {
+  background: linear-gradient(90deg, var(--color-accent), transparent);
+}
+
+.hero--center .hero-title {
+  max-width: 16ch;
+  font-size: var(--fs-hero);
+}
+
+/* The indent that made sense against a left margin reads as a wobble when
+   the line is centred. */
+.hero--center .hero-title span:last-child { padding-left: 0; }
+
+.hero--center .hero-aside { align-items: center; }
+.hero--center .hero-description { max-width: 54ch; }
+.hero--center .hero-actions { justify-content: center; }
+
+/* Symmetrical scrim: protect top and bottom, leave the middle band open */
+.hero--center .hero-video-overlay {
+  background:
+    radial-gradient(
+      ellipse 78% 62% at 50% 50%,
+      color-mix(in srgb, var(--color-background-deep) 72%, transparent) 0%,
+      color-mix(in srgb, var(--color-background-deep) 38%, transparent) 62%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-background-deep) 82%, transparent) 0%,
+      color-mix(in srgb, var(--color-background-deep) 30%, transparent) 30%,
+      color-mix(in srgb, var(--color-background-deep) 40%, transparent) 66%,
+      color-mix(in srgb, var(--color-background-deep) 88%, transparent) 92%,
+      var(--color-background) 100%
+    );
+}
+
+/* Cards move to the outer edges so they frame the centred type instead of
+   colliding with it. */
+.hero--center .hero-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.95rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-background-deep) 86%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: var(--shadow-lg);
+  white-space: nowrap;
+}
+
+.hero--center .hero-card--1 { top: 26%; left: 3%; }
+.hero--center .hero-card--2 { top: 46%; right: 3%; }
+.hero--center .hero-card--3 { top: 70%; left: 6%; }
+
+.hero--center .hero-card .icon-tile {
+  display: inline-grid;
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.9rem;
+  border-color: var(--color-accent-line);
+  color: var(--color-accent);
+}
+
+.hero--center .hero-card-label {
+  display: block;
+  color: var(--color-heading);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.hero--center .hero-card-value {
+  display: block;
+  margin-top: 0.1rem;
+  color: var(--color-faint);
+  font-size: var(--fs-2xs);
+}
+
+.hero--center .hero-rail { justify-items: center; }
+
+@media (max-width: 1279.98px) {
+  .hero--center .hero-card--1 { top: 24%; left: 1.5%; }
+  .hero--center .hero-card--2 { top: 46%; right: 1.5%; }
+  .hero--center .hero-card--3 { top: 72%; left: 3%; }
+}
+
+/* Below the breakpoint the cards would land on the copy */
+@media (max-width: 1023.98px) {
+  .hero--center .hero-cards { display: none; }
+  .hero--center .hero-inner { max-width: none; }
+  .hero--center .hero-title { max-width: 18ch; }
+}
+
+@media (max-width: 767.98px) {
+  .hero--center .hero-title { max-width: none; }
+  .hero--center .hero-actions { width: 100%; }
+}
+
+/* Detail views (article, case study, resource) carry their own h1, so the
+   header collapses to a compact breadcrumb bar rather than an empty block. */
+.page-header--slim {
+  padding-block: calc(var(--navbar-height) + var(--space-sm)) 0;
+}
+
+.page-header--slim .page-header-inner { display: none; }
+.page-header--slim .page-header-rail { border-top: 0; padding-block: var(--space-sm); }
+.page-header--slim::after { display: none; }
