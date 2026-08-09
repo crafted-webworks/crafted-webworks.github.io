@@ -1,0 +1,46 @@
+<!--
+  Component: project-card
+  Runtime builder: components.projectCard(project)  ·  Data: projects.json → items[]
+
+  Media: an <img> when `image.src` exists, otherwise the generated browser
+  mockup (components.mockup) driven by `preview.pattern` + `preview.accent`.
+  See components/media-mockup.html.
+-->
+<article class="card project-card card--interactive"
+         data-reveal="up" data-id="{{ id }}" data-category="{{ category }}" id="{{ slug }}">
+
+  <div class="project-card-media">
+    <span class="media-tag"><span class="badge badge--primary">{{ category_label }}</span></span>
+
+    <!-- either -->
+    <img src="{{ image.src }}" alt="{{ image.alt }}" width="{{ image.width }}" height="{{ image.height }}"
+         loading="lazy" decoding="async">
+    <!-- or the generated mockup -->
+  </div>
+
+  <div class="project-card-body">
+    <div class="project-card-top">
+      <h3 class="card-title">{{ title }}</h3>
+      <span class="badge badge--mono badge--muted">{{ year }}</span>
+    </div>
+
+    <p class="card-meta">
+      <svg class="icon" aria-hidden="true"><use href="#ui-i-briefcase"></use></svg>{{ clientType }}
+    </p>
+
+    <p class="card-text">{{ shortDescription }}</p>
+
+    <div class="cluster cluster--sm">
+      {{#technologies}}<span class="chip">{{ . }}</span>{{/technologies}}
+    </div>
+
+    <div class="project-card-actions">
+      <a class="card-link" href="{{ url }}">
+        View project <svg class="icon" aria-hidden="true"><use href="#ui-i-arrow-up-right"></use></svg>
+      </a>
+      <a class="card-link text-muted" href="{{ caseStudyUrl }}">
+        Case study <svg class="icon" aria-hidden="true"><use href="#ui-i-arrow-right"></use></svg>
+      </a>
+    </div>
+  </div>
+</article>

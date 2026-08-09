@@ -1,0 +1,496 @@
+{
+  "hero": {
+    "eyebrow": "Web Development Studio",
+    "title": "Websites crafted for",
+    "highlight": "your business.",
+    "description": "Custom websites, web applications and digital experiences built for performance, growth and real-world use — not templates dressed up as strategy.",
+    "primaryButton": {
+      "label": "Start Your Project",
+      "url": "/pages/contact.html",
+      "icon": "arrow-right"
+    },
+    "secondaryButton": {
+      "label": "Explore Our Work",
+      "url": "/pages/projects.html",
+      "icon": "play-circle"
+    },
+    "trustLine": [
+      "Custom",
+      "Responsive",
+      "SEO Ready",
+      "Performance Focused"
+    ],
+    "background": {
+      "_note": "Full-bleed cinematic background for the hero. Set type to \"none\" to fall back to the plain grid treatment. The file is used exactly as supplied — cover-fitted and centred, never cropped by hand.",
+      "type": "video",
+      "src": "/assets/video/intro.mp4",
+      "poster": "",
+      "objectPosition": "center",
+      "respectSaveData": true
+    },
+    "visual": {
+      "type": "none",
+      "browserTitle": "craftedwebworks.example",
+      "codeLines": [
+        {
+          "indent": 0,
+          "tokens": [
+            {
+              "t": "tag",
+              "v": "<section"
+            },
+            {
+              "t": "attr",
+              "v": " class"
+            },
+            {
+              "t": "op",
+              "v": "="
+            },
+            {
+              "t": "str",
+              "v": "\"hero\""
+            },
+            {
+              "t": "tag",
+              "v": ">"
+            }
+          ]
+        },
+        {
+          "indent": 1,
+          "tokens": [
+            {
+              "t": "tag",
+              "v": "<h1>"
+            },
+            {
+              "t": "txt",
+              "v": "{{site.logo.wordmark}}"
+            },
+            {
+              "t": "tag",
+              "v": "</h1>"
+            }
+          ]
+        },
+        {
+          "indent": 1,
+          "tokens": [
+            {
+              "t": "com",
+              "v": "// built to convert"
+            }
+          ]
+        },
+        {
+          "indent": 1,
+          "tokens": [
+            {
+              "t": "kw",
+              "v": "const"
+            },
+            {
+              "t": "txt",
+              "v": " site "
+            },
+            {
+              "t": "op",
+              "v": "="
+            },
+            {
+              "t": "fn",
+              "v": " build"
+            },
+            {
+              "t": "op",
+              "v": "({"
+            }
+          ]
+        },
+        {
+          "indent": 2,
+          "tokens": [
+            {
+              "t": "attr",
+              "v": "responsive"
+            },
+            {
+              "t": "op",
+              "v": ":"
+            },
+            {
+              "t": "kw",
+              "v": " true"
+            },
+            {
+              "t": "op",
+              "v": ","
+            }
+          ]
+        },
+        {
+          "indent": 2,
+          "tokens": [
+            {
+              "t": "attr",
+              "v": "seo"
+            },
+            {
+              "t": "op",
+              "v": ":"
+            },
+            {
+              "t": "kw",
+              "v": " true"
+            }
+          ]
+        },
+        {
+          "indent": 1,
+          "tokens": [
+            {
+              "t": "op",
+              "v": "});"
+            }
+          ]
+        },
+        {
+          "indent": 0,
+          "tokens": [
+            {
+              "t": "tag",
+              "v": "</section>"
+            }
+          ]
+        }
+      ],
+      "floatingCards": [
+        {
+          "icon": "gauge",
+          "label": "Performance",
+          "value": "Core Web Vitals",
+          "position": "top-right"
+        },
+        {
+          "icon": "search",
+          "label": "SEO Ready",
+          "value": "Semantic + structured",
+          "position": "bottom-left"
+        },
+        {
+          "icon": "devices",
+          "label": "Responsive",
+          "value": "320px → 4K",
+          "position": "bottom-right"
+        }
+      ],
+      "stats": [
+        {
+          "value": 100,
+          "suffix": "%",
+          "label": "Custom built"
+        },
+        {
+          "value": 12,
+          "suffix": "+",
+          "label": "Service areas"
+        },
+        {
+          "value": 20,
+          "suffix": "+",
+          "label": "Website types"
+        }
+      ],
+      "_note": "Set type back to \"svg\" to show the code window beside the headline. With the background video running it competes rather than adds."
+    }
+  },
+  "trust": {
+    "items": [
+      {
+        "icon": "sparkle",
+        "title": "Fully Custom",
+        "description": "No cookie-cutter templates"
+      },
+      {
+        "icon": "devices",
+        "title": "Responsive",
+        "description": "Works across every device"
+      },
+      {
+        "icon": "search",
+        "title": "SEO Ready",
+        "description": "Built with search in mind"
+      },
+      {
+        "icon": "gauge",
+        "title": "Performance",
+        "description": "Fast and lightweight"
+      },
+      {
+        "icon": "layers",
+        "title": "Scalable",
+        "description": "Built to grow with you"
+      }
+    ]
+  },
+  "servicesIntro": {
+    "eyebrow": "Services",
+    "title": "What we <em>build</em>",
+    "description": "From simple business websites to custom web applications, every project is built around your actual needs.",
+    "link": {
+      "label": "View all services",
+      "url": "/pages/services.html"
+    },
+    "mode": "featured",
+    "limit": 9
+  },
+  "whyUs": {
+    "eyebrow": "Why {{site.name}}",
+    "title": "Why choose <em>{{site.name}}</em>?",
+    "description": "A website is infrastructure for your business. It should be built like it.",
+    "items": [
+      {
+        "icon": "pen-ruler",
+        "title": "Fully Customized",
+        "description": "Every website is built around your business rather than forcing your business into a template."
+      },
+      {
+        "icon": "smartphone",
+        "title": "Mobile First",
+        "description": "Layouts are designed from the smallest screen up, so phones and tablets get a real experience — not a squeezed desktop."
+      },
+      {
+        "icon": "search",
+        "title": "SEO Friendly",
+        "description": "Semantic HTML, clean metadata, structured content and technical foundations that support search visibility."
+      },
+      {
+        "icon": "gauge",
+        "title": "Performance Focused",
+        "description": "Optimized assets, efficient JavaScript and lightweight implementation instead of plugin pile-ups."
+      },
+      {
+        "icon": "blocks",
+        "title": "Reusable Architecture",
+        "description": "Components and design tokens make future updates faster, cheaper and far less risky."
+      },
+      {
+        "icon": "target",
+        "title": "Business Focused",
+        "description": "Every section exists to move a real goal forward — enquiries, sales, bookings or credibility."
+      },
+      {
+        "icon": "code",
+        "title": "Clean Code",
+        "description": "Readable, documented HTML, CSS and JavaScript that another developer can pick up without a rewrite."
+      },
+      {
+        "icon": "trending-up",
+        "title": "Built to Grow",
+        "description": "Architecture that can evolve from a brochure site into a portal, store or full application."
+      }
+    ]
+  },
+  "websiteTypesIntro": {
+    "eyebrow": "Coverage",
+    "title": "Websites we can <em>build</em>",
+    "description": "Different industries need different structures, content and functionality. Here's where we work most often.",
+    "link": {
+      "label": "Discuss your industry",
+      "url": "/pages/contact.html"
+    }
+  },
+  "projectsIntro": {
+    "eyebrow": "Our Work",
+    "title": "Selected <em>projects</em>",
+    "description": "A sample of recent builds across business, commerce and custom application work.",
+    "link": {
+      "label": "View all projects",
+      "url": "/pages/projects.html"
+    },
+    "mode": "featured",
+    "limit": 6,
+    "filters": true
+  },
+  "demosIntro": {
+    "eyebrow": "Demos",
+    "title": "Explore website <em>demos</em>",
+    "description": "Concept builds showing structure, layout and functionality for different industries — each one adaptable to your brand.",
+    "link": {
+      "label": "View all demos",
+      "url": "/pages/demos.html"
+    },
+    "mode": "featured",
+    "limit": 6
+  },
+  "resourcesIntro": {
+    "eyebrow": "Free Resources",
+    "title": "Explore free resources for <em>web creators</em>",
+    "description": "Useful tools, guides and checklists for planning, building and improving better websites.",
+    "link": {
+      "label": "Explore Resources",
+      "url": "/pages/resources.html"
+    },
+    "mode": "featured",
+    "limit": 6
+  },
+  "toolsIntro": {
+    "eyebrow": "General Tools",
+    "title": "Small tools, <em>everyday</em> use",
+    "description": "Simple utilities for web, business and development tasks. Everything runs in your browser.",
+    "link": {
+      "label": "View All Tools",
+      "url": "/pages/tools.html"
+    },
+    "mode": "featured",
+    "limit": 8
+  },
+  "processIntro": {
+    "eyebrow": "Process",
+    "title": "How we <em>build</em>",
+    "description": "A predictable process, so you always know what's happening and what comes next."
+  },
+  "performance": {
+    "eyebrow": "Engineering",
+    "title": "Built for performance. <em>Designed for growth.</em>",
+    "description": "Speed, structure and accessibility aren't add-ons at the end of a project — they're decisions made while building.",
+    "metrics": [
+      {
+        "label": "Fast Loading",
+        "icon": "zap",
+        "value": 94,
+        "caption": "Lightweight assets, deferred scripts, no bloat"
+      },
+      {
+        "label": "Responsive",
+        "icon": "devices",
+        "value": 100,
+        "caption": "Tested from 320px to widescreen"
+      },
+      {
+        "label": "SEO Friendly",
+        "icon": "search",
+        "value": 96,
+        "caption": "Semantic markup and structured data"
+      },
+      {
+        "label": "Accessible",
+        "icon": "accessibility",
+        "value": 92,
+        "caption": "Keyboard support, contrast, focus states"
+      },
+      {
+        "label": "Maintainable",
+        "icon": "wrench",
+        "value": 95,
+        "caption": "Component-driven, documented code"
+      },
+      {
+        "label": "Scalable",
+        "icon": "layers",
+        "value": 93,
+        "caption": "Architecture that grows with the business"
+      }
+    ],
+    "note": "Indicative targets from our own build standards, not a guarantee of any specific third-party score.",
+    "highlights": [
+      {
+        "icon": "feather",
+        "title": "No unnecessary weight",
+        "description": "Libraries are loaded only where they earn their place."
+      },
+      {
+        "icon": "layout",
+        "title": "No layout shift",
+        "description": "Media reserves its space so content doesn't jump while loading."
+      },
+      {
+        "icon": "shield-check",
+        "title": "Standards first",
+        "description": "Semantic HTML, progressive enhancement, graceful degradation."
+      }
+    ]
+  },
+  "testimonialsIntro": {
+    "eyebrow": "Reviews",
+    "title": "What clients <em>say</em>",
+    "description": "Feedback from the people we've built for."
+  },
+  "blogIntro": {
+    "eyebrow": "Blog",
+    "title": "Latest from the <em>blog</em>",
+    "description": "Practical writing on building, maintaining and improving websites.",
+    "link": {
+      "label": "Read the blog",
+      "url": "/pages/blog.html"
+    },
+    "mode": "featured",
+    "limit": 3
+  },
+  "faqIntro": {
+    "eyebrow": "FAQ",
+    "title": "Frequently asked <em>questions</em>",
+    "description": "Short, honest answers to what most people ask before starting.",
+    "link": {
+      "label": "See all questions",
+      "url": "/pages/faq.html"
+    },
+    "mode": "featured",
+    "limit": 8
+  },
+  "contactIntro": {
+    "eyebrow": "Start a Project",
+    "title": "Have a project in <em>mind</em>?",
+    "description": "Tell us what you're building. We'll help you figure out the right approach."
+  },
+  "instagram": {
+    "eyebrow": "Follow Along",
+    "title": "Follow <em>{{site.name}}</em>",
+    "description": "Follow our work, website experiments, tips and new projects.",
+    "button": {
+      "label": "Follow on Instagram",
+      "url": "{{social.instagram.url}}",
+      "icon": "instagram"
+    },
+    "handle": "{{social.instagram.handle}}",
+    "tiles": [
+      {
+        "icon": "code",
+        "label": "Build notes"
+      },
+      {
+        "icon": "palette",
+        "label": "UI experiments"
+      },
+      {
+        "icon": "lightbulb",
+        "label": "Practical tips"
+      },
+      {
+        "icon": "rocket",
+        "label": "New launches"
+      }
+    ]
+  },
+  "finalCTA": {
+    "eyebrow": "Let's Build",
+    "title": "Ready to build something <em>better</em>?",
+    "description": "Let's turn your idea into a website that actually works for your business.",
+    "primaryButton": {
+      "label": "Start a Project",
+      "url": "/pages/contact.html",
+      "icon": "arrow-right"
+    },
+    "secondaryButton": {
+      "label": "Explore Demos",
+      "url": "/pages/demos.html",
+      "icon": "grid"
+    },
+    "assurances": [
+      "No obligation",
+      "Clear scope before you commit",
+      "Straight answers"
+    ]
+  }
+}

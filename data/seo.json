@@ -1,0 +1,49 @@
+{
+  "defaults": {
+    "titleTemplate": "%s | {{site.name}}",
+    "title": "{{site.name}} — Custom Website & Web Application Development",
+    "description": "{{site.name}} builds custom websites, web applications, e-commerce stores and web portals designed for performance, search visibility and real business goals.",
+    "keywords": [
+      "web development studio",
+      "custom website development",
+      "web application development",
+      "business website design",
+      "e-commerce website development",
+      "responsive web design",
+      "SEO friendly website",
+      "website redesign",
+      "landing page development"
+    ],
+    "robots": "index, follow, max-image-preview:large",
+    "language": "en",
+    "locale": "en_IN",
+    "themeColor": "#070B16",
+    "author": "{{site.name}}",
+    "openGraph": {
+      "type": "website",
+      "siteName": "{{site.name}}",
+      "image": "/assets/images/og/og-default.svg",
+      "imageAlt": "{{site.name}} — custom website and web application development",
+      "imageWidth": 1200,
+      "imageHeight": 630
+    },
+    "twitter": {
+      "card": "summary_large_image",
+      "site": "",
+      "creator": ""
+    }
+  },
+  "structuredData": {
+    "organization": {
+      "enabled": true,
+      "type": "ProfessionalService",
+      "serviceType": "Web Development",
+      "areaServed": "Worldwide",
+      "priceRange": "$$"
+    },
+    "website": { "enabled": true, "searchAction": false },
+    "faqPage": { "enabled": true, "onPages": ["home", "faq"] },
+    "breadcrumbs": { "enabled": true }
+  },
+  "notes": "Replace the placeholder domain in site.json before launch. Canonical URLs, Open Graph and Twitter tags are generated from site.json + pages.json by assets/js/seo.js — never write meta tags by hand in a page."
+}

@@ -1,0 +1,35 @@
+<!--
+  Component: demo-card
+  Runtime builder: components.demoCard(demo)  ·  Data: demos.json → items[]
+
+  When `url` is null the action becomes a Preview button that opens the
+  in-page modal instead of navigating to a dead link.
+-->
+<article class="card demo-card card--interactive"
+         data-reveal="up" data-id="{{ id }}" data-category="{{ category }}" data-industry="{{ industry }}">
+
+  <div class="demo-card-media">
+    <span class="media-tag"><span class="badge badge--accent">{{ industry }}</span></span>
+    <!-- generated browser mockup, or <img src="{{ previewImage }}"> -->
+  </div>
+
+  <div class="demo-card-body">
+    <h3 class="card-title">{{ title }}</h3>
+    <p class="card-text">{{ description }}</p>
+
+    <ul class="demo-card-features">
+      {{#features}}<li><span class="badge">{{ . }}</span></li>{{/features}}
+    </ul>
+
+    <div class="demo-card-footer">
+      <span class="card-meta">
+        <svg class="icon" aria-hidden="true"><use href="#ui-i-layers"></use></svg>{{ category_label }}
+      </span>
+
+      <!-- when demo.url exists -->
+      <a class="btn btn-soft btn-sm" href="{{ url }}" target="_blank" rel="noopener noreferrer">View demo</a>
+      <!-- otherwise -->
+      <button type="button" class="btn btn-soft btn-sm" data-demo-preview="{{ id }}">Preview</button>
+    </div>
+  </div>
+</article>

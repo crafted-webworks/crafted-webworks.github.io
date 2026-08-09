@@ -1,0 +1,185 @@
+/* ==========================================================================
+   Animation system
+   Scroll reveal is driven by IntersectionObserver (assets/js/animations.js);
+   this file owns every keyframe and transition state.
+   Rule: motion supports comprehension. If it doesn't, it doesn't ship.
+   ========================================================================== */
+
+/* ==========================================================================
+   KEYFRAMES
+   ========================================================================== */
+@keyframes ui-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ui-ping {
+  0%   { transform: scale(1); opacity: 0.7; }
+  70%  { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes ui-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+@keyframes ui-shimmer {
+  100% { transform: translateX(100%); }
+}
+
+@keyframes ui-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+@keyframes ui-nudge {
+  0%, 100% { transform: rotate(0); }
+  35%      { transform: rotate(-8deg) scale(1.06); }
+  70%      { transform: rotate(4deg) scale(1.02); }
+}
+
+@keyframes ui-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes ui-orbit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes ui-caret {
+  0%, 45%   { opacity: 1; }
+  55%, 100% { opacity: 0; }
+}
+
+@keyframes ui-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes ui-pulse-soft {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 0.7; }
+}
+
+/* ==========================================================================
+   SCROLL REVEAL
+   --------------------------------------------------------------------------
+   CSS owns only the *hidden* starting state, and only once JavaScript has
+   confirmed the motion engine is present and motion is wanted. Motion One
+   owns the animation itself (opacity + transform, applied inline).
+
+   Consequence: no JS, no Motion One, or reduced-motion all mean the
+   `js-reveal-ready` class is never added and every element is simply visible.
+   Content is never trapped behind an animation that didn't load.
+   ========================================================================== */
+.js-reveal-ready [data-reveal] { opacity: 0; }
+.js-reveal-ready [data-reveal].is-revealed { opacity: 1; }
+
+/* Hero headline lines start below their mask; animations.js wraps each line
+   in an overflow-hidden span and slides them out. */
+.js-reveal-ready .hero-title span { opacity: 0; }
+
+/* ==========================================================================
+   SVG LINE DRAWING
+   ========================================================================== */
+.draw-path {
+  stroke-dasharray: var(--path-length, 400);
+  stroke-dashoffset: var(--path-length, 400);
+}
+
+.is-revealed .draw-path,
+.draw-path.is-drawn {
+  animation: ui-draw 1.6s var(--ease-out) forwards;
+}
+
+/* ==========================================================================
+   AMBIENT MOTION
+   ========================================================================== */
+.hero-orbit .orbit-ring {
+  transform-origin: 50% 50%;
+  animation: ui-orbit 46s linear infinite;
+}
+
+.hero-orbit .orbit-ring--reverse { animation-duration: 62s; animation-direction: reverse; }
+.hero-orbit .orbit-node { animation: ui-pulse-soft 4s var(--ease-in-out) infinite; }
+
+.type-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 0.1em;
+  vertical-align: -0.15em;
+  background: var(--color-accent);
+  animation: ui-caret 1.1s steps(1) infinite;
+}
+
+/* ==========================================================================
+   HOVER PRIMITIVES
+   ========================================================================== */
+.hover-lift { transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+.hover-lift:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+.hover-glow { transition: box-shadow var(--dur-base) var(--ease-out); }
+.hover-glow:hover { box-shadow: var(--glow-blue); }
+
+/* Underline that grows from the left */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.link-underline:hover::after { transform: scaleX(1); }
+
+/* ==========================================================================
+   COUNTERS
+   ========================================================================== */
+[data-counter] { font-variant-numeric: tabular-nums; }
+
+/* ==========================================================================
+   REDUCED MOTION
+   Everything above degrades to an instant, legible state.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html { scroll-behavior: auto; }
+
+  .js-reveal-ready [data-reveal],
+  .js-reveal-ready .hero-title span {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .draw-path { stroke-dashoffset: 0; }
+
+  .marquee-track,
+  .pill-dot::after,
+  .type-caret { animation: none !important; }
+
+  .type-caret { opacity: 1; }
+
+  .btn:hover,
+  .card--interactive:hover,
+  .hover-lift:hover { transform: none; }
+}

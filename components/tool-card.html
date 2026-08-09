@@ -1,0 +1,23 @@
+<!--
+  Component: tool-card
+  Runtime builder: components.toolCard(tool)  ·  Data: tools.json → items[]
+
+  status: "live"    → gets data-tool + role="button"; opens the tool modal
+  status: "planned" → renders with a "Coming soon" badge and no interaction
+-->
+<article class="card tool-card card--interactive"
+         data-reveal="up" data-id="{{ id }}" data-category="{{ category }}"
+         data-tool="{{ id }}" role="button" tabindex="0">
+
+  <span class="icon-tile icon-tile--sm">
+    <svg class="icon" aria-hidden="true"><use href="#ui-i-{{ icon }}"></use></svg>
+  </span>
+
+  <div class="tool-card-body">
+    <h3 class="card-title">
+      {{ title }}
+      <!-- planned only --><span class="badge badge--muted">Coming soon</span>
+    </h3>
+    <p class="card-text">{{ description }}</p>
+  </div>
+</article>

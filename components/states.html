@@ -1,0 +1,39 @@
+<!--
+  Components: loading-state · empty-state · error-state · skeleton
+  Runtime builders: components.loadingState(count) · emptyState(opts) · errorState(opts)
+
+  Rule: a section is never blank. Something is always rendered — a skeleton
+  while data loads, an empty state when a filter matches nothing, an error
+  state when a data file cannot be read.
+-->
+
+<!-- Loading: shown immediately, replaced when data arrives -->
+<div class="skeleton-grid" role="status" aria-live="polite">
+  <span class="visually-hidden">Loading…</span>
+  <div class="skeleton"></div>
+  <div class="skeleton"></div>
+  <div class="skeleton"></div>
+</div>
+
+<!-- Empty: no results for the current filter/search -->
+<div class="state">
+  <span class="icon-tile icon-tile--lg">
+    <svg class="icon" aria-hidden="true"><use href="#ui-i-inbox"></use></svg>
+  </span>
+  <p class="state-title">{{ title }}</p>
+  <p class="state-text">{{ text }}</p>
+  <a class="btn btn-secondary btn-sm" href="{{ action.url }}">{{ action.label }}</a>
+</div>
+
+<!-- Error: data could not be loaded. Technical detail goes to the console in
+     development only — visitors get a plain, actionable message. -->
+<div class="state state--error" role="alert">
+  <span class="icon-tile icon-tile--lg">
+    <svg class="icon" aria-hidden="true"><use href="#ui-i-alert-circle"></use></svg>
+  </span>
+  <p class="state-title">This section could not load</p>
+  <p class="state-text">Please refresh the page. If it keeps happening, let us know.</p>
+</div>
+
+<!-- Inline spinner -->
+<span class="spinner" role="status" aria-label="Loading"></span>

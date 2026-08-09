@@ -1,0 +1,78 @@
+<!--
+  Components: modal · toast · breadcrumb · pagination · process-step · notice
+  Runtime builders: components.showModal() / showToast() / breadcrumb() /
+                    processStep(); pagination.render()
+
+  The modal and drawer both use a11y.trapFocus(): Tab is contained, Escape
+  closes, and focus returns to whatever opened it.
+-->
+
+<!-- Modal -->
+<div class="ui-modal is-open" role="dialog" aria-modal="true" aria-label="{{ title }}">
+  <div class="ui-modal-dialog">
+    <div class="ui-modal-head">
+      <div>
+        <h2 class="ui-modal-title">{{ title }}</h2>
+        <p class="ui-modal-subtitle">{{ subtitle }}</p>
+      </div>
+      <button type="button" class="ui-modal-close" aria-label="Close dialog">
+        <svg class="icon" aria-hidden="true"><use href="#ui-i-x"></use></svg>
+      </button>
+    </div>
+    <div class="ui-modal-body">{{ body }}</div>
+    <div class="ui-modal-footer">{{ footer }}</div>
+  </div>
+</div>
+
+<!-- Toast (stacked bottom-right, auto-dismissing) -->
+<div class="ui-toast-stack" id="ui-toasts" role="status" aria-live="polite">
+  <div class="ui-toast ui-toast--success is-visible">
+    <svg class="icon" aria-hidden="true"><use href="#ui-i-check-circle"></use></svg>
+    <div><strong class="ui-toast-title">{{ title }}</strong><span>{{ message }}</span></div>
+    <button type="button" class="ui-toast-close" aria-label="Dismiss">
+      <svg class="icon" aria-hidden="true"><use href="#ui-i-x"></use></svg>
+    </button>
+  </div>
+</div>
+
+<!-- Breadcrumb (also emitted as BreadcrumbList structured data) -->
+<nav aria-label="Breadcrumb">
+  <ol class="breadcrumb">
+    <li><a href="{{ url }}">Home</a></li>
+    <li><span aria-current="page">{{ label }}</span></li>
+  </ol>
+</nav>
+
+<!-- Pagination -->
+<nav class="pagination" aria-label="Pagination">
+  <button type="button" class="page-btn" data-page="1" aria-label="Previous page">
+    <svg class="icon" aria-hidden="true"><use href="#ui-i-chevron-left"></use></svg>
+  </button>
+  <button type="button" class="page-btn is-active" data-page="1" aria-current="page">1</button>
+  <button type="button" class="page-btn" data-page="2">2</button>
+  <span class="page-ellipsis" aria-hidden="true">…</span>
+  <button type="button" class="page-btn" data-page="9">9</button>
+  <button type="button" class="page-btn" data-page="2" aria-label="Next page">
+    <svg class="icon" aria-hidden="true"><use href="#ui-i-chevron-right"></use></svg>
+  </button>
+</nav>
+
+<!-- Process step (timeline item) -->
+<li class="process-step" data-reveal="up">
+  <span class="process-marker">{{ number }}</span>
+  <div class="process-body">
+    <h3 class="process-title">
+      <svg class="icon" aria-hidden="true"><use href="#ui-i-{{ icon }}"></use></svg>{{ title }}
+    </h3>
+    <p class="process-text">{{ description }}</p>
+    <div class="process-deliverables">
+      {{#deliverables}}<span class="badge">{{ . }}</span>{{/deliverables}}
+    </div>
+  </div>
+</li>
+
+<!-- Notice — used for placeholder / demo-mode disclosures -->
+<p class="notice">
+  <svg class="icon" aria-hidden="true"><use href="#ui-i-alert-circle"></use></svg>
+  <span>{{ text }}</span>
+</p>

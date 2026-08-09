@@ -1,0 +1,50 @@
+# ---- OS -------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# ---- Editors --------------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.sublime-workspace
+*.swp
+*~
+
+# ---- Node (only used by the tools/ build scripts) --------------------------
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# ---- Environment & secrets -------------------------------------------------
+# The form endpoint lives in data/contact.json (public by design).
+# Anything with credentials belongs in a server-side env file, never here.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ---- Build output ----------------------------------------------------------
+dist/
+build/
+*.min.css.map
+*.min.js.map
+
+# ---- Local server / logs ---------------------------------------------------
+*.log
+.cache/
+.temp/
+.sass-cache/
+
+# ---- Optional offline bundle ------------------------------------------------
+# data/bundle.js is a GENERATED duplicate of every data/*.json file. It is only
+# needed to open the site directly from the file system (file://), where the
+# browser blocks fetch(). Served over HTTP the JSON files are read directly and
+# the bundle is never requested, so it is not committed.
+#   Generate on demand:  node tools/build-bundle.mjs
+data/bundle.js

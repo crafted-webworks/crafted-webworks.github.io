@@ -1,0 +1,24 @@
+<!--
+  Component: blog-card
+  Runtime builder: components.blogCard(post)  ·  Data: blog.json → items[]
+  Article URL comes from blog.json → settings.articleUrlPattern
+-->
+<article class="card blog-card card--interactive"
+         data-reveal="up" data-id="{{ id }}" data-category="{{ category }}">
+
+  <div class="blog-card-media">
+    <span class="media-tag"><span class="badge badge--primary">{{ category_label }}</span></span>
+    <!-- generated mockup, or <img src="{{ image.src }}" alt="{{ image.alt }}"> -->
+  </div>
+
+  <div class="blog-card-body">
+    <h3 class="card-title"><a href="{{ post_url }}">{{ title }}</a></h3>
+    <p class="card-text clamp-3">{{ excerpt }}</p>
+
+    <div class="blog-card-meta">
+      <time datetime="{{ date_iso }}">{{ date_formatted }}</time>
+      <span class="dot"></span>
+      <span>{{ readingTime }}</span>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,31 @@
+<!--
+  Component: faq-item
+  Runtime builder: components.faqAccordion(items, accordionId)  ·  Data: faqs.json → items[]
+
+  Behaviour and ARIA come from Bootstrap 5's accordion; the visual treatment is
+  re-skinned with design tokens in assets/css/components.css (.faq-accordion).
+  Bootstrap's chevron is replaced with a plus that rotates into a cross.
+-->
+<div class="accordion faq-accordion" id="faq-accordion" data-reveal="up">
+
+  {{#items}}
+  <div class="accordion-item" data-category="{{ category }}">
+    <h3 class="accordion-header" id="faq-accordion-heading-{{ index }}">
+      <button class="accordion-button collapsed" type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#faq-accordion-panel-{{ index }}"
+              aria-expanded="false"
+              aria-controls="faq-accordion-panel-{{ index }}">
+        {{ question }}
+      </button>
+    </h3>
+
+    <div id="faq-accordion-panel-{{ index }}" class="accordion-collapse collapse"
+         aria-labelledby="faq-accordion-heading-{{ index }}"
+         data-bs-parent="#faq-accordion">
+      <div class="accordion-body">{{ answer }}</div>
+    </div>
+  </div>
+  {{/items}}
+
+</div>

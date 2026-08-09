@@ -1,0 +1,66 @@
+<!--
+  Component: navbar
+  Runtime builder: renderer.buildNavbar()  ·  Data: navigation.json, site.json, social.json
+  Loops: {{#primary}} … {{/primary}} over navigation.primary
+-->
+<header class="site-header" data-navbar>
+  <div class="container-wide">
+    <nav class="navbar" aria-label="Primary">
+
+      <a class="navbar-brand" href="{{ home_url }}" aria-label="{{ site_name }} — home">
+        <span class="navbar-brand-mark"><!-- inline SVG mark, see renderer.brandMark() --></span>
+        <span class="navbar-brand-text">{{ logo_wordmark }}<span class="accent">{{ logo_wordmark_accent }}</span></span>
+      </a>
+
+      <ul class="navbar-nav">
+        {{#primary}}
+        <li>
+          <a class="nav-link {{#is_active}}is-active{{/is_active}}"
+             href="{{ url }}"
+             {{#is_section_link}}data-scroll-to="{{ section }}"{{/is_section_link}}
+             {{#is_active}}aria-current="page"{{/is_active}}>{{ label }}</a>
+        </li>
+        {{/primary}}
+      </ul>
+
+      <div class="navbar-actions">
+        <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch colour theme">
+          <svg class="icon icon-moon" aria-hidden="true"><use href="#ui-i-moon"></use></svg>
+          <svg class="icon icon-sun" aria-hidden="true"><use href="#ui-i-sun"></use></svg>
+        </button>
+
+        <a class="btn btn-primary btn-sm btn-cta" href="{{ cta_url }}">{{ cta_label }}</a>
+
+        <button type="button" class="navbar-toggle" data-nav-toggle
+                aria-expanded="false" aria-controls="nav-drawer" aria-label="Open menu">
+          <span class="navbar-toggle-bars"></span>
+        </button>
+      </div>
+
+    </nav>
+  </div>
+  <span class="scroll-progress" data-scroll-progress aria-hidden="true"></span>
+</header>
+
+<div class="nav-backdrop" data-nav-backdrop hidden></div>
+
+<div class="nav-drawer" id="nav-drawer" data-nav-drawer role="dialog" aria-modal="true"
+     aria-label="Site menu" tabindex="-1">
+  <div class="nav-drawer-head">
+    <a class="navbar-brand" href="{{ home_url }}">…</a>
+    <button type="button" class="ui-modal-close" data-nav-close aria-label="Close menu">
+      <svg class="icon" aria-hidden="true"><use href="#ui-i-x"></use></svg>
+    </button>
+  </div>
+
+  <ul class="nav-drawer-nav">
+    {{#primary}}<li><a class="nav-link" href="{{ url }}">{{ label }}</a></li>{{/primary}}
+  </ul>
+
+  <div class="nav-drawer-footer">
+    <a class="btn btn-gradient btn-block" href="{{ cta_url }}">{{ cta_label }}</a>
+    <div class="social-links">
+      {{#social}}<a class="social-link" href="{{ url }}" aria-label="{{ label }}">…</a>{{/social}}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,545 @@
+{
+  "settings": {
+    "note": "Tools with \"status\": \"live\" must have a matching entry in CWW.tools.registry (assets/js/tools.js). Anything else renders with a 'Coming soon' badge. Adding a tool = one entry here + one registry function.",
+    "runsInBrowser": true
+  },
+  "categories": [
+    {
+      "id": "developer",
+      "label": "Developer",
+      "icon": "code"
+    },
+    {
+      "id": "text",
+      "label": "Text",
+      "icon": "type"
+    },
+    {
+      "id": "color",
+      "label": "Color",
+      "icon": "palette"
+    },
+    {
+      "id": "converter",
+      "label": "Converters",
+      "icon": "repeat"
+    },
+    {
+      "id": "generator",
+      "label": "Generators",
+      "icon": "sparkle"
+    },
+    {
+      "id": "seo",
+      "label": "SEO",
+      "icon": "search"
+    },
+    {
+      "id": "image",
+      "label": "Images",
+      "icon": "image"
+    },
+    {
+      "id": "web",
+      "label": "Web",
+      "icon": "globe"
+    }
+  ],
+  "items": [
+    {
+      "id": "json-formatter",
+      "title": "JSON Formatter",
+      "slug": "json-formatter",
+      "category": "developer",
+      "description": "Format, indent and inspect JSON — with the exact position of any syntax error.",
+      "icon": "braces",
+      "url": "/pages/tools.html#json-formatter",
+      "tags": [
+        "json",
+        "format",
+        "beautify",
+        "validate"
+      ],
+      "status": "live",
+      "featured": true,
+      "active": true,
+      "order": 1
+    },
+    {
+      "id": "json-minifier",
+      "title": "JSON Minifier",
+      "slug": "json-minifier",
+      "category": "developer",
+      "description": "Strip whitespace from JSON and see the size difference before and after.",
+      "icon": "minimize",
+      "url": "/pages/tools.html#json-minifier",
+      "tags": [
+        "json",
+        "minify",
+        "compress"
+      ],
+      "status": "live",
+      "featured": false,
+      "active": true,
+      "order": 2
+    },
+    {
+      "id": "color-converter",
+      "title": "Color Converter",
+      "slug": "color-converter",
+      "category": "color",
+      "description": "Convert between HEX, RGB and HSL, with a live swatch and contrast reading.",
+      "icon": "palette",
+      "url": "/pages/tools.html#color-converter",
+      "tags": [
+        "hex",
+        "rgb",
+        "hsl",
+        "contrast"
+      ],
+      "status": "live",
+      "featured": true,
+      "active": true,
+      "order": 3
+    },
+    {
+      "id": "gradient-generator",
+      "title": "CSS Gradient Generator",
+      "slug": "css-gradient-generator",
+      "category": "color",
+      "description": "Build a linear gradient visually and copy the CSS straight out.",
+      "icon": "gradient",
+      "url": "/pages/tools.html#gradient-generator",
+      "tags": [
+        "css",
+        "gradient",
+        "design"
+      ],
+      "status": "live",
+      "featured": true,
+      "active": true,
+      "order": 4
+    },
+    {
+      "id": "password-generator",
+      "title": "Password Generator",
+      "slug": "password-generator",
+      "category": "generator",
+      "description": "Generate strong random passwords using the browser's crypto API.",
+      "icon": "key",
+      "url": "/pages/tools.html#password-generator",
+      "tags": [
+        "password",
+        "security",
+        "random"
+      ],
+      "status": "live",
+      "featured": true,
+      "active": true,
+      "order": 5
+    },
+    {
+      "id": "word-counter",
+      "title": "Word & Character Counter",
+      "slug": "word-counter",
+      "category": "text",
+      "description": "Count words, characters, sentences, paragraphs and estimated reading time.",
+      "icon": "type",
+      "url": "/pages/tools.html#word-counter",
+      "tags": [
+        "words",
+        "characters",
+        "reading time"
+      ],
+      "status": "live",
+      "featured": true,
+      "active": true,
+      "order": 6
+    },
+    {
+      "id": "case-converter",
+      "title": "Case Converter",
+      "slug": "case-converter",
+      "category": "text",
+      "description": "Switch text between sentence, title, upper, lower, camel, kebab and snake case.",
+      "icon": "letter-case",
+      "url": "/pages/tools.html#case-converter",
+      "tags": [
+        "case",
+        "text",
+        "format"
+      ],
+      "status": "live",
+      "featured": false,
+      "active": true,
+      "order": 7
+    },
+    {
+      "id": "slug-generator",
+      "title": "URL Slug Generator",
+      "slug": "slug-generator",
+      "category": "seo",
+      "description": "Turn any title into a clean, readable, URL-safe slug.",
+      "icon": "link",
+      "url": "/pages/tools.html#slug-generator",
+      "tags": [
+        "slug",
+        "url",
+        "seo"
+      ],
+      "status": "live",
+      "featured": false,
+      "active": true,
+      "order": 8
+    },
+    {
+      "id": "meta-tag-generator",
+      "title": "Meta Tag Generator",
+      "slug": "meta-tag-generator",
+      "category": "seo",
+      "description": "Generate title, description, Open Graph and Twitter tags with length guidance.",
+      "icon": "tag",
+      "url": "/pages/tools.html#meta-tag-generator",
+      "tags": [
+        "meta",
+        "open graph",
+        "seo"
+      ],
+      "status": "live",
+      "featured": true,
+      "active": true,
+      "order": 9
+    },
+    {
+      "id": "url-encoder",
+      "title": "URL Encoder / Decoder",
+      "slug": "url-encoder-decoder",
+      "category": "converter",
+      "description": "Percent-encode or decode URLs and query string values.",
+      "icon": "link-2",
+      "url": "/pages/tools.html#url-encoder",
+      "tags": [
+        "url",
+        "encode",
+        "decode"
+      ],
+      "status": "live",
+      "featured": false,
+      "active": true,
+      "order": 10
+    },
+    {
+      "id": "base64-converter",
+      "title": "Base64 Encoder / Decoder",
+      "slug": "base64-encoder-decoder",
+      "category": "converter",
+      "description": "Convert text to and from Base64, with full Unicode support.",
+      "icon": "binary",
+      "url": "/pages/tools.html#base64-converter",
+      "tags": [
+        "base64",
+        "encode",
+        "decode"
+      ],
+      "status": "live",
+      "featured": false,
+      "active": true,
+      "order": 11
+    },
+    {
+      "id": "timestamp-converter",
+      "title": "Timestamp Converter",
+      "slug": "timestamp-converter",
+      "category": "converter",
+      "description": "Convert Unix timestamps to readable dates and back, in local time or UTC.",
+      "icon": "clock",
+      "url": "/pages/tools.html#timestamp-converter",
+      "tags": [
+        "unix",
+        "timestamp",
+        "date"
+      ],
+      "status": "live",
+      "featured": false,
+      "active": true,
+      "order": 12
+    },
+    {
+      "id": "lorem-ipsum",
+      "title": "Lorem Ipsum Generator",
+      "slug": "lorem-ipsum-generator",
+      "category": "generator",
+      "description": "Generate placeholder paragraphs, sentences or words for layout work.",
+      "icon": "align-left",
+      "url": "/pages/tools.html#lorem-ipsum",
+      "tags": [
+        "placeholder",
+        "dummy text",
+        "layout"
+      ],
+      "status": "live",
+      "featured": false,
+      "active": true,
+      "order": 13
+    },
+    {
+      "id": "box-shadow-generator",
+      "title": "Box Shadow Generator",
+      "slug": "box-shadow-generator",
+      "category": "generator",
+      "description": "Dial in a CSS box-shadow with live preview and copyable output.",
+      "icon": "square-stack",
+      "url": "/pages/tools.html#box-shadow-generator",
+      "tags": [
+        "css",
+        "shadow",
+        "design"
+      ],
+      "status": "live",
+      "featured": false,
+      "active": true,
+      "order": 14
+    },
+    {
+      "id": "html-entity-converter",
+      "title": "HTML Entity Converter",
+      "slug": "html-entity-converter",
+      "category": "developer",
+      "description": "Escape text for safe HTML output, or decode entities back to plain text.",
+      "icon": "code-2",
+      "url": "/pages/tools.html#html-entity-converter",
+      "tags": [
+        "html",
+        "entities",
+        "escape"
+      ],
+      "status": "live",
+      "featured": false,
+      "active": true,
+      "order": 15
+    },
+    {
+      "id": "image-compressor",
+      "title": "Image Compressor",
+      "slug": "image-compressor",
+      "category": "image",
+      "description": "Compress images in the browser before uploading them to a website.",
+      "icon": "image-down",
+      "url": "/pages/tools.html#image-compressor",
+      "tags": [
+        "image",
+        "compress",
+        "optimize"
+      ],
+      "status": "live",
+      "featured": false,
+      "active": true,
+      "order": 16
+    },
+    {
+      "id": "image-resizer",
+      "title": "Image Resizer",
+      "slug": "image-resizer",
+      "category": "image",
+      "description": "Resize and crop images to exact dimensions without leaving the page.",
+      "icon": "crop",
+      "url": "/pages/tools.html#image-resizer",
+      "tags": [
+        "image",
+        "resize",
+        "crop"
+      ],
+      "status": "live",
+      "featured": false,
+      "active": true,
+      "order": 17
+    },
+    {
+      "id": "qr-code-generator",
+      "title": "QR Code Generator",
+      "slug": "qr-code-generator",
+      "category": "generator",
+      "description": "Turn a URL or text into a downloadable QR code.",
+      "icon": "qr-code",
+      "url": "/pages/tools.html#qr-code-generator",
+      "tags": [
+        "qr",
+        "code",
+        "share"
+      ],
+      "status": "live",
+      "featured": false,
+      "active": true,
+      "order": 18
+    },
+    {
+      "id": "sitemap-generator",
+      "title": "Sitemap Generator",
+      "slug": "sitemap-generator",
+      "category": "seo",
+      "description": "Build a valid XML sitemap from a list of URLs.",
+      "icon": "sitemap",
+      "url": "/pages/tools.html#sitemap-generator",
+      "tags": [
+        "sitemap",
+        "xml",
+        "seo"
+      ],
+      "status": "live",
+      "featured": false,
+      "active": true,
+      "order": 19
+    },
+    {
+      "id": "unit-converter",
+      "title": "CSS Unit Converter",
+      "slug": "css-unit-converter",
+      "category": "web",
+      "description": "Convert between px, rem, em and percentages against a chosen root size.",
+      "icon": "ruler",
+      "url": "/pages/tools.html#unit-converter",
+      "tags": [
+        "css",
+        "px",
+        "rem"
+      ],
+      "status": "live",
+      "featured": false,
+      "active": true,
+      "order": 20
+    },
+    {
+      "id": "contrast-checker",
+      "title": "Contrast Checker",
+      "slug": "contrast-checker",
+      "category": "color",
+      "description": "Check any colour pair against WCAG AA and AAA, with a live preview of real text.",
+      "icon": "accessibility",
+      "tags": [
+        "wcag",
+        "accessibility",
+        "contrast",
+        "a11y"
+      ],
+      "featured": true,
+      "order": 21,
+      "url": "/pages/tools.html#contrast-checker",
+      "status": "live",
+      "active": true
+    },
+    {
+      "id": "color-shades",
+      "title": "Colour Shades",
+      "slug": "color-shades",
+      "category": "color",
+      "description": "Generate a ten-step tint and shade ramp from one colour, ready as CSS custom properties.",
+      "icon": "palette",
+      "tags": [
+        "palette",
+        "tints",
+        "shades",
+        "design tokens"
+      ],
+      "featured": true,
+      "order": 22,
+      "url": "/pages/tools.html#color-shades",
+      "status": "live",
+      "active": true
+    },
+    {
+      "id": "clamp-generator",
+      "title": "CSS clamp() Generator",
+      "slug": "css-clamp-generator",
+      "category": "web",
+      "description": "Fluid type and spacing that scales between two viewport widths — the correct maths, in rem.",
+      "icon": "ruler",
+      "tags": [
+        "clamp",
+        "fluid",
+        "responsive",
+        "typography"
+      ],
+      "featured": true,
+      "order": 23,
+      "url": "/pages/tools.html#clamp-generator",
+      "status": "live",
+      "active": true
+    },
+    {
+      "id": "hash-generator",
+      "title": "Hash Generator",
+      "slug": "hash-generator",
+      "category": "developer",
+      "description": "SHA-1, SHA-256, SHA-384 and SHA-512 digests, computed in the browser.",
+      "icon": "shield-check",
+      "tags": [
+        "sha",
+        "hash",
+        "digest",
+        "checksum"
+      ],
+      "featured": false,
+      "order": 24,
+      "url": "/pages/tools.html#hash-generator",
+      "status": "live",
+      "active": true
+    },
+    {
+      "id": "uuid-generator",
+      "title": "UUID Generator",
+      "slug": "uuid-generator",
+      "category": "generator",
+      "description": "Generate RFC 4122 v4 UUIDs from the browser crypto API, in bulk.",
+      "icon": "binary",
+      "tags": [
+        "uuid",
+        "guid",
+        "id",
+        "random"
+      ],
+      "featured": false,
+      "order": 25,
+      "url": "/pages/tools.html#uuid-generator",
+      "status": "live",
+      "active": true
+    },
+    {
+      "id": "aspect-ratio",
+      "title": "Aspect Ratio Calculator",
+      "slug": "aspect-ratio-calculator",
+      "category": "web",
+      "description": "Simplify a ratio and solve for a missing dimension, with the CSS to match.",
+      "icon": "crop",
+      "tags": [
+        "aspect ratio",
+        "dimensions",
+        "video",
+        "images"
+      ],
+      "featured": false,
+      "order": 26,
+      "url": "/pages/tools.html#aspect-ratio",
+      "status": "live",
+      "active": true
+    },
+    {
+      "id": "regex-tester",
+      "title": "Regex Tester",
+      "slug": "regex-tester",
+      "category": "developer",
+      "description": "Test a pattern against real text with highlighted matches and captured groups.",
+      "icon": "search",
+      "tags": [
+        "regex",
+        "pattern",
+        "match",
+        "test"
+      ],
+      "featured": true,
+      "order": 27,
+      "url": "/pages/tools.html#regex-tester",
+      "status": "live",
+      "active": true
+    }
+  ]
+}

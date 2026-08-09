@@ -1,0 +1,262 @@
+{
+  "categories": [
+    { "id": "websites", "label": "Websites" },
+    { "id": "commerce", "label": "E-Commerce" },
+    { "id": "applications", "label": "Applications" },
+    { "id": "growth", "label": "Growth & Care" }
+  ],
+  "items": [
+    {
+      "id": "business-websites",
+      "title": "Business Websites",
+      "shortTitle": "Business Sites",
+      "slug": "business-websites",
+      "category": "websites",
+      "icon": "building",
+      "shortDescription": "Professional websites for small and growing businesses.",
+      "description": "A clear, credible website that explains what you do, who it's for and why someone should get in touch — structured to turn visitors into enquiries rather than just look presentable.",
+      "features": [
+        "Structure planned around your services",
+        "Enquiry and contact flows",
+        "Location and business schema",
+        "Content that's easy to update"
+      ],
+      "technologies": ["HTML5", "CSS3", "JavaScript", "Bootstrap 5"],
+      "url": "/pages/services.html#business-websites",
+      "featured": true,
+      "active": true,
+      "order": 1
+    },
+    {
+      "id": "custom-websites",
+      "title": "Custom Websites",
+      "shortTitle": "Custom Builds",
+      "slug": "custom-websites",
+      "category": "websites",
+      "icon": "pen-ruler",
+      "shortDescription": "Fully customized designs and functionality.",
+      "description": "When an off-the-shelf theme can't do the job, we design and build from scratch — bespoke layouts, custom interactions and functionality shaped entirely around your requirements.",
+      "features": [
+        "Original design direction",
+        "Custom components and interactions",
+        "Functionality built to spec",
+        "No theme or plugin lock-in"
+      ],
+      "technologies": ["HTML5", "CSS3", "JavaScript", "SVG"],
+      "url": "/pages/services.html#custom-websites",
+      "featured": true,
+      "active": true,
+      "order": 2
+    },
+    {
+      "id": "landing-pages",
+      "title": "Landing Pages",
+      "shortTitle": "Landing Pages",
+      "slug": "landing-pages",
+      "category": "websites",
+      "icon": "target",
+      "shortDescription": "Conversion-focused pages for products, services and campaigns.",
+      "description": "Single-purpose pages built around one action. Tight copy structure, clear hierarchy, fast loading and measurable outcomes — ideal for ad campaigns and product launches.",
+      "features": [
+        "Single conversion goal",
+        "Fast first paint",
+        "A/B ready structure",
+        "Analytics and event hooks"
+      ],
+      "technologies": ["HTML5", "CSS3", "JavaScript", "Analytics"],
+      "url": "/pages/services.html#landing-pages",
+      "featured": true,
+      "active": true,
+      "order": 3
+    },
+    {
+      "id": "ecommerce-websites",
+      "title": "E-Commerce Websites",
+      "shortTitle": "E-Commerce",
+      "slug": "ecommerce-websites",
+      "category": "commerce",
+      "icon": "shopping-bag",
+      "shortDescription": "Online stores with product, cart, checkout and management functionality.",
+      "description": "Stores built for the way you actually sell — catalogue structure, variants, cart and checkout flow, payment and shipping integration, plus an admin experience your team can operate without help.",
+      "features": [
+        "Catalogue and variant structure",
+        "Cart and checkout flow",
+        "Payment and shipping integration",
+        "Order and inventory management"
+      ],
+      "technologies": ["JavaScript", "REST APIs", "Payment Gateways"],
+      "url": "/pages/services.html#ecommerce-websites",
+      "featured": true,
+      "active": true,
+      "order": 4
+    },
+    {
+      "id": "web-applications",
+      "title": "Web Applications",
+      "shortTitle": "Web Apps",
+      "slug": "web-applications",
+      "category": "applications",
+      "icon": "app-window",
+      "shortDescription": "Custom browser-based applications and internal tools.",
+      "description": "Software that runs in the browser — internal tools, calculators, booking systems, data entry workflows and dashboards that replace the spreadsheet everyone is tired of maintaining.",
+      "features": [
+        "Custom business logic",
+        "User roles and permissions",
+        "Data validation and workflows",
+        "API-backed architecture"
+      ],
+      "technologies": ["JavaScript", "AJAX", "REST APIs", "Databases"],
+      "url": "/pages/services.html#web-applications",
+      "featured": true,
+      "active": true,
+      "order": 5
+    },
+    {
+      "id": "cms-websites",
+      "title": "CMS Websites",
+      "shortTitle": "CMS",
+      "slug": "cms-websites",
+      "category": "websites",
+      "icon": "file-edit",
+      "shortDescription": "Easy-to-manage websites with custom content management.",
+      "description": "Content models designed around your actual content, so editing feels obvious. Add a project, publish a post or change a price without touching code or breaking the layout.",
+      "features": [
+        "Custom content models",
+        "Editor-friendly admin",
+        "Media library and drafts",
+        "Structured, reusable content"
+      ],
+      "technologies": ["WordPress", "Headless CMS", "PHP", "JSON"],
+      "url": "/pages/services.html#cms-websites",
+      "featured": true,
+      "active": true,
+      "order": 6
+    },
+    {
+      "id": "web-portals",
+      "title": "Web Portals",
+      "shortTitle": "Portals",
+      "slug": "web-portals",
+      "category": "applications",
+      "icon": "layout-dashboard",
+      "shortDescription": "Customer portals, dashboards and role-based systems.",
+      "description": "Secure areas where customers, staff or partners log in to see what's relevant to them — documents, orders, reports, requests — with roles and permissions handled properly.",
+      "features": [
+        "Authentication and roles",
+        "Dashboards and reporting",
+        "Document and record access",
+        "Audit-friendly structure"
+      ],
+      "technologies": ["JavaScript", "REST APIs", "Auth", "Databases"],
+      "url": "/pages/services.html#web-portals",
+      "featured": true,
+      "active": true,
+      "order": 7
+    },
+    {
+      "id": "website-redesign",
+      "title": "Website Redesign",
+      "shortTitle": "Redesign",
+      "slug": "website-redesign",
+      "category": "growth",
+      "icon": "refresh",
+      "shortDescription": "Modernize outdated websites and improve UX and performance.",
+      "description": "Rebuild what isn't working without throwing away what is. We audit the current site, keep the content and rankings that earn their place, and rebuild the structure, design and performance around them.",
+      "features": [
+        "Audit of current site",
+        "Content and URL migration plan",
+        "Redirect mapping",
+        "Design and UX rebuild"
+      ],
+      "technologies": ["HTML5", "CSS3", "JavaScript", "SEO Migration"],
+      "url": "/pages/services.html#website-redesign",
+      "featured": true,
+      "active": true,
+      "order": 8
+    },
+    {
+      "id": "seo-development",
+      "title": "SEO-Friendly Development",
+      "shortTitle": "Technical SEO",
+      "slug": "seo-friendly-development",
+      "category": "growth",
+      "icon": "search",
+      "shortDescription": "Technical foundations designed to support search visibility.",
+      "description": "The development side of SEO: crawlable structure, semantic markup, metadata, structured data, clean URLs, sitemaps and fast rendering. Foundations that give your content a fair chance.",
+      "features": [
+        "Semantic HTML and heading structure",
+        "Metadata and Open Graph",
+        "Schema.org structured data",
+        "Sitemaps, robots and canonicals"
+      ],
+      "technologies": ["Schema.org", "Open Graph", "Sitemaps", "Analytics"],
+      "url": "/pages/services.html#seo-development",
+      "featured": true,
+      "active": true,
+      "order": 9
+    },
+    {
+      "id": "performance-optimization",
+      "title": "Performance Optimization",
+      "shortTitle": "Performance",
+      "slug": "performance-optimization",
+      "category": "growth",
+      "icon": "gauge",
+      "shortDescription": "Improve loading speed, Core Web Vitals and overall performance.",
+      "description": "Find what's actually slowing the site down — oversized media, render-blocking scripts, layout shift, heavy third parties — and fix it in priority order, with before-and-after measurements.",
+      "features": [
+        "Asset and media optimization",
+        "Script loading strategy",
+        "Layout shift fixes",
+        "Before/after measurement"
+      ],
+      "technologies": ["Core Web Vitals", "Lighthouse", "WebP/AVIF", "Caching"],
+      "url": "/pages/services.html#performance-optimization",
+      "featured": true,
+      "active": true,
+      "order": 10
+    },
+    {
+      "id": "custom-integrations",
+      "title": "Custom Integrations",
+      "shortTitle": "Integrations",
+      "slug": "custom-integrations",
+      "category": "applications",
+      "icon": "plug",
+      "shortDescription": "APIs, forms, email systems, third-party services and automation.",
+      "description": "Connect your website to the tools you already run on — CRMs, payment providers, email platforms, messaging, sheets, ERPs — so information moves automatically instead of by copy-paste.",
+      "features": [
+        "REST API integration",
+        "CRM and email platforms",
+        "Payment and messaging services",
+        "Webhooks and automation"
+      ],
+      "technologies": ["REST APIs", "Webhooks", "OAuth", "Automation"],
+      "url": "/pages/services.html#custom-integrations",
+      "featured": true,
+      "active": true,
+      "order": 11
+    },
+    {
+      "id": "website-maintenance",
+      "title": "Website Maintenance",
+      "shortTitle": "Maintenance",
+      "slug": "website-maintenance",
+      "category": "growth",
+      "icon": "wrench",
+      "shortDescription": "Ongoing improvements, updates and technical support.",
+      "description": "Websites drift without care. Regular updates, backups, monitoring, content changes and small improvements keep yours secure, current and steadily getting better.",
+      "features": [
+        "Updates and security patches",
+        "Backups and uptime monitoring",
+        "Content and design changes",
+        "Ongoing improvement plan"
+      ],
+      "technologies": ["Monitoring", "Backups", "Version Control"],
+      "url": "/pages/services.html#website-maintenance",
+      "featured": true,
+      "active": true,
+      "order": 12
+    }
+  ]
+}

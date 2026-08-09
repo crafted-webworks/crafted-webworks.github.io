@@ -1,0 +1,74 @@
+{
+  "items": [
+    {
+      "id": "understand",
+      "number": "01",
+      "title": "Understand",
+      "description": "We start with your business, not your website. Who you serve, what you sell, what a good outcome looks like and what's blocking it today.",
+      "deliverables": ["Goal definition", "Audience notes", "Requirement list"],
+      "icon": "compass",
+      "active": true,
+      "order": 1
+    },
+    {
+      "id": "plan",
+      "number": "02",
+      "title": "Plan",
+      "description": "Structure, content, features and technical approach get defined before any design work begins — so nothing important gets discovered late.",
+      "deliverables": ["Sitemap", "Feature scope", "Tech approach"],
+      "icon": "clipboard-list",
+      "active": true,
+      "order": 2
+    },
+    {
+      "id": "design",
+      "number": "03",
+      "title": "Design",
+      "description": "Visual direction and user experience take shape: layout, typography, colour, hierarchy and the details that make it feel considered.",
+      "deliverables": ["Design direction", "Key page layouts", "Component set"],
+      "icon": "palette",
+      "active": true,
+      "order": 3
+    },
+    {
+      "id": "build",
+      "number": "04",
+      "title": "Build",
+      "description": "Development using clean, documented, component-driven code — responsive from the first commit, not retrofitted at the end.",
+      "deliverables": ["Responsive build", "CMS or data layer", "Integrations"],
+      "icon": "code",
+      "active": true,
+      "order": 4
+    },
+    {
+      "id": "test",
+      "number": "05",
+      "title": "Test",
+      "description": "Responsiveness, forms, performance, accessibility and cross-browser behaviour get checked properly — on real screen sizes, not just one laptop.",
+      "deliverables": ["Device testing", "Form and flow checks", "Performance pass"],
+      "icon": "check-circle",
+      "active": true,
+      "order": 5
+    },
+    {
+      "id": "launch",
+      "number": "06",
+      "title": "Launch",
+      "description": "Deployment, domain and hosting configuration, analytics, search console, redirects and a final pre-launch review before going live.",
+      "deliverables": ["Deployment", "Analytics & search setup", "Handover"],
+      "icon": "rocket",
+      "active": true,
+      "order": 6
+    },
+    {
+      "id": "improve",
+      "number": "07",
+      "title": "Improve",
+      "description": "Launch is a milestone, not the finish line. We keep refining based on how people actually use the site and how the business evolves.",
+      "deliverables": ["Monitoring", "Iterative updates", "Support"],
+      "icon": "trending-up",
+      "active": true,
+      "order": 7
+    }
+  ]
+}

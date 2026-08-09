@@ -1,0 +1,38 @@
+<!--
+  Component: buttons
+  Runtime builder: components.button({ label, url, icon, variant, size, tag, attrs })
+
+  Variants — use one primary action per view, one accent at most per page.
+    .btn-primary    brand blue, the standard action
+    .btn-accent     brand orange, highest intent (Instagram, footer CTA)
+    .btn-gradient   blue → orange sweep, reserved for the single hero/CTA action
+    .btn-secondary  outlined, sits beside a primary
+    .btn-ghost      low emphasis, inline
+    .btn-soft       tinted surface, used inside cards
+
+  Sizes: .btn-sm · (default) · .btn-lg · .btn-block · .btn-icon
+  States: :disabled / [aria-disabled] / .is-loading (spinner replaces the label)
+-->
+
+<a class="btn btn-primary" href="{{ url }}">
+  {{ label }}
+  <svg class="icon icon--shift" aria-hidden="true"><use href="#ui-i-arrow-right"></use></svg>
+</a>
+
+<a class="btn btn-gradient btn-lg" href="{{ url }}">{{ label }}</a>
+
+<a class="btn btn-secondary" href="{{ url }}">{{ label }}</a>
+
+<button type="button" class="btn btn-ghost btn-sm">{{ label }}</button>
+
+<button type="submit" class="btn btn-primary is-loading">{{ label }}</button>
+
+<button type="button" class="btn btn-secondary btn-icon" aria-label="Next">
+  <svg class="icon" aria-hidden="true"><use href="#ui-i-chevron-right"></use></svg>
+</button>
+
+<!-- Inline text action used on every card -->
+<a class="card-link" href="{{ url }}">
+  Learn more
+  <svg class="icon" aria-hidden="true"><use href="#ui-i-arrow-right"></use></svg>
+</a>

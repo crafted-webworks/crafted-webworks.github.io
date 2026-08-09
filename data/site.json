@@ -1,0 +1,44 @@
+{
+  "name": "Crafted WebWorks",
+  "shortName": "CWW",
+  "tagline": "Websites Crafted for Your Business",
+  "description": "{{site.name}} builds custom websites, web applications and digital experiences for businesses, creators and organizations — designed for performance, growth and real-world use.",
+  "url": "https://craftedwebworks.example/",
+  "email": "contact.craftedwebworks@gmail.com",
+  "phone": "+91 00000 00000",
+  "location": "Working with clients worldwide",
+  "foundedYear": 2024,
+  "copyrightYear": 2026,
+  "copyrightHolder": "{{site.name}}",
+  "logo": {
+    "_note": "type \"image\" uses the real brand logo file. Switch type to \"svg\" to fall back to the inline vector mark in renderer.js (useful if the image ever goes missing). Source file: assets/images/logo-full.jpg (1080px); logo.png and the favicons are generated from it.",
+    "type": "image",
+    "icon": "logo-mark",
+    "src": "/assets/images/logo.png",
+    "width": 128,
+    "height": 128,
+    "alt": "{{site.name}} logo",
+    "wordmark": "Crafted",
+    "wordmarkAccent": "WebWorks"
+  },
+  "cta": {
+    "label": "Start a Project",
+    "url": "/pages/contact.html"
+  },
+  "features": {
+    "themeToggle": true,
+    "scrollAnimations": true,
+    "scrollSpy": true,
+    "smoothScroll": true,
+    "backToTop": true
+  },
+  "defaults": {
+    "theme": "dark",
+    "itemsPerPage": 9,
+    "dateFormat": "long",
+    "locale": "en-IN"
+  },
+  "meta": {
+    "note": "Replace the placeholder url, email and phone values before going live. Every value in this file is used across the whole site — change it once here."
+  }
+}

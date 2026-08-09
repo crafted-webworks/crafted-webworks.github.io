@@ -1,0 +1,80 @@
+{
+  "_menuNote": "A `menu` block turns a nav item into a dropdown. Its contents are pulled live from the collection named in `source`, so nothing is duplicated here — add a service to services.json and it appears in the Services menu automatically. `groupBy: \"category\"` splits the panel into labelled columns.",
+
+  "primary": [
+    { "id": "home", "label": "Home", "url": "/", "section": "hero" },
+
+    {
+      "id": "services", "label": "Services", "url": "/pages/services.html", "section": "services",
+      "menu": {
+        "source": "services",
+        "layout": "columns",
+        "columns": 2,
+        "limit": 12,
+        "description": "From a focused landing page to a full custom web application.",
+        "footer": { "label": "All services", "url": "/pages/services.html" }
+      }
+    },
+
+    {
+      "id": "projects", "label": "Projects", "url": "/pages/projects.html", "section": "projects",
+      "menu": {
+        "source": "projects",
+        "layout": "feature",
+        "limit": 5,
+        "description": "Selected work, with the thinking behind each build.",
+        "footer": { "label": "All projects", "url": "/pages/projects.html" }
+      }
+    },
+
+    {
+      "id": "demos", "label": "Demos", "url": "/pages/demos.html", "section": "demos",
+      "menu": {
+        "source": "demos",
+        "layout": "columns",
+        "columns": 2,
+        "limit": 10,
+        "description": "Concept builds by industry, adaptable to your brand.",
+        "footer": { "label": "All demos", "url": "/pages/demos.html" }
+      }
+    },
+
+    {
+      "id": "resources", "label": "Resources", "url": "/pages/resources.html", "section": "resources",
+      "menu": {
+        "source": "resources",
+        "layout": "columns",
+        "columns": 2,
+        "limit": 10,
+        "description": "Checklists, guides and references — free, no sign-up.",
+        "footer": { "label": "All resources", "url": "/pages/resources.html" }
+      }
+    },
+
+    {
+      "id": "tools", "label": "Tools", "url": "/pages/tools.html", "section": "tools",
+      "menu": {
+        "source": "tools",
+        "layout": "grouped",
+        "groupBy": "category",
+        "columns": 4,
+        "limit": 20,
+        "description": "Free browser-based utilities. Nothing is uploaded.",
+        "footer": { "label": "All tools", "url": "/pages/tools.html" }
+      }
+    },
+
+    { "id": "about", "label": "About", "url": "/pages/about.html", "section": "why" },
+    { "id": "faq", "label": "FAQ", "url": "/pages/faq.html", "section": "faq" },
+    { "id": "contact", "label": "Contact", "url": "/pages/contact.html", "section": "contact" }
+  ],
+  "cta": {
+    "label": "Start a Project",
+    "url": "/pages/contact.html",
+    "icon": "arrow-up-right"
+  },
+  "settings": {
+    "sectionLinksOnHome": true,
+    "note": "On the homepage, items with a `section` value scroll to that section instead of loading a new page."
+  }
+}

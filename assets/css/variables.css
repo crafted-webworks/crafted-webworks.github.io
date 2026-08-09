@@ -1,0 +1,365 @@
+/* ==========================================================================
+   Design Tokens
+   --------------------------------------------------------------------------
+   Single source of truth for colour, spacing, typography, radius, shadow,
+   motion and layering. Nothing in this project should hard-code a raw value
+   that exists here.
+
+   DIRECTION — "editorial technical studio"
+   Three deliberate decisions drive the whole look:
+
+     1. TYPE CARRIES THE PAGE. A high-contrast serif (Instrument Serif) for the
+        big editorial moments, a neutral grotesk (Inter) for everything you
+        actually read, and a mono (JetBrains Mono) for labels and metadata.
+        Scale contrast is wide on purpose — a 6rem headline above a 0.7rem mono
+        eyebrow reads as considered; everything 1.5x apart reads as a template.
+
+     2. COLOUR IS RATIONED. The palette comes from the brand logo, but it is
+        spent, not sprayed: one accent word per heading, hairline rules, a
+        single lit border. No multi-stop gradient text and no coloured glow
+        behind every card — those are decoration standing in for hierarchy.
+
+     3. DEPTH COMES FROM SURFACE, NOT GLOW. Hairline borders, a whisper of film
+        grain, layered near-blacks. Big soft glows look impressive in isolation
+        and cheap in composition.
+   ========================================================================== */
+
+:root {
+  /* ----------------------------------------------------------------------
+     1. RAW PALETTE  (never used directly in components — see semantics below)
+     ---------------------------------------------------------------------- */
+
+  /* Brand blue — from the logo globe / browser frame */
+  --blue-50:  #EAF2FF;
+  --blue-100: #D3E4FF;
+  --blue-200: #A9C9FF;
+  --blue-300: #7BABFF;
+  --blue-400: #4C8CFF;
+  --blue-500: #2B7FFF;
+  --blue-600: #1566E6;
+  --blue-700: #0C4FBF;
+  --blue-800: #0A3B8F;
+  --blue-900: #082A63;
+
+  /* Brand orange — from the logo brush + swoosh */
+  --orange-50:  #FFF4E8;
+  --orange-100: #FFE5CC;
+  --orange-200: #FFC999;
+  --orange-300: #FFAC5C;
+  --orange-400: #FF9833;
+  --orange-500: #FF8A1E;
+  --orange-600: #F26F0A;
+  --orange-700: #C55705;
+  --orange-800: #8F3F06;
+
+  /* Ink — near-black, warmed a few degrees off pure navy so it reads as
+     printed black rather than screen blue */
+  --ink-950: #050609;
+  --ink-900: #08090D;
+  --ink-850: #0B0D12;
+  --ink-800: #0E1016;
+  --ink-750: #12141B;
+  --ink-700: #171A22;
+  --ink-600: #1E222C;
+  --ink-500: #2A2F3B;
+
+  /* Neutrals */
+  --slate-500: #6B7280;
+  --slate-400: #8A9099;
+  --slate-300: #A8AEB8;
+  --slate-200: #C6CBD3;
+  --slate-100: #E3E6EB;
+  --slate-50:  #F4F5F7;
+  --white: #FFFFFF;
+
+  /* Support colours */
+  --green-500: #3FBF87;
+  --amber-500: #E8B23C;
+  --red-500:   #E8604C;
+  --violet-500:#8B7CFF;
+  --teal-500:  #2BC5D4;
+
+  /* ----------------------------------------------------------------------
+     2. SEMANTIC COLOUR  (dark is the default theme)
+     ---------------------------------------------------------------------- */
+  --color-background:      var(--ink-900);
+  --color-background-deep: var(--ink-950);
+  --color-background-alt:  #0E1017;   /* a touch further from --color-background so the torn edge reads */
+
+  --color-surface:      #0C0E14;
+  --color-surface-2:    #111319;
+  --color-surface-3:    #171A22;
+  --color-surface-glass: rgba(12, 14, 20, 0.78);
+
+  --color-border:        rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+  --color-border-subtle: rgba(255, 255, 255, 0.045);
+
+  --color-heading: #F5F6F8;
+  --color-text:    #C9CDD5;
+  --color-muted:   #8A9099;
+  --color-faint:   #656B76;
+
+  --color-primary:       var(--blue-500);
+  --color-primary-hover: var(--blue-400);
+  --color-primary-soft:  rgba(43, 127, 255, 0.12);
+  --color-primary-line:  rgba(43, 127, 255, 0.34);
+  --color-on-primary:    var(--white);
+
+  --color-accent:        var(--orange-500);
+  --color-accent-hover:  var(--orange-400);
+  --color-accent-soft:   rgba(255, 138, 30, 0.11);
+  --color-accent-line:   rgba(255, 138, 30, 0.34);
+  --color-on-accent:     #1A0D02;
+
+  --color-secondary:     var(--slate-50);
+
+  --color-success: var(--green-500);
+  --color-warning: var(--amber-500);
+  --color-danger:  var(--red-500);
+  --color-success-soft: rgba(63, 191, 135, 0.12);
+  --color-warning-soft: rgba(232, 178, 60, 0.12);
+  --color-danger-soft:  rgba(232, 96, 76, 0.12);
+
+  /* Preview / category accents used by generated card artwork */
+  --accent-blue:   var(--blue-500);
+  --accent-orange: var(--orange-500);
+  --accent-violet: var(--violet-500);
+  --accent-teal:   var(--teal-500);
+  --accent-green:  var(--green-500);
+  --accent-rose:   #E8607F;
+
+  /* ----------------------------------------------------------------------
+     3. SURFACE TREATMENTS
+     Deliberately short. One gradient exists for the brand rule; there is no
+     gradient-text token, because headings get an accent *word* instead.
+     ---------------------------------------------------------------------- */
+  --gradient-rule: linear-gradient(90deg, var(--color-accent), var(--color-primary) 55%, transparent);
+  --gradient-brand: linear-gradient(100deg, var(--blue-500), var(--orange-500));
+  --gradient-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0));
+  --gradient-fade-b: linear-gradient(to bottom, transparent, var(--color-background));
+
+  --grid-line: rgba(255, 255, 255, 0.032);
+  --grain-opacity: 0.035;
+  --vignette: radial-gradient(120% 90% at 50% 0%, transparent 40%, rgba(0, 0, 0, 0.5) 100%);
+
+  /* ----------------------------------------------------------------------
+     4. SPACING SCALE
+     ---------------------------------------------------------------------- */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs:  0.75rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  2rem;
+  --space-xl:  3rem;
+  --space-2xl: 4.5rem;
+  --space-3xl: 6.5rem;
+
+  /* Section rhythm — content earns the height, padding never fakes it */
+  --section-py:    clamp(3rem, 6vw, 6rem);
+  --section-py-sm: clamp(2.25rem, 4vw, 3.5rem);
+  --section-py-lg: clamp(3.5rem, 8vw, 7.5rem);
+  --section-gap:   clamp(2rem, 4vw, 3.5rem);
+
+  /* ----------------------------------------------------------------------
+     5. LAYOUT
+     ---------------------------------------------------------------------- */
+  --container:        1240px;
+  --container-wide:   1400px;
+  --container-narrow: 780px;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+
+  --grid-gap:    clamp(1rem, 1.6vw, 1.5rem);
+  --grid-gap-lg: clamp(1.5rem, 2.6vw, 2.5rem);
+
+  --navbar-height: 76px;
+  --navbar-height-scrolled: 62px;
+
+  /* ----------------------------------------------------------------------
+     6. TYPOGRAPHY — three families, three jobs.
+     Display is only ever used large; below ~1.5rem it loses its point.
+     ---------------------------------------------------------------------- */
+  /* Fraunces — an old-style serif with real weight behind it and optical
+     sizing, so it gains authority at display sizes instead of going spindly.
+     Instrument Serif (the previous pick) is beautiful at 5rem but its strokes
+     thin out on a dark ground and its italic is closer to a script than to an
+     editorial italic. This one reads vintage and settled rather than dainty. */
+  --font-display: "Fraunces", "Iowan Old Style", "Hoefler Text", Georgia, serif;
+
+  /* Optical size + weight for the display face, tuned once */
+  --display-weight: 600;
+  --display-opsz: 96;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  --fs-2xs:  0.6875rem;
+  --fs-xs:   0.75rem;
+  --fs-sm:   0.8125rem;
+  --fs-base: 0.9375rem;
+  --fs-md:   1rem;
+  --fs-lg:   clamp(1.0625rem, 0.3vw + 1rem, 1.1875rem);
+  --fs-xl:   clamp(1.1875rem, 0.5vw + 1rem, 1.375rem);
+
+  /* Display sizes — wide steps, tight leading */
+  --fs-2xl:  clamp(1.75rem, 1.6vw + 1.1rem, 2.5rem);
+  --fs-3xl:  clamp(2.25rem, 3vw + 1rem, 3.75rem);
+  --fs-4xl:  clamp(2.75rem, 4.2vw + 1rem, 4.75rem);
+  --fs-hero: clamp(3rem, 7.2vw, 6.5rem);
+
+  --lh-display: 1.0;
+  --lh-tight: 1.08;
+  --lh-snug:  1.32;
+  --lh-base:  1.68;
+  --lh-loose: 1.85;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* The serif needs almost no negative tracking; the grotesk does */
+  --tracking-display: -0.012em;
+  --tracking-tight: -0.02em;
+  --tracking-snug: -0.011em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.06em;
+  --tracking-widest: 0.18em;
+
+  --measure: 62ch;
+  --measure-narrow: 46ch;
+
+  /* ----------------------------------------------------------------------
+     7. RADIUS — squarer than the SaaS default; corners read as drawn
+     ---------------------------------------------------------------------- */
+  --radius-xs:  3px;
+  --radius-sm:  5px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-2xl: 22px;
+  --radius-pill: 999px;
+
+  /* ----------------------------------------------------------------------
+     8. ELEVATION — neutral and deep, never coloured
+     ---------------------------------------------------------------------- */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 12px 30px -12px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 28px 60px -24px rgba(0, 0, 0, 0.85);
+  --shadow-xl: 0 48px 100px -32px rgba(0, 0, 0, 0.9);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  /* ----------------------------------------------------------------------
+     9. MOTION — one easing family, used everywhere
+     ---------------------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+
+  --dur-instant: 90ms;
+  --dur-fast: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 600ms;
+  --dur-slower: 900ms;
+
+  --transition-base: all var(--dur-base) var(--ease-out);
+  --transition-colors: color var(--dur-fast) var(--ease-out),
+                       background-color var(--dur-fast) var(--ease-out),
+                       border-color var(--dur-fast) var(--ease-out);
+
+  /* ----------------------------------------------------------------------
+     10. LAYERING
+     ---------------------------------------------------------------------- */
+  --z-base: 1;
+  --z-decor: 0;
+  --z-raised: 10;
+  --z-sticky: 900;
+  --z-navbar: 1030;
+  --z-backdrop: 1040;
+  --z-drawer: 1045;
+  --z-modal: 1060;
+  --z-toast: 1090;
+  --z-grain: 1095;
+  --z-top: 1100;
+
+  --focus-ring: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-primary);
+}
+
+/* ==========================================================================
+   LIGHT THEME
+   Token overrides only — no structural CSS. The light side is warm paper
+   rather than pure white, so the serif keeps its weight.
+   ========================================================================== */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --color-background:      #FBFAF8;
+  --color-background-deep: #F3F1ED;
+  --color-background-alt:  #F2EFE9;   /* a touch further from --color-background so the torn edge reads */
+
+  --color-surface:      #FFFFFF;
+  --color-surface-2:    #F6F4F1;
+  --color-surface-3:    #EEEBE6;
+  --color-surface-glass: rgba(251, 250, 248, 0.82);
+
+  --color-border:        rgba(20, 18, 14, 0.11);
+  --color-border-strong: rgba(20, 18, 14, 0.22);
+  --color-border-subtle: rgba(20, 18, 14, 0.06);
+
+  --color-heading: #14120E;
+  --color-text:    #35322C;
+  --color-muted:   #6B675F;
+  --color-faint:   #8C877D;
+
+  --color-primary:       var(--blue-700);
+  --color-primary-hover: var(--blue-800);
+  --color-primary-soft:  rgba(12, 79, 191, 0.08);
+  --color-primary-line:  rgba(12, 79, 191, 0.26);
+
+  --color-accent:        var(--orange-700);
+  --color-accent-hover:  var(--orange-800);
+  --color-accent-soft:   rgba(197, 87, 5, 0.09);
+  --color-accent-line:   rgba(197, 87, 5, 0.28);
+  --color-on-accent:     var(--white);
+
+  --color-secondary: var(--ink-900);
+
+  --gradient-surface: linear-gradient(180deg, rgba(20, 18, 14, 0.022), rgba(20, 18, 14, 0));
+
+  --grid-line: rgba(20, 18, 14, 0.05);
+  --grain-opacity: 0.022;
+  --vignette: radial-gradient(120% 90% at 50% 0%, transparent 45%, rgba(20, 18, 14, 0.07) 100%);
+
+  --shadow-xs: 0 1px 2px rgba(20, 18, 14, 0.05);
+  --shadow-sm: 0 2px 10px rgba(20, 18, 14, 0.06);
+  --shadow-md: 0 12px 30px -14px rgba(20, 18, 14, 0.16);
+  --shadow-lg: 0 28px 60px -28px rgba(20, 18, 14, 0.22);
+  --shadow-xl: 0 48px 100px -36px rgba(20, 18, 14, 0.24);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* ==========================================================================
+   BOOTSTRAP BRIDGE
+   Bootstrap's utilities are !important, so the reliable way to keep them on
+   our palette is to feed its variables rather than fight its specificity.
+   ========================================================================== */
+:root {
+  --bs-body-bg: var(--color-background);
+  --bs-body-color: var(--color-text);
+  --bs-body-font-family: var(--font-sans);
+  --bs-border-color: var(--color-border);
+  --bs-border-radius: var(--radius-md);
+  --bs-primary: var(--color-primary);
+  --bs-primary-rgb: 43, 127, 255;
+  --bs-link-color: var(--color-primary);
+  --bs-link-hover-color: var(--color-primary-hover);
+  --bs-emphasis-color: var(--color-heading);
+  --bs-secondary-color: var(--color-muted);
+  --bs-tertiary-color: var(--color-faint);
+  --bs-heading-color: var(--color-heading);
+}
+
+:root[data-theme="light"] {
+  --bs-primary-rgb: 12, 79, 191;
+}

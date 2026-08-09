@@ -1,0 +1,17 @@
+# Crafted WebWorks — robots.txt
+# Replace the placeholder domain below with the live one before launch.
+
+User-agent: *
+Allow: /
+
+# Generated build artefacts and source tooling have no search value
+Disallow: /tools/
+Disallow: /components/
+Disallow: /data/bundle.js
+
+# Query-string variants of the blog listing are duplicates of the canonical
+# article URLs, which are emitted by seo.js — no need to crawl both.
+Disallow: /pages/blog.html?*&
+Allow: /pages/blog.html?post=
+
+Sitemap: https://craftedwebworks.example/sitemap.xml

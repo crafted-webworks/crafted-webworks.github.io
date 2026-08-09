@@ -1,0 +1,94 @@
+{
+  "notice": "PLACEHOLDER CONTENT — every entry below is sample copy written to demonstrate the component. Replace with real, permission-granted client feedback before launch. No review structured data is emitted for placeholder entries.",
+  "settings": {
+    "autoplay": true,
+    "interval": 7000,
+    "showRatings": true
+  },
+  "items": [
+    {
+      "id": "testimonial-01",
+      "name": "Client Name",
+      "role": "Founder",
+      "company": "Sample Business Pvt Ltd",
+      "avatar": null,
+      "rating": 5,
+      "review": "Sample testimonial text. Replace this with a real client quote about how the project ran, what changed for the business and what the working relationship was like.",
+      "project": "Business Website",
+      "placeholder": true,
+      "featured": true,
+      "active": true,
+      "order": 1
+    },
+    {
+      "id": "testimonial-02",
+      "name": "Client Name",
+      "role": "Marketing Head",
+      "company": "Sample Retail Co.",
+      "avatar": null,
+      "rating": 5,
+      "review": "Sample testimonial text. A good replacement quote mentions a specific outcome — more enquiries, faster pages, easier updates — rather than general praise.",
+      "project": "E-Commerce Website",
+      "placeholder": true,
+      "featured": true,
+      "active": true,
+      "order": 2
+    },
+    {
+      "id": "testimonial-03",
+      "name": "Client Name",
+      "role": "Director",
+      "company": "Sample Services LLP",
+      "avatar": null,
+      "rating": 5,
+      "review": "Sample testimonial text. Keep replacements to two or three sentences so the card stays readable on mobile without truncation.",
+      "project": "Website Redesign",
+      "placeholder": true,
+      "featured": true,
+      "active": true,
+      "order": 3
+    },
+    {
+      "id": "testimonial-04",
+      "name": "Client Name",
+      "role": "Operations Manager",
+      "company": "Sample Logistics",
+      "avatar": null,
+      "rating": 5,
+      "review": "Sample testimonial text. If a client mentions the process — planning, communication, handover — that tends to be more persuasive than adjectives.",
+      "project": "Web Portal",
+      "placeholder": true,
+      "featured": true,
+      "active": true,
+      "order": 4
+    },
+    {
+      "id": "testimonial-05",
+      "name": "Client Name",
+      "role": "Owner",
+      "company": "Sample Clinic",
+      "avatar": null,
+      "rating": 5,
+      "review": "Sample testimonial text. Add the client's role and company so the quote carries context, and get written permission before publishing.",
+      "project": "Healthcare Website",
+      "placeholder": true,
+      "featured": true,
+      "active": true,
+      "order": 5
+    },
+    {
+      "id": "testimonial-06",
+      "name": "Client Name",
+      "role": "Product Lead",
+      "company": "Sample SaaS",
+      "avatar": null,
+      "rating": 5,
+      "review": "Sample testimonial text. Replace all six entries, or delete the ones you don't need — the carousel adjusts automatically to however many remain.",
+      "project": "Web Application",
+      "placeholder": true,
+      "featured": true,
+      "active": true,
+      "order": 6
+    }
+  ]
+}

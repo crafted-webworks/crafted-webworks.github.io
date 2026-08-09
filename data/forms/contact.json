@@ -1,0 +1,106 @@
+{
+  "id": "project-enquiry",
+  "name": "Project Enquiry",
+  "note": "Field definitions for the reusable contact form. `optionsFrom` pulls option lists from data/contact.json so nothing is duplicated. `col` is the Bootstrap column span at md and up (out of 12).",
+  "fields": [
+    {
+      "name": "name",
+      "label": "Your Name",
+      "type": "text",
+      "placeholder": "Jane Doe",
+      "autocomplete": "name",
+      "required": true,
+      "col": 6,
+      "validation": { "minLength": 2, "maxLength": 80, "message": "Please enter your name." }
+    },
+    {
+      "name": "email",
+      "label": "Email Address",
+      "type": "email",
+      "placeholder": "you@company.com",
+      "autocomplete": "email",
+      "required": true,
+      "col": 6,
+      "validation": { "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$", "message": "Please enter a valid email address." }
+    },
+    {
+      "name": "phone",
+      "label": "Phone",
+      "type": "tel",
+      "placeholder": "+91 00000 00000",
+      "autocomplete": "tel",
+      "required": false,
+      "col": 6,
+      "validation": { "pattern": "^[+0-9()\\-.\\s]{7,20}$", "message": "Please enter a valid phone number." }
+    },
+    {
+      "name": "business",
+      "label": "Business Name",
+      "type": "text",
+      "placeholder": "Your company or brand",
+      "autocomplete": "organization",
+      "required": false,
+      "col": 6
+    },
+    {
+      "name": "website",
+      "label": "Current Website",
+      "type": "url",
+      "placeholder": "https://example.com",
+      "autocomplete": "url",
+      "required": false,
+      "col": 12,
+      "help": "Leave blank if you don't have one yet.",
+      "validation": { "pattern": "^(https?:\\/\\/)?[\\w.-]+\\.[a-zA-Z]{2,}(\\/.*)?$", "message": "Please enter a valid website address." }
+    },
+    {
+      "name": "projectType",
+      "label": "Project Type",
+      "type": "select",
+      "placeholder": "Choose a type",
+      "required": true,
+      "col": 4,
+      "optionsFrom": "projectTypes",
+      "validation": { "message": "Please choose a project type." }
+    },
+    {
+      "name": "budget",
+      "label": "Budget Range",
+      "type": "select",
+      "placeholder": "Select a range",
+      "required": false,
+      "col": 4,
+      "optionsFrom": "budgetOptions",
+      "help": "An honest range helps us scope realistically."
+    },
+    {
+      "name": "timeline",
+      "label": "Timeline",
+      "type": "select",
+      "placeholder": "Select a timeline",
+      "required": false,
+      "col": 4,
+      "optionsFrom": "timelineOptions"
+    },
+    {
+      "name": "message",
+      "label": "Project Details",
+      "type": "textarea",
+      "placeholder": "What are you building, who is it for, and what should it achieve?",
+      "required": true,
+      "rows": 5,
+      "col": 12,
+      "validation": { "minLength": 20, "maxLength": 3000, "message": "Please tell us a little about the project (at least 20 characters)." }
+    },
+    {
+      "name": "consent",
+      "label": "I agree to {{site.name}} storing these details in order to respond to this enquiry.",
+      "type": "checkbox",
+      "required": true,
+      "col": 12,
+      "linkText": "Privacy Policy",
+      "linkUrl": "/pages/privacy-policy.html",
+      "validation": { "message": "Please accept the privacy notice so we can reply." }
+    }
+  ]
+}

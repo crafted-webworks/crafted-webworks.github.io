@@ -1,0 +1,41 @@
+<!--
+  Component: section-header
+  Runtime builder: components.sectionHeader({ eyebrow, title, description, align, link })
+
+  `title` is the one field where inline <em> is allowed — it renders as the
+  brand gradient highlight (see base.css → "h2 em"). Everything else is escaped.
+
+  Three variants:
+    default        left aligned, optional link below
+    --center       centred, used for full-width sections
+    --split        title left, "view all" link right (used when `link` is set)
+-->
+
+<!-- default -->
+<div class="section-header" data-reveal="up">
+  <span class="section-eyebrow">{{ eyebrow }}</span>
+  <h2 class="section-title">What we <em>build</em></h2>
+  <p class="section-description">{{ description }}</p>
+</div>
+
+<!-- centred -->
+<div class="section-header section-header--center" data-reveal="up">
+  <span class="section-eyebrow">{{ eyebrow }}</span>
+  <h2 class="section-title">{{ title }}</h2>
+  <p class="section-description">{{ description }}</p>
+</div>
+
+<!-- split, with a trailing link -->
+<div class="section-header section-header--split" data-reveal="up">
+  <div class="section-header-text stack stack--sm">
+    <span class="section-eyebrow">{{ eyebrow }}</span>
+    <h2 class="section-title">{{ title }}</h2>
+    <p class="section-description">{{ description }}</p>
+  </div>
+  <div class="section-header-action">
+    <a class="card-link" href="{{ link.url }}">
+      {{ link.label }}
+      <svg class="icon" aria-hidden="true"><use href="#ui-i-arrow-right"></use></svg>
+    </a>
+  </div>
+</div>

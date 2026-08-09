@@ -1,0 +1,24 @@
+{
+  "items": [
+    { "id": "business", "title": "Business Website", "icon": "building", "description": "Credibility, services and enquiries.", "active": true, "order": 1 },
+    { "id": "portfolio", "title": "Portfolio", "icon": "gallery", "description": "Work presented properly.", "active": true, "order": 2 },
+    { "id": "personal-brand", "title": "Personal Brand", "icon": "user-star", "description": "For professionals and creators.", "active": true, "order": 3 },
+    { "id": "agency", "title": "Agency Website", "icon": "briefcase", "description": "Services, case studies, results.", "active": true, "order": 4 },
+    { "id": "restaurant", "title": "Restaurant", "icon": "utensils", "description": "Menus, hours, reservations.", "active": true, "order": 5 },
+    { "id": "real-estate", "title": "Real Estate", "icon": "home", "description": "Listings, search, enquiries.", "active": true, "order": 6 },
+    { "id": "healthcare", "title": "Healthcare", "icon": "stethoscope", "description": "Clinics, practitioners, appointments.", "active": true, "order": 7 },
+    { "id": "education", "title": "Education", "icon": "graduation-cap", "description": "Courses, admissions, portals.", "active": true, "order": 8 },
+    { "id": "retail", "title": "Retail Store", "icon": "store", "description": "Local stores going online.", "active": true, "order": 9 },
+    { "id": "ecommerce", "title": "E-Commerce", "icon": "shopping-bag", "description": "Full catalogue and checkout.", "active": true, "order": 10 },
+    { "id": "saas", "title": "SaaS", "icon": "cloud", "description": "Product marketing and app.", "active": true, "order": 11 },
+    { "id": "startup", "title": "Startup", "icon": "rocket", "description": "Launch fast, iterate faster.", "active": true, "order": 12 },
+    { "id": "events", "title": "Events", "icon": "calendar", "description": "Schedules, speakers, tickets.", "active": true, "order": 13 },
+    { "id": "non-profit", "title": "Non-Profit", "icon": "heart-hand", "description": "Causes, donations, volunteers.", "active": true, "order": 14 },
+    { "id": "professional-services", "title": "Professional Services", "icon": "scale", "description": "Legal, finance, consulting.", "active": true, "order": 15 },
+    { "id": "local-business", "title": "Local Business", "icon": "map-pin", "description": "Found by nearby customers.", "active": true, "order": 16 },
+    { "id": "booking", "title": "Booking Website", "icon": "calendar-check", "description": "Slots, availability, payments.", "active": true, "order": 17 },
+    { "id": "directory", "title": "Directory", "icon": "list-tree", "description": "Listings, filters, profiles.", "active": true, "order": 18 },
+    { "id": "portal", "title": "Web Portal", "icon": "layout-dashboard", "description": "Secure, role-based access.", "active": true, "order": 19 },
+    { "id": "web-app", "title": "Custom Web Application", "icon": "app-window", "description": "Software built for your workflow.", "active": true, "order": 20 }
+  ]
+}

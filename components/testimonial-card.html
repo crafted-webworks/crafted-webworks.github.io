@@ -1,0 +1,28 @@
+<!--
+  Component: testimonial-card
+  Runtime builder: components.testimonialCard(item)  ·  Data: testimonials.json → items[]
+
+  NOTE: entries flagged "placeholder": true are sample copy. No Review or
+  AggregateRating structured data is generated for them — see assets/js/seo.js.
+-->
+<article class="card testimonial-card" data-reveal="up">
+
+  <span class="testimonial-rating" role="img" aria-label="{{ rating }} out of 5">
+    <!-- rating × filled star icons, remainder outlined -->
+    <svg class="icon icon--fill" aria-hidden="true"><use href="#ui-i-star"></use></svg>
+  </span>
+
+  <blockquote class="testimonial-quote">{{ review }}</blockquote>
+
+  <div class="testimonial-author">
+    <!-- avatar image when provided, generated initials otherwise -->
+    <span class="avatar" aria-hidden="true">{{ initials }}</span>
+
+    <div>
+      <span class="testimonial-author-name">{{ name }}</span>
+      <span class="testimonial-author-role">{{ role }}, {{ company }}</span>
+    </div>
+
+    <span class="badge badge--muted" style="margin-left:auto">{{ project }}</span>
+  </div>
+</article>

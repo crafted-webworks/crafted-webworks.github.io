@@ -1,0 +1,37 @@
+{
+  "instagram": {
+    "enabled": true,
+    "label": "Instagram",
+    "handle": "@crafted_webworks",
+    "icon": "instagram",
+    "url": "https://www.instagram.com/crafted_webworks/"
+  },
+  "linkedin": {
+    "enabled": false,
+    "label": "LinkedIn",
+    "handle": "",
+    "icon": "linkedin",
+    "url": ""
+  },
+  "github": {
+    "enabled": false,
+    "label": "GitHub",
+    "handle": "",
+    "icon": "github",
+    "url": ""
+  },
+  "x": {
+    "enabled": false,
+    "label": "X",
+    "handle": "",
+    "icon": "x-social",
+    "url": ""
+  },
+  "email": {
+    "enabled": true,
+    "label": "Email",
+    "handle": "{{site.email}}",
+    "icon": "mail",
+    "url": "mailto:{{site.email}}"
+  }
+}
