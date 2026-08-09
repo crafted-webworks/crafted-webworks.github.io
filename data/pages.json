@@ -135,6 +135,13 @@
       "eyebrow": "Free Resources",
       "title": "Resources for <em>web creators</em>",
       "description": "Checklists, planning guides and curated references we use ourselves — free to use, no sign-up required.",
+      "background": {
+        "type": "video",
+        "src": "/assets/video/intro.mp4",
+        "poster": "",
+        "objectPosition": "center",
+        "respectSaveData": true
+      },
       "breadcrumb": [{ "label": "Home", "url": "/" }, { "label": "Resources" }]
     },
     "sections": [
@@ -194,7 +201,7 @@
     "template": "inner",
     "seo": {
       "title": "Contact",
-      "description": "Tell us about your project. Share your goals, timeline and budget range and we'll respond with a practical recommendation."
+      "description": "Tell us about your project. Share your goals and timeline and we'll respond with a practical recommendation."
     },
     "header": {
       "eyebrow": "Contact",

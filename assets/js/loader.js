@@ -25,6 +25,51 @@
 
   window.SITE_BASE = base;
 
+  function ensureLink(attrs) {
+    var href = attrs && attrs.href;
+    if (!href) return;
+    var selector = 'link[href="' + href + '"]';
+    if (attrs.rel) selector += '[rel="' + attrs.rel + '"]';
+    if (document.head.querySelector(selector)) return;
+
+    var el = document.createElement("link");
+    Object.keys(attrs).forEach(function (key) { el.setAttribute(key, attrs[key]); });
+    document.head.appendChild(el);
+  }
+
+  function ensureScript(url) {
+    if (!url || document.head.querySelector('script[src="' + url + '"]')) return;
+    var el = document.createElement("script");
+    el.src = url;
+    el.async = false;
+    el.defer = true;
+    document.head.appendChild(el);
+  }
+
+  function ensureMeta(name, content, attributeName) {
+    var selector = 'meta[' + (attributeName || "name") + '="' + name + '"]';
+    var existing = document.head.querySelector(selector);
+    if (existing) {
+      existing.setAttribute("content", content);
+      return;
+    }
+
+    var el = document.createElement("meta");
+    el.setAttribute(attributeName || "name", name);
+    el.setAttribute("content", content);
+    document.head.appendChild(el);
+  }
+
+  function injectHeadAssets() {
+    ensureLink({ rel: "preconnect", href: "https://fonts.googleapis.com" });
+    ensureLink({ rel: "preconnect", href: "https://fonts.gstatic.com" });
+    ensureLink({ rel: "preconnect", href: "https://cdn.jsdelivr.net" });
+    ensureLink({ rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" });
+    ensureLink({ rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" });
+    ensureLink({ rel: "stylesheet", href: base + "assets/css/main.css" });
+    ensureMeta("theme-color", "#070B16");
+  }
+
   /* ------------------------------------------------------------------
      Vendor libraries (CDN). Order matters — jQuery before Bootstrap.
      To self-host, drop the files in assets/vendor/ and swap the URLs.
@@ -81,6 +126,7 @@
     document.head.appendChild(s);
   }
 
+  injectHeadAssets();
   VENDORS.forEach(inject);
 
   /* Offline fallback, loaded ONLY from the file system.

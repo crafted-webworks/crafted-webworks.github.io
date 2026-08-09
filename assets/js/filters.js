@@ -182,6 +182,50 @@
       return list;
     }
 
+    function updateMobileIndicator() {
+      if (window.innerWidth > 767.98) return;
+
+      var indicator = grid.parentNode.querySelector(".mobile-carousel-indicator");
+      if (!indicator) {
+        indicator = document.createElement("div");
+        indicator.className = "mobile-carousel-indicator";
+        grid.parentNode.insertBefore(indicator, grid.nextSibling);
+      }
+
+      var total = grid.children.length;
+      if (!total || grid.querySelector(".empty-state")) {
+        indicator.hidden = true;
+        indicator.innerHTML = "";
+        return;
+      }
+
+      indicator.hidden = false;
+      indicator.innerHTML = "";
+
+      if (total <= 3) {
+        var arrowWrap = document.createElement("div");
+        arrowWrap.className = "mobile-carousel-arrows";
+        arrowWrap.innerHTML = '<span class="mobile-carousel-arrow is-muted">←</span><span class="mobile-carousel-arrow is-muted">→</span>';
+        indicator.appendChild(arrowWrap);
+        return;
+      }
+
+      var dots = Math.min(5, Math.max(1, total));
+      for (var i = 0; i < dots; i++) {
+        var dot = document.createElement("span");
+        dot.className = "mobile-carousel-dot";
+        if (i === 0) dot.classList.add("is-active");
+        indicator.appendChild(dot);
+      }
+
+      var maxScroll = grid.scrollWidth - grid.clientWidth;
+      var progress = maxScroll > 0 ? grid.scrollLeft / maxScroll : 0;
+      var activeIndex = Math.min(dots - 1, Math.max(0, Math.round(progress * (dots - 1))));
+      Array.prototype.forEach.call(indicator.querySelectorAll(".mobile-carousel-dot"), function (node, index) {
+        node.classList.toggle("is-active", index === activeIndex);
+      });
+    }
+
     function apply(options) {
       var list = filtered();
       var total = config.pagination ? App.pagination.totalPages(list.length, perPage) : 1;
@@ -224,6 +268,9 @@
       if (options && options.scroll) {
         U.scrollTo(root, 24);
       }
+
+      updateMobileIndicator();
+      grid.addEventListener("scroll", function () { updateMobileIndicator(); }, { passive: true });
 
       App.emit("content:rendered", { root: grid });
       App.emit("collection:filtered", { collection: config.collection, state: state, count: list.length });

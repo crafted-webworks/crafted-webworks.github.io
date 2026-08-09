@@ -356,3 +356,5 @@ button { cursor: pointer; }
 :root:not([data-theme="light"]) .btn-close {
   filter: invert(1) grayscale(1) brightness(2);
 }
+
+.hidden { display: none !important; }

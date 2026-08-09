@@ -22,11 +22,6 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-/* Icons generated from assets/images/logo-full.jpg (the brand mark) */
-const icons = (prefix) => `<link rel="icon" type="image/png" sizes="32x32" href="${prefix}assets/images/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="64x64" href="${prefix}assets/images/favicon-64.png">
-  <link rel="apple-touch-icon" href="${prefix}assets/images/apple-touch-icon.png">`;
-
 const escapeHtml = (value = "") =>
   String(value)
     .replace(/&/g, "&amp;")
@@ -64,21 +59,10 @@ function shell({ pageId, title, description, prefix }) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- GENERATED FILE — edit data/pages.json and run: node tools/build-pages.mjs
-       Title and description below are the crawl-time fallback; seo.js replaces
-       them (and adds canonical, Open Graph, Twitter and JSON-LD) at runtime. -->
+       Shared head assets (meta tags, fonts and global CSS) are injected at
+       runtime by assets/js/loader.js so they live in one place instead of
+       being duplicated across every HTML page. -->
   <title>${escapeHtml(title)}</title>
-  <meta name="description" content="${escapeHtml(description)}">
-  <meta name="theme-color" content="#070B16">
-
-  ${icons(prefix)}
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
-  <link rel="stylesheet" href="${prefix}assets/css/main.css">
 
   <script>
     (function () {
@@ -91,8 +75,6 @@ function shell({ pageId, title, description, prefix }) {
 </head>
 
 <body data-page="${pageId}">
-  <a class="skip-link" href="#main">Skip to content</a>
-
   <div data-component="navbar"></div>
 
   <main id="main" data-sections></main>
