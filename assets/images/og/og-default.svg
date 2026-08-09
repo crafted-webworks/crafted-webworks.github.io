@@ -54,7 +54,7 @@
 
   <!-- Headline -->
   <text x="88" y="300" font-family="Sora, Segoe UI, sans-serif" font-size="76" font-weight="700" fill="#FFFFFF" letter-spacing="-2.4">Websites crafted for</text>
-  <text x="88" y="384" font-family="Sora, Segoe UI, sans-serif" font-size="76" font-weight="700" fill="url(#sweep)" letter-spacing="-2.4">your business.</text>
+  <text x="88" y="384" font-family="Sora, Segoe UI, sans-serif" font-size="76" font-weight="700" fill="url(#sweep)" letter-spacing="-2.4">your business</text>
 
   <text x="88" y="444" font-family="Inter, Segoe UI, sans-serif" font-size="27" fill="#94A3BF">Custom websites, web applications and digital experiences</text>
   <text x="88" y="482" font-family="Inter, Segoe UI, sans-serif" font-size="27" fill="#94A3BF">built for performance, growth and real-world use.</text>

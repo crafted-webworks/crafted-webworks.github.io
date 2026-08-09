@@ -1,21 +1,69 @@
 {
-  "settings": { "itemsPerPage": 12 },
+  "settings": {
+    "itemsPerPage": 12,
+    "detailUrlPattern": "/pages/resources.html?resource={slug}",
+    "note": "Each resource carries a `content` block array, rendered at detailUrlPattern. Block types: paragraph, heading, list, checklist, links, callout. Adding a resource = one entry here, no HTML."
+  },
   "categories": [
-    { "id": "planning", "label": "Website Planning" },
-    { "id": "seo", "label": "SEO" },
-    { "id": "design", "label": "Design" },
-    { "id": "development", "label": "Development" },
-    { "id": "performance", "label": "Performance" },
-    { "id": "accessibility", "label": "Accessibility" },
-    { "id": "content", "label": "Content" },
-    { "id": "business", "label": "Business" }
+    {
+      "id": "planning",
+      "label": "Website Planning"
+    },
+    {
+      "id": "seo",
+      "label": "SEO"
+    },
+    {
+      "id": "design",
+      "label": "Design"
+    },
+    {
+      "id": "development",
+      "label": "Development"
+    },
+    {
+      "id": "performance",
+      "label": "Performance"
+    },
+    {
+      "id": "accessibility",
+      "label": "Accessibility"
+    },
+    {
+      "id": "content",
+      "label": "Content"
+    },
+    {
+      "id": "business",
+      "label": "Business"
+    }
   ],
   "types": [
-    { "id": "checklist", "label": "Checklist", "icon": "check-square" },
-    { "id": "guide", "label": "Guide", "icon": "book-open" },
-    { "id": "template", "label": "Template", "icon": "file-text" },
-    { "id": "reference", "label": "Reference", "icon": "bookmark" },
-    { "id": "toolkit", "label": "Toolkit", "icon": "toolbox" }
+    {
+      "id": "checklist",
+      "label": "Checklist",
+      "icon": "check-square"
+    },
+    {
+      "id": "guide",
+      "label": "Guide",
+      "icon": "book-open"
+    },
+    {
+      "id": "template",
+      "label": "Template",
+      "icon": "file-text"
+    },
+    {
+      "id": "reference",
+      "label": "Reference",
+      "icon": "bookmark"
+    },
+    {
+      "id": "toolkit",
+      "label": "Toolkit",
+      "icon": "toolbox"
+    }
   ],
   "items": [
     {
@@ -27,13 +75,64 @@
       "icon": "check-square",
       "description": "Everything worth verifying before a site goes live — content, links, forms, metadata, analytics, redirects and backups.",
       "readingTime": "6 min",
-      "url": "/pages/resources.html#website-launch-checklist",
+      "url": "/pages/resources.html?resource=website-launch-checklist",
       "downloadUrl": null,
-      "tags": ["launch", "qa", "pre-flight"],
+      "tags": [
+        "launch",
+        "qa",
+        "pre-flight"
+      ],
       "featured": true,
       "active": true,
       "publishedDate": "2026-01-12",
-      "order": 1
+      "order": 1,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Work down this the day before launch, not the morning of. Anything that fails here is cheap to fix now and expensive to fix once traffic arrives."
+        },
+        {
+          "type": "checklist",
+          "title": "Content",
+          "items": [
+            "Every page has a unique title and meta description written for a human",
+            "No lorem ipsum, no TODO, no placeholder images left anywhere",
+            "Contact details, prices and opening hours match reality",
+            "Legal pages present: privacy, terms, cookies"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Links and forms",
+          "items": [
+            "Every internal link resolves — run a crawler, do not click by hand",
+            "Every form delivers to a real inbox, tested from an outside address",
+            "Form validation rejects bad input and says why",
+            "Thank-you and error states exist and are readable"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Technical",
+          "items": [
+            "HTTPS on, HTTP redirects to HTTPS, no mixed content warnings",
+            "301 redirects mapped from every old URL to its new home",
+            "robots.txt allows what you want indexed and blocks what you do not",
+            "sitemap.xml lists real URLs and is submitted to Search Console",
+            "404 page exists and offers a route back",
+            "Favicon and social share image both render"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Before you sleep",
+          "items": [
+            "Analytics installed and recording a test visit",
+            "Backups running and one restore actually tested",
+            "Someone other than you has loaded the site on a phone"
+          ]
+        }
+      ]
     },
     {
       "id": "seo-checklist",
@@ -44,13 +143,68 @@
       "icon": "search",
       "description": "The structural fundamentals: titles, descriptions, headings, canonicals, sitemaps, robots, structured data and internal linking.",
       "readingTime": "8 min",
-      "url": "/pages/resources.html#technical-seo-checklist",
+      "url": "/pages/resources.html?resource=technical-seo-checklist",
       "downloadUrl": null,
-      "tags": ["seo", "metadata", "structured data"],
+      "tags": [
+        "seo",
+        "metadata",
+        "structured data"
+      ],
       "featured": true,
       "active": true,
       "publishedDate": "2026-01-20",
-      "order": 2
+      "order": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The development half of SEO. None of this makes content rank on its own — it removes the technical reasons it would not."
+        },
+        {
+          "type": "checklist",
+          "title": "Structure",
+          "items": [
+            "One h1 per page describing that page's subject",
+            "Headings nest logically, not by font size",
+            "Real landmarks: header, nav, main, article, footer",
+            "URLs are readable, lowercase and hyphenated"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Metadata",
+          "items": [
+            "Title roughly 50–60 characters, primary subject first",
+            "Description roughly 140–160 characters, written as a reason to click",
+            "Canonical URL on every page, including the homepage",
+            "Open Graph and Twitter tags so shared links do not look broken"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Structured data",
+          "items": [
+            "Organization or LocalBusiness on the site",
+            "Article on posts, Product on products, FAQPage where an FAQ exists",
+            "Only mark up what is on the page and true",
+            "Validated in the Rich Results Test"
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Never fake reviews",
+          "text": "Review or AggregateRating markup for reviews that do not exist is one of the fastest routes to a manual action. Ship without it until you have real ones."
+        },
+        {
+          "type": "checklist",
+          "title": "Crawl and speed",
+          "items": [
+            "sitemap.xml current, robots.txt not blocking anything important",
+            "No orphan pages — everything is reachable by a link",
+            "Core Web Vitals measured on a mid-range phone, not your laptop"
+          ]
+        }
+      ]
     },
     {
       "id": "website-planning-guide",
@@ -61,13 +215,61 @@
       "icon": "compass",
       "description": "How to define goals, audience, sitemap, content and features before a single pixel gets designed.",
       "readingTime": "12 min",
-      "url": "/pages/resources.html#website-planning-guide",
+      "url": "/pages/resources.html?resource=website-planning-guide",
       "downloadUrl": null,
-      "tags": ["planning", "scope", "sitemap"],
+      "tags": [
+        "planning",
+        "scope",
+        "sitemap"
+      ],
       "featured": true,
       "active": true,
       "publishedDate": "2026-02-02",
-      "order": 3
+      "order": 3,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Most website projects run late because of content, not design or development. Deciding the following before anyone opens a design tool is the highest-leverage hour in the whole project."
+        },
+        {
+          "type": "heading",
+          "text": "1. One goal, ranked"
+        },
+        {
+          "type": "paragraph",
+          "text": "What does a successful visit look like? An enquiry, a booking, a purchase, a call. If the answer is five things, the site will do all five badly. Rank them and design for the first."
+        },
+        {
+          "type": "heading",
+          "text": "2. The sitemap"
+        },
+        {
+          "type": "paragraph",
+          "text": "Every page, its purpose, and what it links to. This is where you discover that four planned pages are really one, or that services needs a level of depth nobody considered."
+        },
+        {
+          "type": "heading",
+          "text": "3. The content plan"
+        },
+        {
+          "type": "checklist",
+          "title": "For every page, name",
+          "items": [
+            "What it must say, in rough form",
+            "Who is writing it, and by when",
+            "Which images, logos and documents already exist",
+            "What has to be created from scratch"
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "4. Requirements, separated"
+        },
+        {
+          "type": "paragraph",
+          "text": "Split must-have from nice-to-have before quoting. Anything involving login, payment, or data that must stay accurate belongs in the first list and changes the estimate."
+        }
+      ]
     },
     {
       "id": "content-brief-template",
@@ -78,13 +280,44 @@
       "icon": "file-text",
       "description": "A page-by-page structure for gathering copy, images and calls to action from a client or your own team.",
       "readingTime": "5 min",
-      "url": "/pages/resources.html#website-content-brief-template",
+      "url": "/pages/resources.html?resource=website-content-brief-template",
       "downloadUrl": null,
-      "tags": ["content", "copywriting", "brief"],
+      "tags": [
+        "content",
+        "copywriting",
+        "brief"
+      ],
       "featured": true,
       "active": true,
       "publishedDate": "2026-02-10",
-      "order": 4
+      "order": 4,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Copy this structure per page. Fill in the intent before the words — it is much easier to write a page when you know what it has to achieve."
+        },
+        {
+          "type": "checklist",
+          "title": "Per page, capture",
+          "items": [
+            "Page name and URL",
+            "One sentence: what this page is for",
+            "Primary action, and where it goes",
+            "Audience: who is reading and what they already know",
+            "Key message, in one line",
+            "Proof: what makes it believable — numbers, examples, credentials",
+            "Sections in order, with a rough word count each",
+            "Images and documents needed, and who supplies them",
+            "SEO: target subject, title, meta description"
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Word counts are a kindness",
+          "text": "\"About 120 words\" is a far easier brief to answer than \"write the about section\". It also stops one page arriving at 900 words and another at 40."
+        }
+      ]
     },
     {
       "id": "performance-checklist",
@@ -95,13 +328,61 @@
       "icon": "gauge",
       "description": "Image formats, script loading, font strategy, caching, layout shift and the measurements that tell you it worked.",
       "readingTime": "9 min",
-      "url": "/pages/resources.html#performance-optimization-checklist",
+      "url": "/pages/resources.html?resource=performance-optimization-checklist",
       "downloadUrl": null,
-      "tags": ["performance", "core web vitals", "speed"],
+      "tags": [
+        "performance",
+        "core web vitals",
+        "speed"
+      ],
       "featured": true,
       "active": true,
       "publishedDate": "2026-02-18",
-      "order": 5
+      "order": 5,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Measure first. Every item below is worth doing, but doing them in the wrong order wastes a day on something that was never the bottleneck."
+        },
+        {
+          "type": "checklist",
+          "title": "Images — usually the biggest win",
+          "items": [
+            "Resized to the dimensions actually displayed",
+            "Served as WebP or AVIF with a fallback",
+            "width and height set so nothing shifts while loading",
+            "Below-the-fold images lazy-loaded"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Scripts",
+          "items": [
+            "Nothing render-blocking in the head",
+            "Third-party tags audited — delete what nobody reads a report from",
+            "Bundles split so a page loads only what it uses"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Fonts",
+          "items": [
+            "Two weights, not six",
+            "font-display: swap so text is never invisible",
+            "Subset to the characters you use",
+            "Preconnect to the font host"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Verify",
+          "items": [
+            "Before and after numbers recorded for each change",
+            "Tested on a throttled connection and a real mid-range phone",
+            "Cumulative Layout Shift under 0.1"
+          ]
+        }
+      ]
     },
     {
       "id": "accessibility-checklist",
@@ -112,13 +393,62 @@
       "icon": "accessibility",
       "description": "Practical WCAG basics: semantics, contrast, focus states, keyboard paths, labels and reduced motion.",
       "readingTime": "7 min",
-      "url": "/pages/resources.html#accessibility-quick-checklist",
+      "url": "/pages/resources.html?resource=accessibility-quick-checklist",
       "downloadUrl": null,
-      "tags": ["a11y", "wcag", "keyboard"],
+      "tags": [
+        "a11y",
+        "wcag",
+        "keyboard"
+      ],
       "featured": true,
       "active": true,
       "publishedDate": "2026-02-24",
-      "order": 6
+      "order": 6,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Not the full WCAG spec — the subset that catches most real problems, in the order they usually appear."
+        },
+        {
+          "type": "checklist",
+          "title": "Structure",
+          "items": [
+            "Semantic elements: button for actions, a for navigation",
+            "One h1, headings in order, no levels skipped",
+            "Every image has alt text; decorative images have alt=\"\"",
+            "Page language set on the html element"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Keyboard",
+          "items": [
+            "Everything reachable with Tab, in a sensible order",
+            "Focus is always visible — never outline: none with no replacement",
+            "No keyboard traps; Escape closes dialogs",
+            "Skip link to main content"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Forms",
+          "items": [
+            "Every field has a real label, not just a placeholder",
+            "Errors say what is wrong and how to fix it",
+            "Errors wired with aria-describedby and aria-invalid"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Visual",
+          "items": [
+            "Body text at least 4.5:1 contrast; large text 3:1",
+            "Colour is never the only signal",
+            "Layout survives 200% zoom",
+            "prefers-reduced-motion respected"
+          ]
+        }
+      ]
     },
     {
       "id": "ui-resources",
@@ -129,13 +459,77 @@
       "icon": "palette",
       "description": "A curated list of interface references, layout patterns, spacing systems and design inspiration worth bookmarking.",
       "readingTime": "4 min",
-      "url": "/pages/resources.html#ui-design-resources",
+      "url": "/pages/resources.html?resource=ui-design-resources",
       "downloadUrl": null,
-      "tags": ["ui", "design systems", "inspiration"],
+      "tags": [
+        "ui",
+        "design systems",
+        "inspiration"
+      ],
       "featured": false,
       "active": true,
       "publishedDate": "2026-03-01",
-      "order": 7
+      "order": 7,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "References worth bookmarking rather than a list of everything that exists. All free to use."
+        },
+        {
+          "type": "links",
+          "title": "Interface patterns",
+          "items": [
+            {
+              "label": "Inclusive Components — accessible patterns, explained",
+              "url": "https://inclusive-components.design/"
+            },
+            {
+              "label": "WAI-ARIA Authoring Practices — the reference implementation",
+              "url": "https://www.w3.org/WAI/ARIA/apg/patterns/"
+            },
+            {
+              "label": "Refactoring UI — practical visual design for developers",
+              "url": "https://www.refactoringui.com/"
+            }
+          ]
+        },
+        {
+          "type": "links",
+          "title": "Layout and spacing",
+          "items": [
+            {
+              "label": "Every Layout — layouts as composable primitives",
+              "url": "https://every-layout.dev/"
+            },
+            {
+              "label": "Utopia — fluid type and space scales",
+              "url": "https://utopia.fyi/"
+            },
+            {
+              "label": "Modern CSS Solutions",
+              "url": "https://moderncss.dev/"
+            }
+          ]
+        },
+        {
+          "type": "links",
+          "title": "Colour",
+          "items": [
+            {
+              "label": "Accessible Palette — perceptually even scales",
+              "url": "https://accessiblepalette.com/"
+            },
+            {
+              "label": "WebAIM Contrast Checker",
+              "url": "https://webaim.org/resources/contrastchecker/"
+            },
+            {
+              "label": "OKLCH colour picker",
+              "url": "https://oklch.com/"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "free-icons",
@@ -146,13 +540,65 @@
       "icon": "shapes",
       "description": "Open-licence icon sets that are actually maintained, with notes on style consistency and licensing.",
       "readingTime": "3 min",
-      "url": "/pages/resources.html#free-icon-libraries",
+      "url": "/pages/resources.html?resource=free-icon-libraries",
       "downloadUrl": null,
-      "tags": ["icons", "svg", "assets"],
+      "tags": [
+        "icons",
+        "svg",
+        "assets"
+      ],
       "featured": false,
       "active": true,
       "publishedDate": "2026-03-05",
-      "order": 8
+      "order": 8,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Open-licence sets that are actually maintained. Pick one and stay in it — mixing sets is the fastest way to make an interface look assembled."
+        },
+        {
+          "type": "links",
+          "title": "General purpose",
+          "items": [
+            {
+              "label": "Lucide — community fork of Feather, MIT",
+              "url": "https://lucide.dev/"
+            },
+            {
+              "label": "Heroicons — by the Tailwind team, MIT",
+              "url": "https://heroicons.com/"
+            },
+            {
+              "label": "Phosphor — six weights, MIT",
+              "url": "https://phosphoricons.com/"
+            },
+            {
+              "label": "Remix Icon — Apache 2.0",
+              "url": "https://remixicon.com/"
+            },
+            {
+              "label": "Bootstrap Icons — MIT",
+              "url": "https://icons.getbootstrap.com/"
+            }
+          ]
+        },
+        {
+          "type": "links",
+          "title": "Brand and logo marks",
+          "items": [
+            {
+              "label": "Simple Icons — brand marks, CC0",
+              "url": "https://simpleicons.org/"
+            }
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Check the licence before you ship",
+          "text": "Free to download is not the same as free to use commercially. MIT, Apache 2.0 and CC0 are safe; anything requiring attribution needs a line in your credits."
+        }
+      ]
     },
     {
       "id": "free-fonts",
@@ -163,13 +609,83 @@
       "icon": "type",
       "description": "Typefaces that hold up in real interfaces, with pairing suggestions and loading strategy notes.",
       "readingTime": "4 min",
-      "url": "/pages/resources.html#reliable-free-fonts",
+      "url": "/pages/resources.html?resource=reliable-free-fonts",
       "downloadUrl": null,
-      "tags": ["fonts", "typography", "web fonts"],
+      "tags": [
+        "fonts",
+        "typography",
+        "web fonts"
+      ],
       "featured": false,
       "active": true,
       "publishedDate": "2026-03-08",
-      "order": 9
+      "order": 9,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Typefaces that hold up in real interfaces at real sizes, rather than looking good in a specimen."
+        },
+        {
+          "type": "links",
+          "title": "Interface and body",
+          "items": [
+            {
+              "label": "Inter — designed for screens, variable",
+              "url": "https://rsms.me/inter/"
+            },
+            {
+              "label": "Source Sans 3 — Adobe, open source",
+              "url": "https://fonts.google.com/specimen/Source+Sans+3"
+            },
+            {
+              "label": "IBM Plex Sans — large family, open",
+              "url": "https://www.ibm.com/plex/"
+            }
+          ]
+        },
+        {
+          "type": "links",
+          "title": "Display and editorial",
+          "items": [
+            {
+              "label": "Fraunces — old-style serif with optical sizing",
+              "url": "https://fonts.google.com/specimen/Fraunces"
+            },
+            {
+              "label": "Instrument Serif — high contrast display",
+              "url": "https://fonts.google.com/specimen/Instrument+Serif"
+            },
+            {
+              "label": "Fontshare — free commercial-use families",
+              "url": "https://www.fontshare.com/"
+            }
+          ]
+        },
+        {
+          "type": "links",
+          "title": "Monospace",
+          "items": [
+            {
+              "label": "JetBrains Mono",
+              "url": "https://www.jetbrains.com/lp/mono/"
+            },
+            {
+              "label": "IBM Plex Mono",
+              "url": "https://www.ibm.com/plex/"
+            }
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Loading rules",
+          "items": [
+            "Two weights is usually enough — a variable font counts as one file",
+            "font-display: swap so text is never invisible",
+            "Subset to the characters you use",
+            "Self-host if you can; it removes a third-party request"
+          ]
+        }
+      ]
     },
     {
       "id": "image-optimization-guide",
@@ -180,13 +696,59 @@
       "icon": "image",
       "description": "Choosing formats, sizing responsibly, serving responsive sources and avoiding the layout shift images usually cause.",
       "readingTime": "8 min",
-      "url": "/pages/resources.html#image-optimization-guide",
+      "url": "/pages/resources.html?resource=image-optimization-guide",
       "downloadUrl": null,
-      "tags": ["images", "webp", "responsive"],
+      "tags": [
+        "images",
+        "webp",
+        "responsive"
+      ],
       "featured": false,
       "active": true,
       "publishedDate": "2026-03-14",
-      "order": 10
+      "order": 10,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Images are the single most common cause of a slow site. Four decisions cover almost all of it."
+        },
+        {
+          "type": "heading",
+          "text": "Format"
+        },
+        {
+          "type": "checklist",
+          "title": "Choose by content",
+          "items": [
+            "Photographs — AVIF, or WebP with a JPEG fallback",
+            "Flat graphics, logos, icons — SVG",
+            "Screenshots with text — PNG or WebP lossless",
+            "Never a full-resolution camera JPEG straight from a phone"
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Size"
+        },
+        {
+          "type": "paragraph",
+          "text": "Resize to the largest size actually displayed, then serve narrower copies with srcset and sizes so a phone never downloads a desktop image."
+        },
+        {
+          "type": "heading",
+          "text": "Loading"
+        },
+        {
+          "type": "checklist",
+          "title": "Rules that hold up",
+          "items": [
+            "loading=\"lazy\" on everything below the fold — never on the hero",
+            "width and height on every img, so space is reserved",
+            "fetchpriority=\"high\" on the largest above-the-fold image",
+            "decoding=\"async\" so decode never blocks paint"
+          ]
+        }
+      ]
     },
     {
       "id": "developer-toolkit",
@@ -197,13 +759,81 @@
       "icon": "toolbox",
       "description": "The editors, extensions, CLI utilities and browser tools that earn their place in a daily workflow.",
       "readingTime": "6 min",
-      "url": "/pages/resources.html#developer-toolkit",
+      "url": "/pages/resources.html?resource=developer-toolkit",
       "downloadUrl": null,
-      "tags": ["tools", "workflow", "devtools"],
+      "tags": [
+        "tools",
+        "workflow",
+        "devtools"
+      ],
       "featured": false,
       "active": true,
       "publishedDate": "2026-03-20",
-      "order": 11
+      "order": 11,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The tools that earn their place in a daily workflow, rather than everything that exists."
+        },
+        {
+          "type": "links",
+          "title": "In the browser",
+          "items": [
+            {
+              "label": "Lighthouse — performance, accessibility, SEO audits",
+              "url": "https://developer.chrome.com/docs/lighthouse/"
+            },
+            {
+              "label": "WebPageTest — real-device, throttled testing",
+              "url": "https://www.webpagetest.org/"
+            },
+            {
+              "label": "Can I Use — browser support, before you commit",
+              "url": "https://caniuse.com/"
+            },
+            {
+              "label": "axe DevTools — accessibility issues in context",
+              "url": "https://www.deque.com/axe/devtools/"
+            }
+          ]
+        },
+        {
+          "type": "links",
+          "title": "Reference",
+          "items": [
+            {
+              "label": "MDN Web Docs — the reference",
+              "url": "https://developer.mozilla.org/"
+            },
+            {
+              "label": "web.dev — patterns and Core Web Vitals",
+              "url": "https://web.dev/"
+            },
+            {
+              "label": "HTML5 Validator",
+              "url": "https://validator.w3.org/"
+            }
+          ]
+        },
+        {
+          "type": "links",
+          "title": "Search and structured data",
+          "items": [
+            {
+              "label": "Google Search Console",
+              "url": "https://search.google.com/search-console"
+            },
+            {
+              "label": "Rich Results Test",
+              "url": "https://search.google.com/test/rich-results"
+            },
+            {
+              "label": "Schema.org reference",
+              "url": "https://schema.org/docs/schemas.html"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "website-maintenance-plan",
@@ -214,13 +844,59 @@
       "icon": "wrench",
       "description": "A simple monthly and quarterly schedule for updates, backups, monitoring, content review and reporting.",
       "readingTime": "5 min",
-      "url": "/pages/resources.html#website-maintenance-plan",
+      "url": "/pages/resources.html?resource=website-maintenance-plan",
       "downloadUrl": null,
-      "tags": ["maintenance", "backups", "monitoring"],
+      "tags": [
+        "maintenance",
+        "backups",
+        "monitoring"
+      ],
       "featured": false,
       "active": true,
       "publishedDate": "2026-03-26",
-      "order": 12
+      "order": 12,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Websites degrade quietly. A schedule beats good intentions."
+        },
+        {
+          "type": "checklist",
+          "title": "Monthly",
+          "items": [
+            "Apply platform, plugin and dependency updates",
+            "Verify a backup by actually restoring it somewhere",
+            "Submit a test enquiry through every form",
+            "Check uptime and error logs"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Quarterly",
+          "items": [
+            "Review content: prices, staff, services, hours",
+            "Re-measure Core Web Vitals",
+            "Scan for broken links and 404s in Search Console",
+            "Review analytics against the site's actual goal"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Annually",
+          "items": [
+            "Does the structure still match the business?",
+            "Renew domain, SSL and hosting — confirm ownership is still yours",
+            "Audit third-party scripts and delete the unused",
+            "Review legal pages against current practice"
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "The failure that actually hurts",
+          "text": "Discovering three months late that the contact form stopped delivering. A monthly test costs a minute and catches it."
+        }
+      ]
     },
     {
       "id": "brief-questions",
@@ -231,13 +907,52 @@
       "icon": "help-circle",
       "description": "The questions that surface real requirements early — and prevent the expensive discoveries that arrive late.",
       "readingTime": "6 min",
-      "url": "/pages/resources.html#questions-before-building",
+      "url": "/pages/resources.html?resource=questions-before-building",
       "downloadUrl": null,
-      "tags": ["discovery", "requirements", "scope"],
+      "tags": [
+        "discovery",
+        "requirements",
+        "scope"
+      ],
       "featured": false,
       "active": true,
       "publishedDate": "2026-04-02",
-      "order": 13
+      "order": 13,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "These surface real requirements early. Every one of them is cheaper to answer now than to discover in week six."
+        },
+        {
+          "type": "checklist",
+          "title": "Business",
+          "items": [
+            "What does a successful visit look like, specifically?",
+            "How do enquiries reach you today, and what happens next?",
+            "Who decides sign-off, and who else must approve?",
+            "Is there a date this has to be live for, and why that date?"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Content",
+          "items": [
+            "Who is writing the copy?",
+            "Do brand assets exist — logo files, fonts, photography?",
+            "How often will content change, and who changes it?"
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "Technical",
+          "items": [
+            "Does anyone need to log in? What can they see or do?",
+            "What systems must it connect to — CRM, payments, email, stock?",
+            "Where is the domain registered, and who controls it?",
+            "Is there an existing site with traffic worth preserving?"
+          ]
+        }
+      ]
     },
     {
       "id": "css-architecture-guide",
@@ -248,13 +963,62 @@
       "icon": "layers",
       "description": "Design tokens, layering, naming and file structure that keep a stylesheet maintainable past month three.",
       "readingTime": "10 min",
-      "url": "/pages/resources.html#css-architecture-guide",
+      "url": "/pages/resources.html?resource=css-architecture-guide",
       "downloadUrl": null,
-      "tags": ["css", "tokens", "architecture"],
+      "tags": [
+        "css",
+        "tokens",
+        "architecture"
+      ],
       "featured": false,
       "active": true,
       "publishedDate": "2026-04-09",
-      "order": 14
+      "order": 14,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "A stylesheet becomes unmaintainable through a hundred small decisions, not one big one. These conventions prevent most of them."
+        },
+        {
+          "type": "heading",
+          "text": "Tokenise every decision"
+        },
+        {
+          "type": "paragraph",
+          "text": "Colour, spacing, type scale, radius, shadow, motion and z-index all live as custom properties in one file. The discipline is refusing to write a raw value once the tokens exist."
+        },
+        {
+          "type": "heading",
+          "text": "Layer in cascade order"
+        },
+        {
+          "type": "checklist",
+          "title": "Load in this order",
+          "items": [
+            "variables — tokens only, no rules",
+            "base — reset and element defaults",
+            "layout — containers, grids, section rhythm",
+            "components — reusable pieces",
+            "sections — composition of components",
+            "utilities — single-purpose helpers, must win over components",
+            "responsive — breakpoint corrections, must win over everything"
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Rules worth keeping"
+        },
+        {
+          "type": "checklist",
+          "title": "In practice",
+          "items": [
+            "One definition per component — no page-specific variants",
+            "A fixed spacing scale; never an arbitrary pixel value",
+            "!important only to beat a third party you do not control",
+            "If a pattern needs three utilities every time, make it a component"
+          ]
+        }
+      ]
     }
   ]
 }

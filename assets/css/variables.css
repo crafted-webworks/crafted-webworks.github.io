@@ -98,7 +98,7 @@
   --color-heading: #F5F6F8;
   --color-text:    #C9CDD5;
   --color-muted:   #8A9099;
-  --color-faint:   #656B76;
+  --color-faint:   #797E89;   /* 4.7:1 on the page ground — AA for body text */
 
   --color-primary:       var(--blue-500);
   --color-primary-hover: var(--blue-400);
@@ -193,9 +193,13 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
-  --fs-2xs:  0.6875rem;
-  --fs-xs:   0.75rem;
-  --fs-sm:   0.8125rem;
+  /* The small end was measurably too small: eyebrows, chips, badges and card
+     labels all sat at 11px. Legible in isolation, but small type is one of the
+     reliable tells of a cheap layout, and uppercase mono at 11px is a squint.
+     Each step up one notch; the reading sizes below are untouched. */
+  --fs-2xs:  0.75rem;      /* 12px — mono labels, eyebrows, chips */
+  --fs-xs:   0.8125rem;    /* 13px */
+  --fs-sm:   0.875rem;     /* 14px */
   --fs-base: 0.9375rem;
   --fs-md:   1rem;
   --fs-lg:   clamp(1.0625rem, 0.3vw + 1rem, 1.1875rem);
@@ -310,7 +314,7 @@
   --color-heading: #14120E;
   --color-text:    #35322C;
   --color-muted:   #6B675F;
-  --color-faint:   #8C877D;
+  --color-faint:   #6E6A61;   /* 5.2:1 on warm paper */
 
   --color-primary:       var(--blue-700);
   --color-primary-hover: var(--blue-800);

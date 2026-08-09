@@ -57,7 +57,12 @@
         "Ask an Expert routing to surveyors, solicitors and mortgage advisers",
         "Custom WordPress theme — every section editable by the client"
       ],
-      "image": null,
+      "image": {
+        "width": 1200,
+        "height": 750,
+        "src": "/assets/images/projects/advaith-homes.jpg",
+        "alt": "The Advaith Homes website home page, showing property guidance and calculator sections"
+      },
       "preview": {
         "pattern": "cms",
         "accent": "blue"
@@ -113,7 +118,12 @@
         "Event catering enquiry and booking flow",
         "Custom WordPress theme, client-editable"
       ],
-      "image": null,
+      "image": {
+        "width": 1200,
+        "height": 750,
+        "src": "/assets/images/projects/the-cane-house.jpg",
+        "alt": "The Cane House holding page — Pressed Fresh. Served Cool."
+      },
       "preview": {
         "pattern": "store",
         "accent": "green"

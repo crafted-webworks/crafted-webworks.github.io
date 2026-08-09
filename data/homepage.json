@@ -2,7 +2,7 @@
   "hero": {
     "eyebrow": "Web Development Studio",
     "title": "Websites crafted for",
-    "highlight": "your business.",
+    "highlight": "your business",
     "description": "Custom websites, web applications and digital experiences built for performance, growth and real-world use — not templates dressed up as strategy.",
     "primaryButton": {
       "label": "Start Your Project",
@@ -248,7 +248,7 @@
   "whyUs": {
     "eyebrow": "Why {{site.name}}",
     "title": "Why choose <em>{{site.name}}</em>?",
-    "description": "A website is infrastructure for your business. It should be built like it.",
+    "description": "A website is infrastructure for your business It should be built like it.",
     "items": [
       {
         "icon": "pen-ruler",
@@ -476,7 +476,7 @@
   "finalCTA": {
     "eyebrow": "Let's Build",
     "title": "Ready to build something <em>better</em>?",
-    "description": "Let's turn your idea into a website that actually works for your business.",
+    "description": "Let's turn your idea into a website that actually works for your business",
     "primaryButton": {
       "label": "Start a Project",
       "url": "/pages/contact.html",

@@ -244,11 +244,172 @@
   App.sections.register("project-case", caseSection);
 
   /* ==================================================================
+     RESOURCE DETAIL
+     Rendered from resources.json at /pages/resources.html?resource=slug.
+     Same data-driven pattern as the blog article and the case study, so a
+     new resource is one JSON entry — no page, no route, no template.
+     ================================================================== */
+  function renderResourceBlock(block) {
+    switch (block.type) {
+      case "heading":
+        return "<h2>" + U.richText(block.text) + "</h2>";
+
+      case "checklist":
+        /* Real checkboxes: these are working documents, and being able to
+           tick items off while you go through a launch is the entire point.
+           State is deliberately not persisted — a checklist you half
+           completed last month is worse than a clean one. */
+        return '<section class="res-check">' +
+                 (block.title ? '<h3 class="res-check-title">' + U.escape(block.title) + "</h3>" : "") +
+                 '<ul class="res-check-list">' +
+                   (block.items || []).map(function (item, i) {
+                     var id = "chk-" + U.slugify(block.title || "list") + "-" + i;
+                     return "<li>" +
+                              '<input type="checkbox" id="' + id + '">' +
+                              '<label for="' + id + '">' + U.richText(item) + "</label>" +
+                            "</li>";
+                   }).join("") +
+                 "</ul>" +
+               "</section>";
+
+      case "links":
+        return '<section class="res-links">' +
+                 (block.title ? '<h3 class="res-check-title">' + U.escape(block.title) + "</h3>" : "") +
+                 "<ul>" +
+                   (block.items || []).map(function (link) {
+                     return '<li><a href="' + U.attr(link.url) + '" target="_blank" rel="noopener noreferrer">' +
+                              U.escape(link.label) + icon("arrow-up-right") +
+                            "</a></li>";
+                   }).join("") +
+                 "</ul>" +
+               "</section>";
+
+      case "list":
+        return "<ul>" + (block.items || []).map(function (i) {
+          return "<li>" + U.richText(i) + "</li>";
+        }).join("") + "</ul>";
+
+      case "callout":
+        return '<aside class="article-callout article-callout--' + U.attr(block.style || "info") + '">' +
+                 icon(block.style === "warning" ? "alert-circle" : "info") +
+                 "<div>" +
+                   (block.title ? '<strong class="article-callout-title">' + U.escape(block.title) + "</strong>" : "") +
+                   U.escape(block.text) +
+                 "</div>" +
+               "</aside>";
+
+      case "paragraph":
+      default:
+        return "<p>" + U.richText(block.text) + "</p>";
+    }
+  }
+
+  var resourceSection = {
+    needs: ["resources", "site"],
+
+    render: function (options, context) {
+      var resource = context.resource;
+
+      if (!resource) {
+        return '<section class="section"><div class="container">' +
+               C.emptyState({
+                 icon: "book-open",
+                 title: "Resource not found",
+                 text: "That link may be out of date.",
+                 action: { label: "All resources", url: "/pages/resources.html" }
+               }) + "</div></section>";
+      }
+
+      var all = U.activeSorted(App.data.items("resources"));
+      var related = all.filter(function (item) {
+        return item.id !== resource.id && item.category === resource.category;
+      }).slice(0, 3);
+
+      if (related.length < 3) {
+        all.forEach(function (item) {
+          if (item.id !== resource.id && related.indexOf(item) === -1 && related.length < 3) related.push(item);
+        });
+      }
+
+      return '<section class="section" id="resource">' +
+               '<div class="container">' +
+                 '<article class="article res-article">' +
+                   '<header class="article-head">' +
+                     C.badge(C.typeLabel("resources", resource.type), "accent") +
+                     '<h1 class="article-title">' + U.escape(resource.title) + "</h1>" +
+                     '<p class="article-excerpt">' + U.escape(resource.description) + "</p>" +
+                     '<div class="article-meta">' +
+                       "<span>" + U.escape(C.categoryLabel("resources", resource.category)) + "</span>" +
+                       '<span class="dot"></span><span>' + U.escape(resource.readingTime || "") + "</span>" +
+                       '<span class="dot"></span><span>Free to use</span>' +
+                     "</div>" +
+                   "</header>" +
+
+                   '<div class="article-body">' +
+                     (resource.content || []).map(renderResourceBlock).join("") +
+                   "</div>" +
+
+                   '<footer class="article-footer">' +
+                     '<div class="cluster cluster--sm">' +
+                       (resource.tags || []).map(function (tag) { return C.badge(tag); }).join("") +
+                     "</div>" +
+                     C.button({ label: "All resources", url: "/pages/resources.html",
+                                variant: "btn-secondary", icon: "arrow-right" }) +
+                   "</footer>" +
+                 "</article>" +
+               "</div>" +
+             "</section>" +
+
+             (related.length
+               ? '<section class="section section--alt" id="resource-related">' +
+                   '<div class="container">' +
+                     C.sectionHeader({ eyebrow: "Also useful", title: "More <em>resources</em>" }) +
+                     '<div class="grid grid--auto-md">' + related.map(C.resourceCard).join("") + "</div>" +
+                   "</div>" +
+                 "</section>"
+               : "");
+    }
+  };
+
+  App.sections.register("resource-detail", resourceSection);
+
+  /* ==================================================================
      PAGE CONFIGURATION HOOKS
      Each hook may return a modified page object (and may attach extra
      values to `context` for the sections to use).
      ================================================================== */
   var HOOKS = {
+
+    resources: function (page, context) {
+      var slug = U.query("resource");
+      if (!slug) return page;
+
+      var resource = App.data.items("resources").filter(function (item) {
+        return item.slug === slug;
+      })[0];
+
+      context.resource = resource || null;
+
+      return Object.assign({}, page, {
+        sections: ["page-header", "resource-detail"],
+        header: {
+          eyebrow: "",
+          title: "",
+          breadcrumb: [
+            { label: "Home", url: "/" },
+            { label: "Resources", url: "/pages/resources.html" },
+            { label: resource ? resource.title : "Not found" }
+          ]
+        },
+        seo: resource
+          ? {
+              title: resource.title,
+              description: resource.description,
+              canonical: "/pages/resources.html?resource=" + resource.slug
+            }
+          : { title: "Resource not found", robots: "noindex, follow" }
+      });
+    },
 
     projects: function (page, context) {
       var slug = U.query("project");
@@ -359,6 +520,7 @@
     requires: function (pageId) {
       if (pageId === "blog") return ["blog"];
       if (pageId === "projects") return ["projects"];
+      if (pageId === "resources") return ["resources"];
       return [];
     },
 
