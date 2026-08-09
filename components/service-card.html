@@ -1,0 +1,37 @@
+<!--
+  Component: service-card
+  Runtime builder: components.serviceCard(service, options)  ·  Data: services.json → items[]
+  Options: { index: number, features: bool, featureLimit: number }
+
+  Responsive by itself: works in 1–4 column grids with no markup change.
+-->
+<article class="card service-card card--interactive"
+         data-reveal="up" data-id="{{ id }}" data-category="{{ category }}">
+
+  <span class="service-card-index">{{ index }}</span>
+
+  <span class="icon-tile">
+    <svg class="icon" aria-hidden="true"><use href="#ui-i-{{ icon }}"></use></svg>
+  </span>
+
+  <div class="card-body">
+    <h3 class="card-title"><a href="{{ url }}">{{ title }}</a></h3>
+    <p class="card-text">{{ shortDescription }}</p>
+
+    <ul class="service-card-features">
+      {{#features}}
+      <li>
+        <svg class="icon" aria-hidden="true"><use href="#ui-i-check"></use></svg>
+        <span>{{ . }}</span>
+      </li>
+      {{/features}}
+    </ul>
+  </div>
+
+  <div class="card-footer">
+    <a class="card-link" href="{{ url }}">
+      Learn more
+      <svg class="icon" aria-hidden="true"><use href="#ui-i-arrow-right"></use></svg>
+    </a>
+  </div>
+</article>

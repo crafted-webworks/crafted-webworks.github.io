@@ -1,0 +1,261 @@
+{
+  "settings": {
+    "itemsPerPage": 9,
+    "articleUrlPattern": "/pages/blog.html?post={slug}",
+    "note": "Articles render from the `content` block array. Add a post by appending an object here — no HTML file needed. Block types: paragraph, heading, list, quote, code, callout, image."
+  },
+  "categories": [
+    { "id": "web-development", "label": "Web Development" },
+    { "id": "seo", "label": "SEO" },
+    { "id": "design", "label": "Website Design" },
+    { "id": "performance", "label": "Performance" },
+    { "id": "business", "label": "Business" },
+    { "id": "tools", "label": "Tools" },
+    { "id": "guides", "label": "Guides" }
+  ],
+  "authors": [
+    { "id": "cww", "name": "{{site.name}}", "role": "Studio", "avatar": null }
+  ],
+  "items": [
+    {
+      "id": "post-custom-vs-template",
+      "slug": "custom-website-vs-template",
+      "title": "Custom Website vs Template: How to Actually Decide",
+      "excerpt": "Templates are not the enemy and custom is not automatically better. The right answer depends on three things most people never think about before paying.",
+      "category": "business",
+      "tags": ["custom development", "templates", "budget"],
+      "author": "cww",
+      "date": "2026-04-18",
+      "modifiedDate": "2026-04-18",
+      "readingTime": "6 min read",
+      "image": null,
+      "preview": { "pattern": "landing", "accent": "orange" },
+      "featured": true,
+      "published": true,
+      "order": 1,
+      "seo": {
+        "title": "Custom Website vs Template: How to Decide",
+        "description": "A practical framework for choosing between a template and a custom build, based on differentiation, complexity and how long the site has to last."
+      },
+      "content": [
+        { "type": "paragraph", "text": "Almost every project starts with the same question, usually phrased as a budget concern: should we use a template or build something custom? It gets treated as a quality question. It isn't. It's a fit question, and there are three factors that decide it." },
+        { "type": "heading", "level": 2, "text": "1. How much does your differentiation live in the interface?" },
+        { "type": "paragraph", "text": "If what makes your business distinctive is your product, your location or your price, a well-implemented template can carry it. If your differentiation is the experience itself — how someone configures an order, compares options or moves through a process — a template will actively work against you, because you'll spend the whole build fighting decisions someone else made." },
+        { "type": "heading", "level": 2, "text": "2. How complex is your content model?" },
+        { "type": "paragraph", "text": "Five pages of text and images? Templates handle that comfortably. Products with variants, properties with filters, courses with schedules, case studies with structured sections? That's a data problem before it's a design problem, and templates rarely model data the way your business actually works." },
+        {
+          "type": "list",
+          "style": "unordered",
+          "items": [
+            "Flat content, few page types → template territory",
+            "Repeating structured items with relationships → custom territory",
+            "Anything requiring login, roles or workflow → custom, always"
+          ]
+        },
+        { "type": "heading", "level": 2, "text": "3. How long does this need to last?" },
+        { "type": "paragraph", "text": "A campaign page that lives for six weeks and a platform you'll build on for five years deserve completely different decisions. Templates carry maintenance debt — theme updates, plugin conflicts, abandoned developers. Over a long enough horizon, that debt costs more than the custom build you avoided." },
+        { "type": "quote", "text": "The expensive mistake isn't picking a template. It's picking a template for something that was always going to outgrow it.", "attribution": "A lesson most businesses learn twice" },
+        { "type": "heading", "level": 2, "text": "The honest middle ground" },
+        { "type": "paragraph", "text": "Most projects land between the extremes: a custom front-end on an established platform, or a template used as scaffolding for genuinely custom sections. Anyone who tells you it's always one or the other is describing their own capabilities, not your requirements." }
+      ]
+    },
+    {
+      "id": "post-technical-seo-foundations",
+      "slug": "technical-seo-foundations",
+      "title": "Technical SEO Foundations Every New Website Needs",
+      "excerpt": "Before content strategy, before link building — these are the structural decisions that determine whether search engines can make sense of your site at all.",
+      "category": "seo",
+      "tags": ["seo", "structured data", "metadata"],
+      "author": "cww",
+      "date": "2026-04-04",
+      "modifiedDate": "2026-04-04",
+      "readingTime": "8 min read",
+      "image": null,
+      "preview": { "pattern": "cms", "accent": "blue" },
+      "featured": true,
+      "published": true,
+      "order": 2,
+      "seo": {
+        "title": "Technical SEO Foundations for New Websites",
+        "description": "Semantic structure, metadata, structured data, crawlability and performance — the technical groundwork that has to exist before content can rank."
+      },
+      "content": [
+        { "type": "paragraph", "text": "Technical SEO gets described as complicated because agencies sell it that way. The foundational layer is not complicated. It's a set of structural decisions made during development that either give your content a fair chance or quietly handicap it." },
+        { "type": "heading", "level": 2, "text": "Semantic structure comes first" },
+        { "type": "paragraph", "text": "One h1 per page describing that page's subject. Headings that nest logically rather than by font size. Real landmark elements — header, nav, main, article, footer. Lists marked as lists. This costs nothing at build time and is genuinely painful to retrofit." },
+        { "type": "heading", "level": 2, "text": "Metadata that's written, not generated" },
+        { "type": "paragraph", "text": "Every indexable page needs a unique title and description written for a human deciding whether to click. Templated descriptions stitched from field names are worse than none — they burn the one line of persuasion you get in the results page." },
+        {
+          "type": "list",
+          "style": "unordered",
+          "items": [
+            "Title: roughly 50–60 characters, primary subject first",
+            "Description: roughly 140–160 characters, written as a reason to click",
+            "Canonical URL on every page, including the homepage",
+            "Open Graph and Twitter tags so shared links don't look broken"
+          ]
+        },
+        { "type": "heading", "level": 2, "text": "Structured data, honestly applied" },
+        { "type": "paragraph", "text": "Schema.org markup helps search engines understand what a page represents. Organization, WebSite, Article, Product, FAQPage and LocalBusiness cover most needs. The rule is simple: only mark up what's actually on the page and actually true. Fabricated review markup is a penalty waiting to happen." },
+        { "type": "callout", "style": "warning", "title": "Don't invent reviews", "text": "Review and AggregateRating markup for reviews that don't exist is one of the fastest ways to earn a manual action. If you have no reviews yet, ship without the schema." },
+        { "type": "heading", "level": 2, "text": "Crawlability and speed" },
+        { "type": "paragraph", "text": "A sitemap that lists your real URLs, a robots.txt that doesn't block what you need indexed, clean readable URLs, and internal links that connect pages to each other. Then performance — because a page that takes eight seconds on a mid-range phone has a ranking problem and a conversion problem simultaneously." },
+        { "type": "paragraph", "text": "None of this guarantees rankings. It removes the technical reasons you wouldn't get them, which is the only part development can honestly promise." }
+      ]
+    },
+    {
+      "id": "post-website-speed",
+      "slug": "why-your-website-is-slow",
+      "title": "Why Your Website Is Slow (It's Usually These Five Things)",
+      "excerpt": "Performance problems feel mysterious but rarely are. In practice, the same handful of causes account for most of the damage.",
+      "category": "performance",
+      "tags": ["performance", "core web vitals", "optimization"],
+      "author": "cww",
+      "date": "2026-03-21",
+      "modifiedDate": "2026-03-21",
+      "readingTime": "7 min read",
+      "image": null,
+      "preview": { "pattern": "dashboard", "accent": "violet" },
+      "featured": true,
+      "published": true,
+      "order": 3,
+      "seo": {
+        "title": "Why Your Website Is Slow — 5 Common Causes",
+        "description": "Oversized images, render-blocking scripts, third-party tags, font loading and layout shift: the usual suspects behind slow websites, and how to fix each."
+      },
+      "content": [
+        { "type": "paragraph", "text": "Run a performance audit on almost any underperforming site and the same five causes come up. Measure before you change anything — but expect to find these." },
+        { "type": "heading", "level": 2, "text": "1. Images uploaded at camera resolution" },
+        { "type": "paragraph", "text": "A 4000px photo displayed in a 400px card is the single most common cause of a slow page. Resize to the size actually displayed, serve WebP or AVIF, provide responsive sources, and lazy-load anything below the fold." },
+        { "type": "heading", "level": 2, "text": "2. Scripts blocking the render" },
+        { "type": "paragraph", "text": "Every synchronous script in the head stops the page from painting. Most scripts don't need to run before content appears. Defer them, and the perceived load time drops before you've optimized anything else." },
+        { "type": "heading", "level": 2, "text": "3. Third-party tags nobody audits" },
+        { "type": "paragraph", "text": "Analytics, chat widgets, heatmaps, pixels, A/B tools, review embeds — each added for a good reason, none ever removed. Audit them yearly. Delete what nobody has opened a report from." },
+        { "type": "heading", "level": 2, "text": "4. Fonts loaded badly" },
+        { "type": "paragraph", "text": "Six weights of two families, loaded without font-display, produces invisible text and a layout that reflows when the fonts arrive. Two weights, subset, with font-display: swap, covers nearly every real design." },
+        { "type": "heading", "level": 2, "text": "5. Layout shift" },
+        { "type": "paragraph", "text": "Content that jumps while loading is a measured ranking factor and an obvious irritation. Set width and height on images, reserve space for embeds and banners, and stop injecting elements above content that's already painted." },
+        { "type": "callout", "style": "info", "title": "Measure, then fix, then measure", "text": "Optimize in priority order and record the numbers on both sides of each change. Otherwise you're guessing — expensively." }
+      ]
+    },
+    {
+      "id": "post-website-planning",
+      "slug": "planning-a-website-before-design",
+      "title": "Plan the Website Before You Design It",
+      "excerpt": "The most expensive projects are the ones that started in a design tool. Structure, content and requirements come first.",
+      "category": "guides",
+      "tags": ["planning", "process", "scope"],
+      "author": "cww",
+      "date": "2026-03-07",
+      "modifiedDate": "2026-03-07",
+      "readingTime": "6 min read",
+      "image": null,
+      "preview": { "pattern": "business", "accent": "teal" },
+      "featured": false,
+      "published": true,
+      "order": 4,
+      "seo": {
+        "title": "How to Plan a Website Before Designing It",
+        "description": "Goals, audience, sitemap, content and requirements — the planning work that prevents expensive rework later in a website project."
+      },
+      "content": [
+        { "type": "paragraph", "text": "Designing before planning feels productive because you see something immediately. It also guarantees rework, because you're making visual decisions about content that doesn't exist yet." },
+        { "type": "heading", "level": 2, "text": "Start with the goal, singular" },
+        { "type": "paragraph", "text": "What does a successful visit look like? An enquiry, a booking, a purchase, an application, a phone call. If the answer is a list of five things, the site will do all five badly. Rank them and design for the first." },
+        { "type": "heading", "level": 2, "text": "Then the sitemap" },
+        { "type": "paragraph", "text": "Every page, its purpose, and what it links to. This is where you discover that four planned pages are really one, or that the services section needs a level of depth nobody had considered." },
+        { "type": "heading", "level": 2, "text": "Then the content" },
+        {
+          "type": "list",
+          "style": "ordered",
+          "items": [
+            "What each page must say, in rough form",
+            "Who is writing it and by when",
+            "What images, logos and documents exist already",
+            "What has to be created from scratch"
+          ]
+        },
+        { "type": "paragraph", "text": "Content is the reason most website projects run late. Not design, not development — content. Deciding this early is the highest-leverage hour in the whole project." },
+        { "type": "quote", "text": "Design applied to real content is design. Design applied to placeholder text is decoration.", "attribution": "Every project that shipped late" }
+      ]
+    },
+    {
+      "id": "post-maintenance",
+      "slug": "website-maintenance-matters",
+      "title": "A Website Is Not a One-Time Purchase",
+      "excerpt": "Launch day is the beginning of the useful life of a website, not the end of the project. Here's what neglect actually costs.",
+      "category": "business",
+      "tags": ["maintenance", "security", "ownership"],
+      "author": "cww",
+      "date": "2026-02-22",
+      "modifiedDate": "2026-02-22",
+      "readingTime": "5 min read",
+      "image": null,
+      "preview": { "pattern": "portal", "accent": "green" },
+      "featured": false,
+      "published": true,
+      "order": 5,
+      "seo": {
+        "title": "Why Website Maintenance Matters",
+        "description": "What happens to a website left unmaintained — security, performance, content drift and search visibility — and what a sensible maintenance rhythm looks like."
+      },
+      "content": [
+        { "type": "paragraph", "text": "Websites are treated like furniture: buy once, use for years. They behave more like vehicles. Left alone, they don't stay still — they degrade, quietly, in ways nobody notices until something breaks publicly." },
+        { "type": "heading", "level": 2, "text": "What actually degrades" },
+        {
+          "type": "list",
+          "style": "unordered",
+          "items": [
+            "Security: unpatched dependencies are found by automated scanners, not people",
+            "Content: prices, staff, services and hours drift out of date and quietly cost trust",
+            "Performance: added tags, images and plugins accumulate weight nobody budgets for",
+            "Search: competitors publish, you don't, and rankings move accordingly",
+            "Compatibility: browsers change, integrations deprecate, forms stop delivering"
+          ]
+        },
+        { "type": "heading", "level": 2, "text": "A sensible rhythm" },
+        { "type": "paragraph", "text": "Monthly: updates, backups verified, uptime and form delivery checked. Quarterly: content review, performance measurement, broken link scan. Annually: a proper look at whether the structure still matches the business." },
+        { "type": "callout", "style": "info", "title": "The cheapest insurance", "text": "The failure mode that actually hurts is discovering three months later that the contact form stopped delivering. A monthly check catches that for the cost of a coffee." }
+      ]
+    },
+    {
+      "id": "post-design-systems",
+      "slug": "design-tokens-for-small-sites",
+      "title": "Design Tokens Make Sense Even for Small Websites",
+      "excerpt": "Design systems sound like enterprise overhead. The core idea — naming your decisions — pays for itself on a five-page site.",
+      "category": "design",
+      "tags": ["design tokens", "css", "maintainability"],
+      "author": "cww",
+      "date": "2026-02-08",
+      "modifiedDate": "2026-02-08",
+      "readingTime": "5 min read",
+      "image": null,
+      "preview": { "pattern": "gallery", "accent": "orange" },
+      "featured": false,
+      "published": true,
+      "order": 6,
+      "seo": {
+        "title": "Design Tokens for Small Websites",
+        "description": "Why CSS custom properties for colour, spacing, radius and typography make even small websites faster to change and harder to break."
+      },
+      "content": [
+        { "type": "paragraph", "text": "A design token is just a named decision. Instead of writing #2B7FFF in forty places, you write it once as --color-primary and use the name. That's the entire concept, and it changes how maintainable a stylesheet is." },
+        { "type": "heading", "level": 2, "text": "What to tokenize" },
+        {
+          "type": "list",
+          "style": "unordered",
+          "items": [
+            "Colour: surfaces, text, borders, accents, states",
+            "Spacing: a fixed scale, not arbitrary pixel values",
+            "Typography: sizes, weights, line heights",
+            "Radius, shadows, transitions, z-index layers"
+          ]
+        },
+        { "type": "heading", "level": 2, "text": "Why it matters on a small site" },
+        { "type": "paragraph", "text": "A rebrand becomes a ten-line change instead of a find-and-replace gamble. A dark mode becomes a token override rather than a second stylesheet. And spacing stays consistent because there are only eight legal values to choose from." },
+        { "type": "code", "language": "css", "code": ":root {\n  --color-primary: #2B7FFF;\n  --color-accent:  #FF8A1E;\n  --space-md: 1.5rem;\n  --radius-lg: 18px;\n}\n\n.card {\n  padding: var(--space-md);\n  border-radius: var(--radius-lg);\n}" },
+        { "type": "paragraph", "text": "The discipline is refusing to write a raw value once the tokens exist. That's the whole practice — and it's why this site's entire colour scheme lives in one file." }
+      ]
+    }
+  ]
+}

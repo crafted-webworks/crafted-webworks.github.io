@@ -1,0 +1,155 @@
+{
+  "categories": [
+    { "id": "pricing", "label": "Pricing & Timelines" },
+    { "id": "build", "label": "Building" },
+    { "id": "seo", "label": "SEO & Performance" },
+    { "id": "support", "label": "Support & Hosting" },
+    { "id": "working", "label": "Working Together" }
+  ],
+  "items": [
+    {
+      "id": "cost",
+      "category": "pricing",
+      "question": "How much does a website cost?",
+      "answer": "It depends on scope, not page count. A focused landing page, a multi-page business website and a custom web application are three very different builds. After a short conversation about your goals and requirements we send a fixed quote with the scope written down, so there are no moving numbers later. If you have a budget range in mind, tell us — we'll say honestly what's realistic within it.",
+      "featured": true,
+      "active": true,
+      "order": 1
+    },
+    {
+      "id": "timeline",
+      "category": "pricing",
+      "question": "How long does a website take?",
+      "answer": "A landing page can be ready in about a week. A typical business website runs two to four weeks. E-commerce and custom applications usually take longer and are delivered in stages. The single biggest factor is content — projects move fastest when text, images and brand assets are ready or when we agree upfront that we'll handle them.",
+      "featured": true,
+      "active": true,
+      "order": 2
+    },
+    {
+      "id": "custom",
+      "category": "build",
+      "question": "Do you build completely custom websites?",
+      "answer": "Yes — that's the default. Layouts, components and functionality are built for your business rather than adapted from a purchased theme. Where an existing platform genuinely serves you better, we'll say so instead of building something custom for the sake of it.",
+      "featured": true,
+      "active": true,
+      "order": 3
+    },
+    {
+      "id": "redesign",
+      "category": "build",
+      "question": "Can you redesign an existing website?",
+      "answer": "Yes. We start with an audit of the current site — what's working, what's costing you, which pages have search value worth protecting. Content and URLs are migrated deliberately with redirects mapped, so a redesign doesn't quietly undo years of accumulated visibility.",
+      "featured": true,
+      "active": true,
+      "order": 4
+    },
+    {
+      "id": "seo",
+      "category": "seo",
+      "question": "Do you provide SEO?",
+      "answer": "We handle the technical and structural side: semantic markup, heading hierarchy, metadata, structured data, clean URLs, sitemaps, internal linking and fast rendering. That's the foundation search engines need. Ongoing content strategy, link building and campaign work are a separate discipline — we can advise and coordinate, but we don't sell ranking guarantees, because nobody can honestly make them.",
+      "featured": true,
+      "active": true,
+      "order": 5
+    },
+    {
+      "id": "mobile",
+      "category": "build",
+      "question": "Will the website work on mobile?",
+      "answer": "Yes. Every build is designed mobile-first and tested from 320px upward through tablets, laptops and large displays. Mobile isn't a shrunken desktop layout — navigation, typography, spacing and forms are reworked for touch and small screens.",
+      "featured": true,
+      "active": true,
+      "order": 6
+    },
+    {
+      "id": "self-update",
+      "category": "support",
+      "question": "Can I update the website myself?",
+      "answer": "Yes, if you want to. We can connect the site to a CMS with content models built around your actual content, so adding a project, publishing a post or changing a price takes a minute and doesn't risk the layout. You'll get a walkthrough and written handover notes at launch.",
+      "featured": true,
+      "active": true,
+      "order": 7
+    },
+    {
+      "id": "hosting",
+      "category": "support",
+      "question": "Do you provide hosting?",
+      "answer": "We don't resell hosting, but we'll recommend an appropriate option for your traffic and stack, set everything up — domain, DNS, SSL, email routing, backups — and hand over full ownership. Your domain and hosting accounts stay in your name. Always.",
+      "featured": true,
+      "active": true,
+      "order": 8
+    },
+    {
+      "id": "api",
+      "category": "build",
+      "question": "Can you integrate APIs and third-party services?",
+      "answer": "Yes. Payment gateways, CRMs, email platforms, messaging, maps, booking systems, analytics, sheets and internal ERPs are all common. If a service publishes an API, it can usually be connected — and if it doesn't, there's often a workable alternative.",
+      "featured": false,
+      "active": true,
+      "order": 9
+    },
+    {
+      "id": "maintenance",
+      "category": "support",
+      "question": "Do you provide maintenance?",
+      "answer": "Yes, on a monthly or as-needed basis. That covers updates, security patches, backups, uptime monitoring, content changes and small improvements. Plenty of clients start with a few months of support after launch and continue from there — there's no lock-in either way.",
+      "featured": false,
+      "active": true,
+      "order": 10
+    },
+    {
+      "id": "ecommerce",
+      "category": "build",
+      "question": "Can you build an e-commerce website?",
+      "answer": "Yes — catalogue structure, product variants, cart and checkout, payment and shipping integration, order management and an admin area your team can actually operate. We'll help decide between an established platform and a custom build based on your catalogue size and how you sell.",
+      "featured": false,
+      "active": true,
+      "order": 11
+    },
+    {
+      "id": "webapp",
+      "category": "build",
+      "question": "Can you build custom web applications?",
+      "answer": "Yes. Internal tools, customer portals, dashboards, booking systems and calculators — anything that needs logic, user accounts and data rather than just pages. These usually start with a scoping phase to define workflows and data before development begins.",
+      "featured": false,
+      "active": true,
+      "order": 12
+    },
+    {
+      "id": "international",
+      "category": "working",
+      "question": "Do you work with businesses outside India?",
+      "answer": "Yes. We work remotely with clients in different time zones and are used to asynchronous collaboration — written updates, shared documents, scheduled calls in an overlapping window. Payments can be arranged in the currency that suits you.",
+      "featured": false,
+      "active": true,
+      "order": 13
+    },
+    {
+      "id": "start",
+      "category": "working",
+      "question": "What do you need from me to start?",
+      "answer": "A short description of your business, what you want the website to achieve, examples of sites you like (and why), and any existing brand assets. That's enough for a first conversation. Content, images and structure can be worked out together — we'll tell you exactly what's needed and when.",
+      "featured": false,
+      "active": true,
+      "order": 14
+    },
+    {
+      "id": "performance",
+      "category": "seo",
+      "question": "Can you fix a slow website?",
+      "answer": "Usually, yes. We measure first to find what's genuinely responsible — oversized media, render-blocking scripts, heavy third-party tags, layout shift, server response time — then fix in priority order and re-measure. You get before-and-after numbers rather than a claim.",
+      "featured": false,
+      "active": true,
+      "order": 15
+    },
+    {
+      "id": "ownership",
+      "category": "working",
+      "question": "Who owns the code and the website?",
+      "answer": "You do, once the project is paid for in full. Source code, content, domain and hosting accounts are all yours, and you're free to take them to another developer at any point. Nothing is held hostage — that's not a business model we're interested in.",
+      "featured": false,
+      "active": true,
+      "order": 16
+    }
+  ]
+}

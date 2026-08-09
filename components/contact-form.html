@@ -1,0 +1,74 @@
+<!--
+  Component: contact-form
+  Runtime builder: forms.buildContactForm()  ·  forms.initContactForm(form)
+  Data: data/forms/contact.json (fields) + data/contact.json (option lists, endpoint)
+
+  SERVER-SIDE NOTES
+  · `form.endpoint` in contact.json must point at your own handler. Never put
+    API keys, SMTP credentials or tokens in any file under this directory —
+    everything here is served to the browser.
+  · Repeat every validation rule server-side. Client validation is a courtesy,
+    not a control.
+  · The honeypot field and the minimum time-to-submit are cheap first filters.
+    Check both again on the server before accepting a submission.
+-->
+<form class="contact-form" data-contact-form novalidate>
+
+  <!-- Success / error message, focused and announced on submit -->
+  <div class="form-status" data-form-status></div>
+
+  <div class="form-grid">
+
+    {{#fields}}
+    <!-- text / email / tel / url -->
+    <div class="form-group fg-{{ col }}" data-field="{{ name }}">
+      <label class="form-label" for="field-{{ name }}">
+        {{ label }}<span class="required" aria-hidden="true">*</span>
+      </label>
+      <input class="form-control" type="{{ type }}" id="field-{{ name }}" name="{{ name }}"
+             placeholder="{{ placeholder }}" autocomplete="{{ autocomplete }}"
+             required aria-required="true" aria-describedby="field-{{ name }}-error">
+      <span class="form-help" id="field-{{ name }}-help">{{ help }}</span>
+      <span class="form-error" id="field-{{ name }}-error" role="alert">
+        <svg class="icon" aria-hidden="true"><use href="#ui-i-alert-circle"></use></svg><span></span>
+      </span>
+    </div>
+
+    <!-- select: options come from contact.json via `optionsFrom` -->
+    <div class="form-group fg-4" data-field="{{ name }}">
+      <label class="form-label" for="field-{{ name }}">{{ label }}</label>
+      <select class="form-select" id="field-{{ name }}" name="{{ name }}"
+              aria-describedby="field-{{ name }}-error">
+        <option value="">{{ placeholder }}</option>
+        {{#options}}<option value="{{ value }}">{{ label }}</option>{{/options}}
+      </select>
+      <span class="form-error" id="field-{{ name }}-error" role="alert">…</span>
+    </div>
+
+    <!-- consent checkbox -->
+    <div class="form-group fg-12" data-field="consent">
+      <label class="form-check" for="field-consent">
+        <input type="checkbox" id="field-consent" name="consent" required aria-required="true"
+               aria-describedby="field-consent-error">
+        <span class="form-check-label">{{ label }} <a href="{{ linkUrl }}">{{ linkText }}</a></span>
+      </label>
+      <span class="form-error" id="field-consent-error" role="alert">…</span>
+    </div>
+    {{/fields}}
+
+  </div>
+
+  <!-- Honeypot: off-screen, tab-skipped, never shown to a person -->
+  <div class="form-hp" aria-hidden="true">
+    <label for="{{ honeypot }}">Leave this field empty</label>
+    <input type="text" id="{{ honeypot }}" name="{{ honeypot }}" tabindex="-1" autocomplete="off">
+  </div>
+
+  <div class="form-actions mt-lg">
+    <button type="submit" class="btn btn-gradient btn-lg" data-form-submit>
+      {{ submitLabel }}
+      <svg class="icon icon--shift" aria-hidden="true"><use href="#ui-i-arrow-right"></use></svg>
+    </button>
+    <span class="form-help">{{ responseTime }}</span>
+  </div>
+</form>

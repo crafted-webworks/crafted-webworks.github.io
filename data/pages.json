@@ -1,0 +1,285 @@
+{
+  "home": {
+    "id": "home",
+    "url": "/",
+    "template": "home",
+    "seo": {
+      "title": "{{site.name}} — Custom Website & Web Application Development",
+      "useTitleTemplate": false,
+      "description": "Custom websites, web applications and digital experiences built for performance, growth and real-world use. Business websites, e-commerce, portals and more.",
+      "canonical": "/"
+    },
+    "sections": [
+      "hero",
+      "trust",
+      "services",
+      "why",
+      "website-types",
+      "projects",
+      "demos",
+      "resources",
+      "tools",
+      "process",
+      "performance",
+      "testimonials",
+      "blog",
+      "faq",
+      "contact",
+      "instagram",
+      "cta"
+    ]
+  },
+
+  "about": {
+    "id": "about",
+    "url": "/pages/about.html",
+    "template": "inner",
+    "seo": {
+      "title": "About",
+      "description": "{{site.name}} is a web development studio focused on custom, maintainable websites and web applications built around real business goals."
+    },
+    "header": {
+      "eyebrow": "About Us",
+      "title": "A studio built around <em>craft</em>, not templates.",
+      "description": "{{site.name}} exists for one reason: too many businesses are handed websites that look fine and do nothing. We build the other kind.",
+      "breadcrumb": [{ "label": "Home", "url": "/" }, { "label": "About" }]
+    },
+    "sections": [
+      "page-header",
+      "about-story",
+      "stats",
+      "why",
+      "process",
+      { "id": "services", "options": { "mode": "featured", "limit": 6 } },
+      "testimonials",
+      "cta"
+    ]
+  },
+
+  "services": {
+    "id": "services",
+    "url": "/pages/services.html",
+    "template": "inner",
+    "seo": {
+      "title": "Services",
+      "description": "Website and web application development services: business websites, e-commerce, landing pages, CMS, web portals, redesigns, SEO foundations and performance work."
+    },
+    "header": {
+      "eyebrow": "Services",
+      "title": "What we <em>build</em>",
+      "description": "From a focused landing page to a full custom web application — scoped around what your business actually needs.",
+      "breadcrumb": [{ "label": "Home", "url": "/" }, { "label": "Services" }]
+    },
+    "sections": [
+      "page-header",
+      { "id": "services", "options": { "mode": "all", "filters": true, "search": true, "showHeader": false } },
+      "process",
+      "why",
+      "faq",
+      "cta"
+    ]
+  },
+
+  "projects": {
+    "id": "projects",
+    "url": "/pages/projects.html",
+    "template": "inner",
+    "seo": {
+      "title": "Projects",
+      "description": "Selected website and web application projects by {{site.name}} across business, e-commerce, real estate, CMS and custom application work."
+    },
+    "header": {
+      "eyebrow": "Our Work",
+      "title": "Selected <em>projects</em>",
+      "description": "A look at the kind of work we take on, the problems behind it and how each build was approached.",
+      "breadcrumb": [{ "label": "Home", "url": "/" }, { "label": "Projects" }]
+    },
+    "sections": [
+      "page-header",
+      { "id": "projects", "options": { "mode": "all", "filters": true, "search": true, "pagination": true, "perPage": 9, "showHeader": false } },
+      "testimonials",
+      "cta"
+    ]
+  },
+
+  "demos": {
+    "id": "demos",
+    "url": "/pages/demos.html",
+    "template": "inner",
+    "seo": {
+      "title": "Website Demos",
+      "description": "Explore website demo concepts by industry — business, restaurant, real estate, portfolio, e-commerce, healthcare, education, SaaS and more."
+    },
+    "header": {
+      "eyebrow": "Demos",
+      "title": "Explore website <em>demos</em>",
+      "description": "Concept builds that show layout, structure and functionality for different industries. Any of them can be adapted to your brand and requirements.",
+      "breadcrumb": [{ "label": "Home", "url": "/" }, { "label": "Demos" }]
+    },
+    "sections": [
+      "page-header",
+      { "id": "demos", "options": { "mode": "all", "filters": true, "search": true, "pagination": true, "perPage": 9, "showHeader": false } },
+      "cta"
+    ]
+  },
+
+  "resources": {
+    "id": "resources",
+    "url": "/pages/resources.html",
+    "template": "inner",
+    "seo": {
+      "title": "Free Resources for Web Creators",
+      "description": "Free checklists, guides, references and curated tools for planning, building, optimizing and maintaining better websites."
+    },
+    "header": {
+      "eyebrow": "Free Resources",
+      "title": "Resources for <em>web creators</em>",
+      "description": "Checklists, planning guides and curated references we use ourselves — free to use, no sign-up required.",
+      "breadcrumb": [{ "label": "Home", "url": "/" }, { "label": "Resources" }]
+    },
+    "sections": [
+      "page-header",
+      { "id": "resources", "options": { "mode": "all", "filters": true, "search": true, "pagination": true, "perPage": 12, "showHeader": false } },
+      { "id": "tools", "options": { "mode": "featured", "limit": 8 } },
+      "cta"
+    ]
+  },
+
+  "tools": {
+    "id": "tools",
+    "url": "/pages/tools.html",
+    "template": "inner",
+    "seo": {
+      "title": "General Tools",
+      "description": "Free browser-based tools for everyday web, content and development tasks — formatters, converters, generators, color and SEO utilities."
+    },
+    "header": {
+      "eyebrow": "General Tools",
+      "title": "Simple tools for <em>everyday</em> work",
+      "description": "Small, fast utilities for web, content and development tasks. Everything runs in your browser — nothing is uploaded.",
+      "breadcrumb": [{ "label": "Home", "url": "/" }, { "label": "Tools" }]
+    },
+    "sections": [
+      "page-header",
+      { "id": "tools", "options": { "mode": "all", "filters": true, "search": true, "showHeader": false } },
+      { "id": "resources", "options": { "mode": "featured", "limit": 4 } },
+      "cta"
+    ]
+  },
+
+  "blog": {
+    "id": "blog",
+    "url": "/pages/blog.html",
+    "template": "inner",
+    "seo": {
+      "title": "Blog",
+      "description": "Practical articles on web development, SEO foundations, website performance, design decisions and running a website as a business asset."
+    },
+    "header": {
+      "eyebrow": "Blog",
+      "title": "Notes from the <em>workbench</em>",
+      "description": "Practical writing about building, maintaining and improving websites — no filler, no listicles.",
+      "breadcrumb": [{ "label": "Home", "url": "/" }, { "label": "Blog" }]
+    },
+    "sections": [
+      "page-header",
+      { "id": "blog", "options": { "mode": "all", "filters": true, "search": true, "pagination": true, "perPage": 9, "showHeader": false } },
+      "cta"
+    ]
+  },
+
+  "contact": {
+    "id": "contact",
+    "url": "/pages/contact.html",
+    "template": "inner",
+    "seo": {
+      "title": "Contact",
+      "description": "Tell us about your project. Share your goals, timeline and budget range and we'll respond with a practical recommendation."
+    },
+    "header": {
+      "eyebrow": "Contact",
+      "title": "Let's talk about your <em>project</em>",
+      "description": "Share a few details and we'll come back with a clear direction — scope, approach and what it realistically takes.",
+      "breadcrumb": [{ "label": "Home", "url": "/" }, { "label": "Contact" }]
+    },
+    "sections": [
+      "page-header",
+      { "id": "contact", "options": { "showHeader": false } },
+      "instagram",
+      { "id": "faq", "options": { "mode": "featured", "limit": 6 } }
+    ]
+  },
+
+  "faq": {
+    "id": "faq",
+    "url": "/pages/faq.html",
+    "template": "inner",
+    "seo": {
+      "title": "Frequently Asked Questions",
+      "description": "Answers about cost, timelines, custom development, redesigns, SEO, maintenance, e-commerce, integrations and how projects start."
+    },
+    "header": {
+      "eyebrow": "FAQ",
+      "title": "Frequently asked <em>questions</em>",
+      "description": "The questions we're asked most often, answered plainly. If yours isn't here, just ask.",
+      "breadcrumb": [{ "label": "Home", "url": "/" }, { "label": "FAQ" }]
+    },
+    "sections": [
+      "page-header",
+      { "id": "faq", "options": { "mode": "all", "filters": true, "showHeader": false } },
+      "contact"
+    ]
+  },
+
+  "privacy-policy": {
+    "id": "privacy-policy",
+    "url": "/pages/privacy-policy.html",
+    "template": "legal",
+    "documentKey": "privacy",
+    "seo": {
+      "title": "Privacy Policy",
+      "description": "How {{site.name}} collects, uses and protects information submitted through this website.",
+      "robots": "index, follow"
+    },
+    "header": {
+      "eyebrow": "Legal",
+      "title": "Privacy Policy",
+      "breadcrumb": [{ "label": "Home", "url": "/" }, { "label": "Privacy Policy" }]
+    },
+    "sections": ["page-header", "legal", "cta"]
+  },
+
+  "terms": {
+    "id": "terms",
+    "url": "/pages/terms.html",
+    "template": "legal",
+    "documentKey": "terms",
+    "seo": {
+      "title": "Terms & Conditions",
+      "description": "The terms that apply when you use this website or engage {{site.name}} for development work."
+    },
+    "header": {
+      "eyebrow": "Legal",
+      "title": "Terms & Conditions",
+      "breadcrumb": [{ "label": "Home", "url": "/" }, { "label": "Terms & Conditions" }]
+    },
+    "sections": ["page-header", "legal", "cta"]
+  },
+
+  "cookie-policy": {
+    "id": "cookie-policy",
+    "url": "/pages/cookie-policy.html",
+    "template": "legal",
+    "documentKey": "cookies",
+    "seo": {
+      "title": "Cookie Policy",
+      "description": "How this website uses cookies and local browser storage, and how you can control them."
+    },
+    "header": {
+      "eyebrow": "Legal",
+      "title": "Cookie Policy",
+      "breadcrumb": [{ "label": "Home", "url": "/" }, { "label": "Cookie Policy" }]
+    },
+    "sections": ["page-header", "legal", "cta"]
+  }
+}

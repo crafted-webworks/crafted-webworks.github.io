@@ -1,0 +1,38 @@
+{
+  "story": {
+    "eyebrow": "Our Approach",
+    "title": "We build websites the way software gets built",
+    "lead": "{{site.name}} is a web development studio. We design and build custom websites, web applications and digital systems for businesses, creators, professionals and organizations.",
+    "paragraphs": [
+      "Most websites fail quietly. They look acceptable, they load eventually, and they generate almost nothing. Usually that's not a design failure — it's a decision failure. Nobody defined what the site was for, so it became a brochure that nobody reads.",
+      "We work the other way around. Every project starts with what the business needs to happen, and every section of the finished site exists because it moves that forward. Design and code come after that's settled, not instead of it.",
+      "Technically, we build with the fundamentals — semantic HTML, CSS design tokens, modular JavaScript, component-driven architecture — rather than assembling plugins and hoping they cooperate. It costs a little more thought upfront and considerably less money over the following three years."
+    ],
+    "signature": "{{site.name}}",
+    "highlights": [
+      { "icon": "target", "title": "Goal first", "text": "Structure follows the business objective, not a template's page order." },
+      { "icon": "code", "title": "Fundamentals", "text": "Standards-based code that another developer can read and extend." },
+      { "icon": "handshake", "title": "You own it", "text": "Code, content, domain and accounts stay in your name. Always." }
+    ]
+  },
+  "stats": {
+    "eyebrow": "At a glance",
+    "title": "How we work",
+    "items": [
+      { "value": 12, "suffix": "+", "label": "Service areas", "description": "From landing pages to full applications" },
+      { "value": 20, "suffix": "+", "label": "Website types", "description": "Across industries and business models" },
+      { "value": 7, "suffix": "", "label": "Process stages", "description": "From understanding to ongoing improvement" },
+      { "value": 100, "suffix": "%", "label": "Custom built", "description": "No purchased themes dressed up as strategy" }
+    ]
+  },
+  "principles": {
+    "eyebrow": "Principles",
+    "title": "What we won't do",
+    "items": [
+      { "icon": "x-circle", "title": "Promise rankings", "text": "Nobody can guarantee search positions. We build the foundations that make them possible." },
+      { "icon": "x-circle", "title": "Hold your assets", "text": "No hostage domains, no locked accounts, no code you can't take elsewhere." },
+      { "icon": "x-circle", "title": "Ship plugin soup", "text": "Twenty plugins to avoid writing forty lines of code is a maintenance bill, not a solution." },
+      { "icon": "x-circle", "title": "Bill for surprises", "text": "Scope is agreed in writing first. Changes get quoted before they get built." }
+    ]
+  }
+}

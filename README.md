@@ -1,16 +1,401 @@
-## Hi there 👋
+# Crafted WebWorks
 
-<!--
-**crafted-webworks/crafted-webworks** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+A production-quality, fully **data-driven** website system for a web development studio.
+HTML5 · CSS3 · vanilla JavaScript · jQuery · AJAX · Bootstrap 5 · inline SVG. No build step
+required to run it, no frontend framework, no theme.
 
-Here are some ideas to get you started:
+The core idea: **every piece of editable content lives in `data/*.json`.** HTML files contain
+mount points and nothing else. Adding a service, project, demo, tool, article or FAQ means
+editing one JSON file — never touching markup.
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+---
+
+## Quick start
+
+```bash
+# Any static server works. Pick one:
+npx serve .
+python -m http.server 8080
+php -S localhost:8080
+```
+
+Then open `http://localhost:8080`.
+
+**Opening `index.html` directly from disk also works.** Browsers block `fetch()` on
+`file://`, so the app falls back to `data/bundle.js` — a generated copy of every JSON file.
+Rebuild it after editing any data:
+
+```bash
+node tools/build-bundle.mjs
+```
+
+---
+
+## How the site is assembled
+
+```
+data/*.json  →  data.js (load + cache)  →  components.js (build markup)
+                                        →  sections.js  (compose sections)
+                                        →  renderer.js  (mount into the page)
+```
+
+`pages.json` decides which sections appear on a page and in what order. This is the whole of
+`index.html`'s body:
+
+```html
+<body data-page="home">
+  <div data-component="navbar"></div>
+  <main id="main" data-sections></main>
+  <div data-component="footer"></div>
+  <script src="assets/js/loader.js" defer></script>
+</body>
+```
+
+Remove `"tools"` from `pages.json → home → sections` and the tools section is gone. Move
+`"testimonials"` above `"process"` and it moves. No HTML edit, no CSS edit.
+
+---
+
+## Editing content
+
+| I want to change… | Edit this |
+| --- | --- |
+| Studio name, email, phone, domain, copyright | `data/site.json` |
+| Navigation items and the header CTA | `data/navigation.json` |
+| Footer columns, links, pre-footer CTA | `data/footer.json` |
+| Social profiles (one source, used everywhere) | `data/social.json` |
+| Hero, all homepage section intros, final CTA | `data/homepage.json` |
+| Which sections a page shows, and page SEO | `data/pages.json` |
+| Services | `data/services.json` |
+| Portfolio projects | `data/projects.json` |
+| Demo concepts | `data/demos.json` |
+| Free resources | `data/resources.json` |
+| General tools | `data/tools.json` |
+| Blog articles (full content, not just cards) | `data/blog.json` |
+| FAQs | `data/faqs.json` |
+| Testimonials | `data/testimonials.json` |
+| Process steps | `data/process.json` |
+| Website type cards | `data/website-types.json` |
+| Contact info, budget/timeline options, form endpoint | `data/contact.json` |
+| Contact form fields and validation rules | `data/forms/contact.json` |
+| Privacy / Terms / Cookie text | `data/legal.json` |
+| Global SEO defaults and structured data | `data/seo.json` |
+| About page copy | `data/about.json` |
+
+### Nothing is written twice
+
+**The studio name and every contact detail exist in exactly one place: `data/site.json`.**
+
+```bash
+$ grep -rn "Crafted WebWorks" data/*.json assets/js assets/css tools components
+data/site.json:2:  "name": "Crafted WebWorks",
+```
+
+That is the complete result. (Two image assets also carry the name —
+`assets/images/og/og-default.svg` and the logo files — because it is drawn into the artwork.
+Artwork is the one thing a token can't reach; regenerate those when you rebrand.) Rebranding is a one-line edit — no find-and-replace across the
+code, because **nothing in `assets/` or `tools/` mentions the brand at all**. The JavaScript
+namespace is `Site`, the CSS/DOM prefix is `ui-`, and every other file references the name
+with a token:
+
+```jsonc
+// data/social.json
+"email": { "handle": "{{site.email}}", "url": "mailto:{{site.email}}" }
+
+// data/seo.json
+"titleTemplate": "%s | {{site.name}}"
+
+// data/contact.json
+{ "label": "Instagram", "value": "{{social.instagram.handle}}", "url": "{{social.instagram.url}}" }
+
+// data/forms/contact.json
+"label": "I agree to {{site.name}} storing these details…"
+```
+
+`assets/js/data.js` resolves `{{site.*}}` and `{{social.*}}` the moment a file loads;
+`tools/build-pages.mjs` does the same at build time for the `<title>` and meta description.
+Change the name or address once and the navbar, footer, legal documents, consent checkbox,
+page titles, mailto links and structured data all follow. `check-integrity.mjs` fails the
+build on a token that doesn't resolve, so a typo can't ship.
+
+The HTML files carry no content at all — no headings, no contact details, no navigation. Each
+page is a `<head>`, three mount points and one script tag, generated by
+`node tools/build-pages.mjs` from `data/pages.json`. **`index.html` included.**
+
+> One consequence worth knowing: because there is no `<noscript>` copy of the content, a
+> visitor with JavaScript disabled sees an empty page. That was the deliberate trade for
+> having zero duplicated text. If you ever need the fallback, port to PHP (see below) — that
+> gives you real server-rendered HTML rather than a second copy to keep in sync.
+
+### Brand assets
+
+`assets/images/logo-full.jpg` is the source logo (1080px). `logo.png` (128px) and
+`favicon-32/64.png` are generated from it and wired up in `data/site.json → logo` and the
+page `<head>`. To swap the logo: replace `logo-full.jpg`, regenerate the smaller sizes, and
+nothing else changes. Setting `site.json → logo.type` to `"svg"` falls back to the inline
+vector mark drawn in `renderer.js`, which needs no image file at all.
+
+### Adding a service (the pattern for everything)
+
+```jsonc
+// data/services.json → items[]
+{
+  "id": "api-development",
+  "title": "API Development",
+  "slug": "api-development",
+  "category": "applications",
+  "icon": "plug",                       // any name from assets/js/icons.js
+  "shortDescription": "REST APIs your other systems can actually use.",
+  "description": "…",
+  "features": ["Versioned endpoints", "Auth", "Documentation"],
+  "technologies": ["REST", "OAuth"],
+  "url": "/pages/services.html#api-development",
+  "featured": true,
+  "active": true,
+  "order": 13
+}
+```
+
+Save. Reload. The card appears on the homepage, on the services page, in search, and in the
+`ItemList` structured data. Filter buttons regenerate themselves from the data, so a brand new
+category gets its own button automatically.
+
+### The hero video
+
+`data/homepage.json → hero.background` controls it:
+
+```jsonc
+"background": {
+  "type": "video",                      // "none" falls back to the grid treatment
+  "src": "/assets/video/intro.mp4",
+  "poster": "",
+  "objectPosition": "center",
+  "respectSaveData": true
+}
+```
+
+The file is used exactly as supplied — `object-fit: cover`, centred, never cropped by hand.
+It sits at `z-index: 0` behind all hero content with a directional scrim over it (heavy on the
+text side, light where the footage reads). `assets/js/sections.js → initHeroVideo` handles what
+the HTML attributes can't: reduced-motion holds a still frame, Save-Data skips the download,
+and a refused autoplay falls back to a frame rather than a gap.
+
+Set `hero.visual.type` to `"none"` to drop the code window and let the video hold the frame alone.
+
+### Nav dropdowns
+
+A `menu` block in `data/navigation.json` turns any nav item into a mega-menu, and the contents
+are pulled **live from the collection** — add a tool to `tools.json` and it appears in the Tools
+menu with no other edit:
+
+```jsonc
+{ "id": "tools", "label": "Tools", "url": "/pages/tools.html",
+  "menu": { "source": "tools", "layout": "grouped", "groupBy": "category",
+            "columns": 4, "limit": 20,
+            "footer": { "label": "All tools", "url": "/pages/tools.html" } } }
+```
+
+Layouts: `columns` (even grid), `grouped` (a labelled column per category), `feature` (lead item
+with artwork plus a list). Panels open on hover *and* keyboard focus, so tabbing reaches every
+entry; Escape closes. On touch, tapping the parent just navigates to the full listing page, so
+nothing is unreachable.
+
+### Project case studies
+
+`/pages/projects.html?project=slug` renders a full case study from `projects.json` — same
+data-driven hook as the blog, no per-project HTML file. Add a `caseStudy` block:
+
+```jsonc
+"caseStudy": {
+  "brief": "…", "challenge": "…", "approach": "…", "outcome": "…",
+  "role": ["Design direction", "Front-end build"],
+  "duration": "6 weeks"
+}
+```
+
+Any project without one still renders — it just shows the facts and highlights instead of the
+narrative chapters.
+
+### Adding a blog article
+
+Append to `data/blog.json → items[]` with a `content` array of blocks
+(`paragraph`, `heading`, `list`, `quote`, `code`, `callout`, `image`). The listing card and the
+full article at `/pages/blog.html?post=your-slug` both render from it — no HTML file needed.
+
+### Adding a tool
+
+1. Add an entry to `data/tools.json` with `"status": "live"`.
+2. Add a matching entry to `REGISTRY` in `assets/js/tools.js`:
+
+```js
+"my-tool": {
+  render: function () { return field({ name: "in", label: "Input" }) + output("out"); },
+  mount: function (root) {
+    live(root, function () { write(root, "out", value(root, "in").toUpperCase()); });
+  }
+}
+```
+
+Fifteen tools are implemented and working (JSON formatter/minifier, colour converter with
+WCAG contrast, gradient and box-shadow generators, crypto-backed password generator, word
+counter, case converter, slug generator, meta tag generator, URL and Base64 converters,
+timestamp converter, lorem ipsum, HTML entity converter). Entries marked `"planned"` render
+with a "Coming soon" badge until an implementation exists.
+
+### Adding a page
+
+1. Add an entry to `data/pages.json` (`url`, `seo`, `header`, `sections`).
+2. Run `node tools/build-pages.mjs` — the HTML shell and `sitemap.xml` are generated.
+
+---
+
+## Project structure
+
+```
+crafted-webworks/
+├── index.html                  # homepage shell
+├── pages/                      # generated shells — edit pages.json, not these
+├── components/                 # markup reference templates for PHP/WP/Laravel ports
+├── data/                       # ★ every piece of editable content
+│   ├── forms/contact.json
+│   └── bundle.js               # generated; file:// fallback
+├── assets/
+│   ├── css/                    # variables → base → layout → components →
+│   │                           #   sections → animations → utilities → responsive
+│   │                           # main.css imports them in that order
+│   ├── js/                     # 19 modules, loaded by loader.js in dependency order
+│   ├── images/                 # logo-full.jpg (source) → logo.png + favicons
+│   └── images/og/              # social share image (SVG source)
+├── tools/                      # node build scripts (optional, not runtime)
+├── robots.txt · sitemap.xml
+```
+
+### JavaScript modules
+
+| Module | Responsibility |
+| --- | --- |
+| `loader.js` | Resolves the site root from its own URL; injects vendors + modules in order |
+| `config.js` | The `Site` namespace, settings, event bus, dev-only logging |
+| `utilities.js` | Escaping, URL resolution, dates, collections, DOM, storage |
+| `ajax.js` | One request helper (jQuery with a fetch fallback), timeout, retry, errors |
+| `data.js` | JSON loading, caching, `file://` bundle fallback |
+| `icons.js` | ~110-icon inline SVG sprite, referenced from JSON by name |
+| `components.js` | Every reusable UI builder — one per component, no variants |
+| `sections.js` | Section renderers keyed by id |
+| `renderer.js` | Navbar, footer, and the section mount pipeline |
+| `navigation.js` | Header state, drawer, smooth scroll, scroll spy, theme, back-to-top |
+| `search.js` · `pagination.js` · `filters.js` | The reusable collection controller |
+| `forms.js` | Data-driven form building, validation, AJAX submission |
+| `animations.js` | IntersectionObserver reveal, counters, meters, SVG path drawing |
+| `seo.js` | Meta, Open Graph, Twitter, JSON-LD |
+| `accessibility.js` | Focus trapping, live announcements, keyboard modality |
+| `tools.js` | The general-tools mini apps |
+| `pages.js` | Per-page hooks (currently the blog article view) |
+| `app.js` | Boot sequence |
+
+### CSS
+
+All design decisions are tokens in `assets/css/variables.css` — colour, spacing, type scale,
+radius, shadow, motion, z-index. Nothing else hard-codes a value. The light theme is *only*
+token overrides, which is why it works without duplicating a single rule.
+
+The palette is taken from the Crafted WebWorks logo: near-black navy `#070B16`, electric blue
+`#2B7FFF`, signal orange `#FF8A1E`. To rebrand, change those three tokens.
+
+---
+
+## Converting to a server-rendered stack
+
+The architecture was designed for this. Each component has a documented markup contract in
+`components/` with `{{ placeholder }}` syntax.
+
+- **PHP** — `include 'components/navbar.php'`, replace `{{ x }}` with `<?= $x ?>`, read the same
+  JSON with `json_decode(file_get_contents(...))`.
+- **Laravel** — components map to Blade components; `{{ }}` syntax already matches.
+- **WordPress** — components become `template-parts/`; JSON collections become custom post types.
+- **Any CMS** — the JSON files *are* the content model. Field names line up with what a CMS
+  would generate.
+
+Because content is separated from markup and markup is separated from behaviour, porting is a
+translation job, not a rewrite.
+
+---
+
+## Before you launch
+
+- [ ] Replace the placeholder domain `https://craftedwebworks.example/` in `data/site.json`
+      and `robots.txt`
+- [ ] Replace the placeholder email and phone in `data/site.json`, `data/social.json` and
+      `data/contact.json`
+- [ ] **Set a real form endpoint**: `data/contact.json → form.endpoint`, and change
+      `form.mode` from `"demo"` to `"live"`. Until you do, the form validates and shows a
+      success state but sends nothing — and says so
+- [ ] Replace the sample projects in `data/projects.json` with real work (and get client
+      permission before publishing names)
+- [ ] Replace the placeholder testimonials in `data/testimonials.json` with real, permitted
+      quotes. No review structured data is emitted until you do — deliberately
+- [ ] Export `assets/images/og/og-default.svg` to a **1200×630 PNG** and point
+      `data/seo.json → defaults.openGraph.image` at it (most social platforms don't render SVG)
+- [ ] Have `data/legal.json` reviewed by someone qualified — it is a template, not legal advice
+- [ ] Fill in `data/social.json` for LinkedIn/GitHub and set `"enabled": true`
+- [ ] Re-run `node tools/build-bundle.mjs` and `node tools/build-pages.mjs`
+
+### Server-side requirements for the contact form
+
+The endpoint is yours to build. It must, at minimum:
+
+- Re-validate **every** field — the client-side rules are a courtesy, not a control
+- Reject submissions where the honeypot field (`company_website_url`) is non-empty
+- Rate-limit by IP and apply a server-side minimum time-to-submit
+- Store credentials (SMTP, API keys, tokens) in server environment variables. **Nothing under
+  `data/` is private** — it is served to the browser
+
+---
+
+## Accessibility
+
+Semantic landmarks, one `h1` per page, logical heading order, skip link, visible focus states,
+full keyboard operation, focus trapping in the drawer and modal with focus restored on close,
+`aria-live` announcements for filter results, labelled form fields with errors wired through
+`aria-describedby` and `aria-invalid`, 44px touch targets on coarse pointers, and full
+`prefers-reduced-motion` support at both the CSS and JavaScript level.
+
+## Performance
+
+One CSS entry point, no icon font (a ~110-icon inline SVG sprite instead), no images required
+(card artwork is generated CSS/SVG browser mockups), all scripts deferred, `content-visibility`
+avoided in favour of genuinely small payloads, lazy-loaded images with explicit dimensions to
+prevent layout shift, and one cached request per JSON file.
+
+For production: concatenate `assets/css/*.css` in the order listed in `main.css` to remove the
+`@import` chain, minify, and consider self-hosting the fonts and Bootstrap.
+
+## Browser support
+
+Current Chrome, Edge, Firefox and Safari. Uses `IntersectionObserver`, CSS custom properties,
+CSS Grid, `color-mix()` and `:has()` — the last two degrade gracefully (a slightly flatter
+mockup tint and a non-highlighted open FAQ item).
+
+---
+
+## Known trade-offs
+
+**Content is rendered client-side.** Google executes JavaScript and will index it, but
+server-side rendering is still better for SEO, social preview scrapers and no-JS visitors. Each
+page ships a real `<title>` and `<meta name="description">` for crawl time; everything else
+arrives with JavaScript. If organic search is critical, port to PHP or Laravel using
+`components/` — the architecture is built for that move, and it removes this trade-off entirely
+without introducing a duplicated copy of your content.
+
+**`data/bundle.js` duplicates the JSON.** It is generated, never edited, and exists so the site
+works from the file system. Over HTTP it is loaded but never read.
+
+---
+
+## Credits
+
+Design and implementation for Crafted WebWorks.
+Instagram: [@crafted_webworks](https://www.instagram.com/crafted_webworks/)
+
+Third-party: Bootstrap 5.3 and jQuery 3.7 (CDN), Google Fonts (Sora, Inter, JetBrains Mono).
+All icons and illustrations are original inline SVG.

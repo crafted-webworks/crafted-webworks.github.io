@@ -1,0 +1,677 @@
+{
+  "notice": "Advaith Homes is a real client project. Every other entry is a SAMPLE describing a representative build type, not a named engagement — replace them with real work (with client permission) before launch. Deliberately contains no performance or revenue claims.",
+  "settings": {
+    "itemsPerPage": 9,
+    "defaultFilter": "all",
+    "caseStudyUrlPattern": "/pages/projects.html?project={slug}"
+  },
+  "categories": [
+    {
+      "id": "business",
+      "label": "Business"
+    },
+    {
+      "id": "ecommerce",
+      "label": "E-Commerce"
+    },
+    {
+      "id": "webapp",
+      "label": "Web App"
+    },
+    {
+      "id": "landing",
+      "label": "Landing Page"
+    },
+    {
+      "id": "cms",
+      "label": "CMS"
+    }
+  ],
+  "items": [
+    {
+      "id": "project-advaith-homes",
+      "title": "Advaith Homes",
+      "slug": "advaith-homes",
+      "category": "cms",
+      "clientType": "UK Property Services",
+      "year": 2025,
+      "shortDescription": "A buyer-side property guidance platform: a deep content library and five financial calculators, all client-editable.",
+      "description": "A WordPress platform for a UK property consultancy that supports buyers rather than listing houses. The site organises a large body of guidance around the stages of a purchase, puts five financial calculators in front of the questions people actually get stuck on, and routes anyone who needs a professional to the right one.",
+      "technologies": [
+        "WordPress",
+        "Custom Theme",
+        "PHP",
+        "JavaScript",
+        "Calculators"
+      ],
+      "tags": [
+        "property",
+        "cms",
+        "calculators",
+        "content architecture",
+        "lead generation"
+      ],
+      "highlights": [
+        "Five financial calculators: total cost to buy, stamp duty, first-time-buyer savings plan, affordability and budget",
+        "Guidance library structured by purchase stage rather than by page",
+        "Ask an Expert routing to surveyors, solicitors and mortgage advisers",
+        "Custom WordPress theme — every section editable by the client"
+      ],
+      "image": null,
+      "preview": {
+        "pattern": "cms",
+        "accent": "blue"
+      },
+      "url": "https://advaithhomes.co.uk/",
+      "caseStudyUrl": "/pages/projects.html?project=advaith-homes",
+      "featured": true,
+      "status": "live",
+      "placeholder": false,
+      "order": 0,
+      "caseStudy": {
+        "_note": "Written from the live site. The Brief and Outcome describe what is observably there — replace them with the real engagement story, and fill in role and duration, before this goes public.",
+        "brief": "A UK property consultancy that works for the buyer rather than the seller. They needed a site that could carry a large and growing body of guidance, host the financial tools their clients kept asking for, and connect people to vetted professionals — all of it editable by the team without a developer.",
+        "challenge": "Buying a home in the UK is a process most people go through two or three times in a lifetime, against professionals who do it daily. The information exists but is scattered, and the numbers that decide whether a purchase is possible — stamp duty, the true total cost, what is actually affordable — are exactly the ones buyers get wrong. A conventional estate-agency site, built around listings, answers none of that.",
+        "approach": "The content architecture follows the purchase itself rather than a page hierarchy: buying a home, property knowledge, tools, professionals. Five calculators sit at the points where buyers stall — total cost to buy, stamp duty, a first-time-buyer savings plan, affordability and budget — so the guidance and the arithmetic live in the same place. Everything runs on a custom WordPress theme with structured content types, so new guides and updated rates are a content edit rather than a release. Coverage spans England, Wales, Scotland and Northern Ireland, which the tools account for.",
+        "outcome": "A property platform that gives buyers the guidance and the numbers in one place, and gives the consultancy a site their own team maintains — with the Ask an Expert route turning readers into enquiries.",
+        "role": [
+          "Content architecture",
+          "Custom WordPress theme",
+          "Calculator development",
+          "Front-end build"
+        ],
+        "duration": ""
+      }
+    },
+    {
+      "id": "project-cane-house",
+      "title": "The Cane House",
+      "slug": "the-cane-house",
+      "category": "ecommerce",
+      "clientType": "Food & Beverage",
+      "year": 2026,
+      "status": "in-progress",
+      "statusLabel": "In progress",
+      "shortDescription": "Freshly pressed sugarcane juice — online ordering and event catering, currently in build.",
+      "description": "An online ordering and event catering site for a UK sugarcane juice brand. The holding page is live while the storefront is built: flavour ordering, and enquiry-to-booking for event catering.",
+      "technologies": [
+        "WordPress",
+        "Custom Theme",
+        "Online Ordering",
+        "Catering Enquiries"
+      ],
+      "tags": [
+        "ecommerce",
+        "food and drink",
+        "ordering",
+        "catering",
+        "in progress"
+      ],
+      "highlights": [
+        "Holding page live now — “Pressed Fresh. Served Cool.”",
+        "Flavour-based online ordering in build",
+        "Event catering enquiry and booking flow",
+        "Custom WordPress theme, client-editable"
+      ],
+      "image": null,
+      "preview": {
+        "pattern": "store",
+        "accent": "green"
+      },
+      "url": "https://thecanehouse.co.uk/",
+      "caseStudyUrl": "/pages/projects.html?project=the-cane-house",
+      "featured": true,
+      "placeholder": false,
+      "order": 1,
+      "caseStudy": {
+        "_note": "This project is still in build. The Outcome is deliberately empty — nothing to report until it ships. Replace the narrative with the real engagement story before publishing.",
+        "brief": "A UK brand pressing sugarcane juice to order wanted to sell online and take event catering bookings, rather than relying on being found in person.",
+        "challenge": "The product is made fresh and served cold, which makes it a poor fit for conventional shipping-based e-commerce. Ordering has to work around collection and events instead of a courier, and the catering side is an enquiry with a date and a headcount rather than an item in a basket.",
+        "approach": "A holding page went up first so the brand had a working address while the storefront was built. Ordering is being modelled around flavours and collection rather than shipping, with event catering handled as a dated enquiry flow instead of a checkout — two different jobs that a single generic cart would do badly.",
+        "outcome": "",
+        "role": [
+          "Holding page",
+          "Custom WordPress theme",
+          "Ordering flow",
+          "Catering enquiry flow"
+        ],
+        "duration": ""
+      }
+    },
+    {
+      "id": "project-studio-interiors",
+      "title": "Interior Design Studio",
+      "slug": "interior-design-studio",
+      "category": "business",
+      "clientType": "Design Studio",
+      "year": 2025,
+      "shortDescription": "A portfolio-led studio website where the work does the selling.",
+      "description": "A restrained, image-first website for an interior design practice. Projects are the primary navigation, each with a full case layout, and the enquiry flow is available from every scroll position without ever interrupting the browsing experience.",
+      "technologies": [
+        "HTML5",
+        "CSS Grid",
+        "JavaScript",
+        "Lightbox"
+      ],
+      "tags": [
+        "portfolio",
+        "gallery",
+        "enquiry",
+        "responsive"
+      ],
+      "highlights": [
+        "Project-first navigation",
+        "Responsive image galleries",
+        "Sticky enquiry access"
+      ],
+      "image": null,
+      "preview": {
+        "pattern": "gallery",
+        "accent": "orange"
+      },
+      "url": "/pages/projects.html#interior-design-studio",
+      "caseStudyUrl": "/pages/projects.html?project=interior-design-studio",
+      "featured": true,
+      "status": "live",
+      "placeholder": true,
+      "order": 2,
+      "caseStudy": {
+        "brief": "A design practice whose work sold itself in person but not online. The old site buried projects three clicks deep behind a services menu.",
+        "challenge": "Photography was the product, but the previous template compressed every image into a 400px card and put a stock hero above them. Enquiries came almost entirely from Instagram, not the website.",
+        "approach": "Projects became the primary navigation rather than a sub-page. Each one got a full case layout with responsive image sources at four widths, and the enquiry route was made available from any scroll position without a pop-up.",
+        "outcome": "A site the studio sends people to instead of a portfolio PDF, with the work at the size it deserves.",
+        "role": [
+          "Design direction",
+          "Front-end build",
+          "Image pipeline",
+          "Enquiry flow"
+        ],
+        "duration": "3 weeks"
+      }
+    },
+    {
+      "id": "project-artisan-store",
+      "title": "Artisan Goods Store",
+      "slug": "artisan-goods-store",
+      "category": "ecommerce",
+      "clientType": "Retail Brand",
+      "year": 2025,
+      "shortDescription": "A small-catalogue store built around variants and fast checkout.",
+      "description": "An online store for a handmade goods brand with a modest catalogue but complex variants. Product pages handle size, finish and personalisation without turning into a form, and checkout is reduced to the fewest steps the payment flow allows.",
+      "technologies": [
+        "JavaScript",
+        "REST API",
+        "Payment Gateway",
+        "Webhooks"
+      ],
+      "tags": [
+        "cart",
+        "checkout",
+        "variants",
+        "inventory"
+      ],
+      "highlights": [
+        "Variant-aware product pages",
+        "Two-step checkout",
+        "Order and stock sync"
+      ],
+      "image": null,
+      "preview": {
+        "pattern": "store",
+        "accent": "blue"
+      },
+      "url": "/pages/projects.html#artisan-goods-store",
+      "caseStudyUrl": "/pages/projects.html?project=artisan-goods-store",
+      "featured": true,
+      "status": "live",
+      "placeholder": true,
+      "order": 3,
+      "caseStudy": {
+        "brief": "A maker brand selling roughly forty products, each with size, finish and personalisation options.",
+        "challenge": "Variants multiplied into hundreds of combinations. On the previous platform every option was a separate dropdown, so the product page read as a tax form and abandonment was concentrated there.",
+        "approach": "Options were modelled as a single variant matrix with live availability and price, so choosing a size greys out the finishes that don't exist. Checkout was cut to two steps and order and stock sync run over webhooks.",
+        "outcome": "A product page that answers the question 'can I actually buy this one' before the customer has to guess.",
+        "role": [
+          "Catalogue modelling",
+          "Storefront build",
+          "Payment integration",
+          "Stock sync"
+        ],
+        "duration": "6 weeks"
+      }
+    },
+    {
+      "id": "project-fleet-dashboard",
+      "title": "Operations Dashboard",
+      "slug": "operations-dashboard",
+      "category": "webapp",
+      "clientType": "Logistics Company",
+      "year": 2025,
+      "shortDescription": "An internal tool that replaced a shared spreadsheet.",
+      "description": "A browser-based operations dashboard for a logistics team: job records, status workflow, role-based access and exportable reporting. Built to be usable on a phone in the field and on a desktop in the office, with validation that prevents the data mess the spreadsheet allowed.",
+      "technologies": [
+        "JavaScript",
+        "AJAX",
+        "REST API",
+        "Auth",
+        "Charts"
+      ],
+      "tags": [
+        "dashboard",
+        "roles",
+        "reporting",
+        "internal-tool"
+      ],
+      "highlights": [
+        "Role-based permissions",
+        "Workflow state tracking",
+        "CSV and print reporting"
+      ],
+      "image": null,
+      "preview": {
+        "pattern": "dashboard",
+        "accent": "violet"
+      },
+      "url": "/pages/projects.html#operations-dashboard",
+      "caseStudyUrl": "/pages/projects.html?project=operations-dashboard",
+      "featured": true,
+      "status": "live",
+      "placeholder": true,
+      "order": 4,
+      "caseStudy": {
+        "brief": "A logistics team running daily operations out of one shared spreadsheet that four people edited at once.",
+        "challenge": "No validation, no history, and no way to see who changed what. Jobs were lost to overwritten rows, and the field crew couldn't use it on a phone at all.",
+        "approach": "A browser-based tool with a real data model, role-based permissions and a workflow state per job. Built mobile-first because most edits happen from a van, with CSV and print output so the office reporting habit survived the migration.",
+        "outcome": "Job records that can't be silently overwritten, and a field crew that stopped phoning the office to ask about status.",
+        "role": [
+          "Requirements",
+          "Data model",
+          "Application build",
+          "Role and permission design"
+        ],
+        "duration": "10 weeks"
+      }
+    },
+    {
+      "id": "project-property-listings",
+      "title": "Property Listings Portal",
+      "slug": "property-listings-portal",
+      "category": "webapp",
+      "clientType": "Real Estate Agency",
+      "year": 2024,
+      "shortDescription": "Search, filter and enquire — without a page reload.",
+      "description": "A property portal with map and list views, multi-criteria filtering, saved searches and per-listing enquiry routing. Listings are managed through a custom admin area so the agency's team can publish without developer involvement.",
+      "technologies": [
+        "JavaScript",
+        "AJAX",
+        "Maps API",
+        "Custom Admin"
+      ],
+      "tags": [
+        "search",
+        "filters",
+        "listings",
+        "maps"
+      ],
+      "highlights": [
+        "Instant client-side filtering",
+        "Map and list views",
+        "Agent-managed listings"
+      ],
+      "image": null,
+      "preview": {
+        "pattern": "listing",
+        "accent": "teal"
+      },
+      "url": "/pages/projects.html#property-listings-portal",
+      "caseStudyUrl": "/pages/projects.html?project=property-listings-portal",
+      "featured": true,
+      "status": "live",
+      "placeholder": true,
+      "order": 5,
+      "caseStudy": {
+        "brief": "An agency whose listings were re-typed by hand into a website, a portal feed and a printed sheet.",
+        "challenge": "Listings went stale within days, and buyers filtering by more than one criterion triggered a full page reload each time.",
+        "approach": "One admin area as the source of truth, with client-side filtering across every criterion so refining a search is instant. Map and list views share the same result set rather than being separate pages.",
+        "outcome": "Agents publish once, and buyers can narrow twelve criteria without ever waiting for a page load.",
+        "role": [
+          "Portal build",
+          "Admin area",
+          "Search and filter system",
+          "Maps integration"
+        ],
+        "duration": "8 weeks"
+      }
+    },
+    {
+      "id": "project-clinic-booking",
+      "title": "Clinic Booking Website",
+      "slug": "clinic-booking-website",
+      "category": "business",
+      "clientType": "Healthcare Practice",
+      "year": 2024,
+      "shortDescription": "Appointments booked directly, without a phone call.",
+      "description": "A multi-practitioner clinic website with service information, practitioner profiles and an appointment request flow tied to real availability. Accessibility was a first-class requirement given the patient demographic.",
+      "technologies": [
+        "HTML5",
+        "JavaScript",
+        "Calendar API",
+        "Forms"
+      ],
+      "tags": [
+        "booking",
+        "accessibility",
+        "appointments",
+        "healthcare"
+      ],
+      "highlights": [
+        "Availability-aware booking",
+        "WCAG-minded interface",
+        "Practitioner profiles"
+      ],
+      "image": null,
+      "preview": {
+        "pattern": "booking",
+        "accent": "green"
+      },
+      "url": "/pages/projects.html#clinic-booking-website",
+      "caseStudyUrl": "/pages/projects.html?project=clinic-booking-website",
+      "featured": true,
+      "status": "live",
+      "placeholder": true,
+      "order": 6,
+      "caseStudy": {
+        "brief": "A multi-practitioner clinic taking every appointment by phone during opening hours only.",
+        "challenge": "Reception spent mornings on the phone, and patients who needed an evening appointment had no way to ask for one. A significant share of patients use screen readers or large text.",
+        "approach": "Accessibility was a build requirement, not a review step: full keyboard operation, real labels, and contrast checked against WCAG AA throughout. Requests are tied to actual practitioner availability so the clinic never has to decline a slot it already offered.",
+        "outcome": "Appointment requests arriving outside opening hours, and a booking flow that works with a screen reader end to end.",
+        "role": [
+          "Accessibility-led design",
+          "Front-end build",
+          "Calendar integration",
+          "Practitioner profiles"
+        ],
+        "duration": "5 weeks"
+      }
+    },
+    {
+      "id": "project-saas-launch",
+      "title": "SaaS Product Launch Page",
+      "slug": "saas-product-launch-page",
+      "category": "landing",
+      "clientType": "Software Startup",
+      "year": 2025,
+      "shortDescription": "One page, one action, measured end to end.",
+      "description": "A launch page for a software product: a tight narrative from problem to proof to sign-up, with a single conversion goal, event tracking on every meaningful interaction and a structure ready for A/B variants.",
+      "technologies": [
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "Analytics Events"
+      ],
+      "tags": [
+        "conversion",
+        "campaign",
+        "analytics",
+        "single-page"
+      ],
+      "highlights": [
+        "Single conversion goal",
+        "Event-instrumented",
+        "Variant-ready structure"
+      ],
+      "image": null,
+      "preview": {
+        "pattern": "landing",
+        "accent": "orange"
+      },
+      "url": "/pages/projects.html#saas-product-launch-page",
+      "caseStudyUrl": "/pages/projects.html?project=saas-product-launch-page",
+      "featured": true,
+      "status": "live",
+      "placeholder": true,
+      "order": 7,
+      "caseStudy": {
+        "brief": "A software team with a launch date and no page to send traffic to.",
+        "challenge": "Paid traffic was scheduled before the page existed, and the team needed to know which section of the argument was losing people.",
+        "approach": "A single-goal page structured as problem, proof, sign-up, with analytics events on each meaningful interaction and a component structure that lets any section be swapped for an A/B variant without a rebuild.",
+        "outcome": "A page that shipped ahead of the campaign and can be reasoned about with data rather than opinion.",
+        "role": [
+          "Narrative structure",
+          "Page build",
+          "Analytics instrumentation",
+          "Variant architecture"
+        ],
+        "duration": "1 week"
+      }
+    },
+    {
+      "id": "project-publishing-cms",
+      "title": "Editorial CMS Website",
+      "slug": "editorial-cms-website",
+      "category": "cms",
+      "clientType": "Media Publisher",
+      "year": 2024,
+      "shortDescription": "A content model editors don't need training to use.",
+      "description": "A publishing website with custom content types, editorial workflow, scheduled publishing and structured article components. Editors compose from reusable blocks, so layouts stay consistent no matter who publishes.",
+      "technologies": [
+        "CMS",
+        "PHP",
+        "JSON",
+        "Structured Content"
+      ],
+      "tags": [
+        "publishing",
+        "workflow",
+        "editorial",
+        "content-model"
+      ],
+      "highlights": [
+        "Block-based article builder",
+        "Scheduled publishing",
+        "Consistent layouts"
+      ],
+      "image": null,
+      "preview": {
+        "pattern": "cms",
+        "accent": "blue"
+      },
+      "url": "/pages/projects.html#editorial-cms-website",
+      "caseStudyUrl": "/pages/projects.html?project=editorial-cms-website",
+      "featured": false,
+      "status": "live",
+      "placeholder": true,
+      "order": 8
+    },
+    {
+      "id": "project-manufacturing-site",
+      "title": "Manufacturing Company Website",
+      "slug": "manufacturing-company-website",
+      "category": "business",
+      "clientType": "Industrial Manufacturer",
+      "year": 2024,
+      "shortDescription": "A technical catalogue made navigable for buyers.",
+      "description": "A corporate website for a manufacturer with a large product catalogue, specification tables, downloadable datasheets and a quote request flow. The challenge was making dense technical information findable rather than impressive.",
+      "technologies": [
+        "HTML5",
+        "JavaScript",
+        "Search",
+        "PDF Assets"
+      ],
+      "tags": [
+        "catalogue",
+        "b2b",
+        "specifications",
+        "downloads"
+      ],
+      "highlights": [
+        "Faceted product catalogue",
+        "Spec comparison tables",
+        "Quote request routing"
+      ],
+      "image": null,
+      "preview": {
+        "pattern": "business",
+        "accent": "violet"
+      },
+      "url": "/pages/projects.html#manufacturing-company-website",
+      "caseStudyUrl": "/pages/projects.html?project=manufacturing-company-website",
+      "featured": false,
+      "status": "live",
+      "placeholder": true,
+      "order": 9
+    },
+    {
+      "id": "project-education-portal",
+      "title": "Student Portal",
+      "slug": "student-portal",
+      "category": "webapp",
+      "clientType": "Education Institute",
+      "year": 2024,
+      "shortDescription": "One login for admissions, materials and results.",
+      "description": "A student-facing portal covering admission applications, course materials, schedules and results, with separate staff and administrator views. Sessions, permissions and document access were designed around institutional policy from the start.",
+      "technologies": [
+        "JavaScript",
+        "REST API",
+        "Auth",
+        "File Storage"
+      ],
+      "tags": [
+        "portal",
+        "authentication",
+        "documents",
+        "education"
+      ],
+      "highlights": [
+        "Three role types",
+        "Secure document access",
+        "Applications and results"
+      ],
+      "image": null,
+      "preview": {
+        "pattern": "portal",
+        "accent": "teal"
+      },
+      "url": "/pages/projects.html#student-portal",
+      "caseStudyUrl": "/pages/projects.html?project=student-portal",
+      "featured": false,
+      "status": "live",
+      "placeholder": true,
+      "order": 10
+    },
+    {
+      "id": "project-restaurant-redesign",
+      "title": "Restaurant Website Redesign",
+      "slug": "restaurant-website-redesign",
+      "category": "business",
+      "clientType": "Restaurant Group",
+      "year": 2025,
+      "shortDescription": "A rebuild that made the menu the point again.",
+      "description": "A redesign for a restaurant group whose previous site buried the menu behind a slideshow. The rebuild put menus, hours, location and reservations within one tap of the landing screen and cut the page weight substantially.",
+      "technologies": [
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "Reservations API"
+      ],
+      "tags": [
+        "redesign",
+        "menu",
+        "reservations",
+        "local"
+      ],
+      "highlights": [
+        "Menu-first structure",
+        "Reservation integration",
+        "Substantially lighter pages"
+      ],
+      "image": null,
+      "preview": {
+        "pattern": "business",
+        "accent": "orange"
+      },
+      "url": "/pages/projects.html#restaurant-website-redesign",
+      "caseStudyUrl": "/pages/projects.html?project=restaurant-website-redesign",
+      "featured": false,
+      "status": "live",
+      "placeholder": true,
+      "order": 11
+    },
+    {
+      "id": "project-event-landing",
+      "title": "Conference Registration Page",
+      "slug": "conference-registration-page",
+      "category": "landing",
+      "clientType": "Event Organiser",
+      "year": 2024,
+      "shortDescription": "Schedule, speakers and registration in one scroll.",
+      "description": "A single-page site for a professional conference: agenda, speaker profiles, venue details and tiered ticket registration, built to hold up under a concentrated traffic spike on announcement day.",
+      "technologies": [
+        "HTML5",
+        "JavaScript",
+        "Payments",
+        "Static Hosting"
+      ],
+      "tags": [
+        "events",
+        "registration",
+        "tickets",
+        "single-page"
+      ],
+      "highlights": [
+        "Tiered ticket flow",
+        "Agenda and speakers",
+        "Spike-resilient hosting"
+      ],
+      "image": null,
+      "preview": {
+        "pattern": "landing",
+        "accent": "blue"
+      },
+      "url": "/pages/projects.html#conference-registration-page",
+      "caseStudyUrl": "/pages/projects.html?project=conference-registration-page",
+      "featured": false,
+      "status": "live",
+      "placeholder": true,
+      "order": 12
+    },
+    {
+      "id": "project-nonprofit-cms",
+      "title": "Non-Profit Programme Site",
+      "slug": "non-profit-programme-site",
+      "category": "cms",
+      "clientType": "Non-Profit Organisation",
+      "year": 2025,
+      "shortDescription": "Programmes, reports and donations, self-managed.",
+      "description": "A website for a non-profit covering programmes, impact reports, volunteer sign-up and recurring donations. Every content area is editable by the organisation's own team, because their update frequency made anything else impractical.",
+      "technologies": [
+        "CMS",
+        "JavaScript",
+        "Payments",
+        "Forms"
+      ],
+      "tags": [
+        "donations",
+        "volunteers",
+        "reports",
+        "self-managed"
+      ],
+      "highlights": [
+        "Recurring donation flow",
+        "Volunteer sign-up",
+        "Fully client-editable"
+      ],
+      "image": null,
+      "preview": {
+        "pattern": "cms",
+        "accent": "green"
+      },
+      "url": "/pages/projects.html#non-profit-programme-site",
+      "caseStudyUrl": "/pages/projects.html?project=non-profit-programme-site",
+      "featured": false,
+      "status": "live",
+      "placeholder": true,
+      "order": 13
+    }
+  ]
+}

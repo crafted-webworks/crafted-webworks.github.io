@@ -1,0 +1,26 @@
+/* ==========================================================================
+   Stylesheet entry point
+   --------------------------------------------------------------------------
+   Every page links this one file. The cascade order below is deliberate:
+
+     1. variables  — design tokens (no rules, only custom properties)
+     2. base       — reset + element defaults
+     3. layout     — containers, section rhythm, grids
+     4. components — every reusable UI piece
+     5. sections   — composition of components into page sections
+     6. animations — keyframes + reveal states
+     7. utilities  — single-purpose helpers (must win over components)
+     8. responsive — breakpoint corrections (must win over everything)
+
+   For production, concatenate these in the same order into a single file
+   (or inline them at build time) to avoid the @import request chain.
+   ========================================================================== */
+
+@import url("variables.css");
+@import url("base.css");
+@import url("layout.css");
+@import url("components.css");
+@import url("sections.css");
+@import url("animations.css");
+@import url("utilities.css");
+@import url("responsive.css");

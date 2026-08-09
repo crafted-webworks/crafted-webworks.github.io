@@ -1,0 +1,184 @@
+{
+  "notice": "TEMPLATE TEXT — these documents are a starting point written for a small web development studio. They are not legal advice. Have them reviewed against your jurisdiction, your actual data practices and any applicable regulation (DPDP Act, GDPR, etc.) before publishing.",
+  "documents": {
+    "privacy": {
+      "title": "Privacy Policy",
+      "lastUpdated": "2026-01-01",
+      "intro": "This policy explains what information {{site.name}} collects through this website, why it is collected, and what happens to it.",
+      "showTemplateNotice": true,
+      "sections": [
+        {
+          "id": "information-we-collect",
+          "title": "Information we collect",
+          "blocks": [
+            { "type": "paragraph", "text": "We only collect information you choose to give us. There is no account system on this website and we do not sell or trade personal information under any circumstances." },
+            {
+              "type": "list",
+              "items": [
+                "Enquiry details: the name, email address, phone number, business name, website, project type, budget range, timeline and message you submit through the contact form.",
+                "Technical data: anonymous, aggregated usage information such as page views and referrers, if analytics is enabled.",
+                "Local storage: a single preference key that remembers your light or dark theme choice. It contains no personal data."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "how-we-use-it",
+          "title": "How we use your information",
+          "blocks": [
+            { "type": "paragraph", "text": "Enquiry information is used to respond to your message, prepare a proposal and communicate about a potential or active project. That is the entire purpose." },
+            { "type": "paragraph", "text": "We do not add enquiries to marketing lists, run automated follow-up sequences, or share your details with third parties for their own marketing." }
+          ]
+        },
+        {
+          "id": "retention",
+          "title": "How long we keep it",
+          "blocks": [
+            { "type": "paragraph", "text": "Enquiries that don't become projects are deleted within twelve months. Project records are retained for as long as needed for the engagement plus any period required for tax or contractual obligations." }
+          ]
+        },
+        {
+          "id": "third-parties",
+          "title": "Third-party services",
+          "blocks": [
+            { "type": "paragraph", "text": "This website may use third-party services for hosting, form delivery, fonts and analytics. Each of these processes limited data on our behalf and under their own privacy terms. We choose providers that support data protection obligations and we do not grant them rights to use your data for their own purposes." }
+          ]
+        },
+        {
+          "id": "your-rights",
+          "title": "Your rights",
+          "blocks": [
+            { "type": "paragraph", "text": "You can ask us at any time to tell you what information we hold about you, correct it, or delete it. Requests are handled within a reasonable period and free of charge." },
+            { "type": "paragraph", "text": "To make a request, email us using the address on the contact page." }
+          ]
+        },
+        {
+          "id": "security",
+          "title": "Security",
+          "blocks": [
+            { "type": "paragraph", "text": "Data submitted through this website is transmitted over an encrypted connection and stored with access limited to the people who need it. No system is perfectly secure, but we take reasonable technical and organisational measures appropriate to the sensitivity of the information involved." }
+          ]
+        },
+        {
+          "id": "changes",
+          "title": "Changes to this policy",
+          "blocks": [
+            { "type": "paragraph", "text": "If this policy changes, the revised version will be published on this page with an updated date. Material changes affecting existing enquiries will be communicated directly." }
+          ]
+        }
+      ]
+    },
+
+    "terms": {
+      "title": "Terms & Conditions",
+      "lastUpdated": "2026-01-01",
+      "intro": "These terms apply to your use of this website and, where noted, to development work carried out by {{site.name}}.",
+      "showTemplateNotice": true,
+      "sections": [
+        {
+          "id": "website-use",
+          "title": "Use of this website",
+          "blocks": [
+            { "type": "paragraph", "text": "This website is provided for information purposes. You may browse it, reference it and share links to it freely. You may not copy its design, code or written content for use in a competing product or service." }
+          ]
+        },
+        {
+          "id": "content-accuracy",
+          "title": "Accuracy of content",
+          "blocks": [
+            { "type": "paragraph", "text": "We keep the information here current and accurate, but it is provided without warranty. Service descriptions, example projects and resources are illustrative and do not form part of any contract unless repeated in a signed proposal." }
+          ]
+        },
+        {
+          "id": "project-terms",
+          "title": "Project engagements",
+          "blocks": [
+            { "type": "paragraph", "text": "Development work is governed by a separate written proposal covering scope, deliverables, timeline, payment schedule and revision terms. Where these website terms conflict with a signed proposal, the proposal takes precedence." },
+            {
+              "type": "list",
+              "items": [
+                "Scope is agreed in writing before work begins; additions are quoted separately.",
+                "Timelines assume content and feedback are provided at the agreed points.",
+                "Ownership of delivered code and assets transfers to the client on full payment.",
+                "Third-party licences, hosting and services are billed at cost and remain in the client's name."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "intellectual-property",
+          "title": "Intellectual property",
+          "blocks": [
+            { "type": "paragraph", "text": "The {{site.name}} name, logo and this website's design and code remain our property. Work produced for a client becomes the client's property on full payment, excluding any general-purpose components, libraries or tooling we reuse across projects, which remain ours and are licensed to the client for use within the delivered work." }
+          ]
+        },
+        {
+          "id": "liability",
+          "title": "Limitation of liability",
+          "blocks": [
+            { "type": "paragraph", "text": "To the extent permitted by law, {{site.name}} is not liable for indirect or consequential loss arising from use of this website. Liability relating to project work is addressed in the applicable project agreement." }
+          ]
+        },
+        {
+          "id": "links",
+          "title": "External links",
+          "blocks": [
+            { "type": "paragraph", "text": "This website links to third-party resources we consider useful. We don't control them and aren't responsible for their content, availability or practices." }
+          ]
+        },
+        {
+          "id": "governing-law",
+          "title": "Governing law",
+          "blocks": [
+            { "type": "paragraph", "text": "These terms are governed by the laws of India, unless a signed project agreement specifies otherwise." }
+          ]
+        }
+      ]
+    },
+
+    "cookies": {
+      "title": "Cookie Policy",
+      "lastUpdated": "2026-01-01",
+      "intro": "This page explains how this website uses cookies and browser storage.",
+      "showTemplateNotice": true,
+      "sections": [
+        {
+          "id": "what-we-use",
+          "title": "What this website stores",
+          "blocks": [
+            { "type": "paragraph", "text": "This website is deliberately light on tracking. In its default configuration it sets no advertising or cross-site tracking cookies." },
+            {
+              "type": "list",
+              "items": [
+                "Theme preference: a single localStorage entry remembering your light or dark mode choice. It is not a cookie and is never transmitted to a server.",
+                "Analytics (if enabled): aggregated, anonymised usage statistics such as page views and referrers.",
+                "Essential cookies: set only where required for a specific feature such as form security."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "third-party",
+          "title": "Third-party cookies",
+          "blocks": [
+            { "type": "paragraph", "text": "Embedded content from other services — for example a social media profile link that you follow — may set its own cookies once you interact with it. Those are governed by the provider's own policy, not this one." }
+          ]
+        },
+        {
+          "id": "control",
+          "title": "How to control cookies",
+          "blocks": [
+            { "type": "paragraph", "text": "Every major browser lets you view, block and delete cookies and site storage through its settings. Blocking storage for this site will reset your theme preference on each visit but will not otherwise affect functionality." }
+          ]
+        },
+        {
+          "id": "updates",
+          "title": "Updates",
+          "blocks": [
+            { "type": "paragraph", "text": "If additional cookies are introduced — for example when analytics or a chat widget is added — this page will be updated before those services go live." }
+          ]
+        }
+      ]
+    }
+  }
+}

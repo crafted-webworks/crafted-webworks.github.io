@@ -1,0 +1,66 @@
+{
+  "about": {
+    "heading": "{{site.name}}",
+    "description": "A web development studio building custom websites, web applications and digital experiences for businesses, creators and organizations.",
+    "badges": ["Custom Development", "SEO Ready", "Performance Focused"]
+  },
+  "cta": {
+    "enabled": true,
+    "title": "Have a project in mind?",
+    "description": "Tell us what you're building and we'll help you plan the right approach.",
+    "button": { "label": "Start a Project", "url": "/pages/contact.html" }
+  },
+  "columns": [
+    {
+      "id": "company",
+      "title": "Company",
+      "links": [
+        { "label": "About", "url": "/pages/about.html" },
+        { "label": "Services", "url": "/pages/services.html" },
+        { "label": "Projects", "url": "/pages/projects.html" },
+        { "label": "Demos", "url": "/pages/demos.html" },
+        { "label": "Contact", "url": "/pages/contact.html" }
+      ]
+    },
+    {
+      "id": "resources",
+      "title": "Resources",
+      "links": [
+        { "label": "Free Resources", "url": "/pages/resources.html" },
+        { "label": "General Tools", "url": "/pages/tools.html" },
+        { "label": "Blog", "url": "/pages/blog.html" },
+        { "label": "Guides", "url": "/pages/resources.html#guides" },
+        { "label": "FAQs", "url": "/pages/faq.html" }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "What We Build",
+      "links": [
+        { "label": "Business Websites", "url": "/pages/services.html#business-websites" },
+        { "label": "E-Commerce", "url": "/pages/services.html#ecommerce-websites" },
+        { "label": "Web Applications", "url": "/pages/services.html#web-applications" },
+        { "label": "Landing Pages", "url": "/pages/services.html#landing-pages" },
+        { "label": "Website Redesign", "url": "/pages/services.html#website-redesign" }
+      ]
+    },
+    {
+      "id": "legal",
+      "title": "Legal",
+      "links": [
+        { "label": "Privacy Policy", "url": "/pages/privacy-policy.html" },
+        { "label": "Terms & Conditions", "url": "/pages/terms.html" },
+        { "label": "Cookie Policy", "url": "/pages/cookie-policy.html" }
+      ]
+    }
+  ],
+  "bottom": {
+    "copyright": "All rights reserved.",
+    "note": "Built with clean, maintainable HTML, CSS and JavaScript.",
+    "links": [
+      { "label": "Privacy", "url": "/pages/privacy-policy.html" },
+      { "label": "Terms", "url": "/pages/terms.html" },
+      { "label": "Cookies", "url": "/pages/cookie-policy.html" }
+    ]
+  }
+}

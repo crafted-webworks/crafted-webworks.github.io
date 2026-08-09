@@ -1,0 +1,47 @@
+<!--
+  Component: footer
+  Runtime builder: renderer.buildFooter()  ·  Data: footer.json, site.json, social.json
+-->
+<footer class="site-footer">
+  <div class="container section section--sm">
+
+    <!-- Optional pre-footer CTA — footer.json → cta.enabled -->
+    <div class="footer-cta">
+      <div>
+        <h2 class="footer-cta-title">{{ cta_title }}</h2>
+        <p class="footer-cta-text">{{ cta_description }}</p>
+      </div>
+      <a class="btn btn-accent" href="{{ cta_url }}">{{ cta_label }}</a>
+    </div>
+
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="navbar-brand" href="{{ home_url }}">…</a>
+        <p class="footer-brand-text">{{ about_description }}</p>
+        <div class="cluster cluster--sm">
+          {{#badges}}<span class="badge">{{ . }}</span>{{/badges}}
+        </div>
+        <div class="social-links">
+          {{#social}}<a class="social-link" href="{{ url }}" aria-label="{{ label }}">…</a>{{/social}}
+        </div>
+      </div>
+
+      {{#columns}}
+      <div class="footer-col footer-col--{{ id }}">
+        <h2 class="footer-col-title">{{ title }}</h2>
+        <ul class="footer-links">
+          {{#links}}<li><a href="{{ url }}">{{ label }}</a></li>{{/links}}
+        </ul>
+      </div>
+      {{/columns}}
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; {{ year }} {{ copyright_holder }}. {{ copyright_text }}</span>
+      <div class="footer-bottom-links">
+        {{#bottom_links}}<a href="{{ url }}">{{ label }}</a>{{/bottom_links}}
+      </div>
+    </div>
+
+  </div>
+</footer>

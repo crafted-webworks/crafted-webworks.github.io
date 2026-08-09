@@ -1,0 +1,2077 @@
+/* ==========================================================================
+   Sections — layout for specific page sections.
+   Anything reusable lives in components.css; this file is composition only.
+   ========================================================================== */
+
+/* ==========================================================================
+   HERO — editorial masthead
+   Oversized serif set against mono metadata, a hairline baseline rule, and a
+   single quiet artefact on the right. No colour wash, no glassmorphism, no
+   three floating badges orbiting a mockup.
+   ========================================================================== */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-block: calc(var(--navbar-height) + clamp(2.5rem, 6vw, 5rem)) var(--section-py);
+  overflow: hidden;
+  background: var(--color-background-deep);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* A single faint column grid — the page's underlying structure made visible,
+   which is the honest version of "tech background decoration". */
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--grid-line) 0 1px,
+    transparent 1px calc(100% / 6)
+  );
+  mask-image: linear-gradient(to bottom, #000 10%, transparent 85%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 10%, transparent 85%);
+}
+
+/* Painted last, so it sits over the video as well as the grid */
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--vignette);
+}
+
+.hero-bg .bg-glow { display: none; }
+
+/* --------------------------------------------------------------------------
+   Cinematic hero video
+   --------------------------------------------------------------------------
+   Full-bleed, cover-fitted and centred, so the source is never cropped by
+   hand and never distorted — the element does the fitting, at whatever the
+   viewport happens to be. It is decorative and sits behind everything: the
+   content column carries z-index above it, and pointer events are off on the
+   whole backdrop so nothing under the cursor changes.
+   -------------------------------------------------------------------------- */
+.hero--video { background: var(--ink-950); }
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;          /* fill the hero, preserve aspect ratio */
+  object-position: center;    /* overridden inline from homepage.json */
+  z-index: 0;
+  /* Fade in once there are frames to show, so the hero never flashes a
+     black rectangle while the file is still arriving. */
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-out);
+  will-change: opacity;
+}
+
+.hero--video-ready .hero-video,
+.hero--video-idle .hero-video { opacity: 1; }
+
+/* Directional scrim: heaviest behind the text column on the left, lightest on
+   the right where the footage actually reads. A flat 50% black over the whole
+   frame would protect the text and kill the video at the same time. */
+.hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* Weighted to the left, where all the type now lives, and released across
+     the right so the video's subject is actually visible. The bottom band
+     carries the metadata rail; the top band keeps the navbar legible. */
+  background:
+    linear-gradient(
+      95deg,
+      var(--color-background-deep) 0%,
+      color-mix(in srgb, var(--color-background-deep) 94%, transparent) 34%,
+      color-mix(in srgb, var(--color-background-deep) 68%, transparent) 52%,
+      color-mix(in srgb, var(--color-background-deep) 28%, transparent) 72%,
+      color-mix(in srgb, var(--color-background-deep) 18%, transparent) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-background-deep) 80%, transparent) 0%,
+      transparent 22%,
+      transparent 62%,
+      color-mix(in srgb, var(--color-background-deep) 72%, transparent) 90%,
+      var(--color-background) 100%
+    );
+}
+
+/* On narrow screens the text sits over the middle of the frame, so the scrim
+   becomes vertical rather than directional. */
+@media (max-width: 991.98px) {
+  .hero-video-overlay {
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--color-background-deep) 82%, transparent) 0%,
+        color-mix(in srgb, var(--color-background-deep) 58%, transparent) 38%,
+        color-mix(in srgb, var(--color-background-deep) 88%, transparent) 78%,
+        var(--color-background) 100%
+      );
+  }
+}
+
+.hero-inner {
+  position: relative;
+  z-index: var(--z-raised);
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+/* With hero.visual.type = "none" the text takes a single measured column and
+   the video carries the rest of the frame. */
+.hero--single .hero-inner { grid-template-columns: minmax(0, 1fr); }
+.hero--single .hero-content { max-width: 46rem; }
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.hero-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-heading);
+  text-wrap: balance;
+}
+
+.hero-title span { display: block; }
+
+/* The accent line is a real serif italic, indented like a pulled quote */
+.hero-title span:last-child {
+  padding-left: 0.08em;
+}
+
+.hero-description {
+  margin: 0;
+  max-width: 44ch;
+  color: var(--color-muted);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-snug);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Trust line reads as a printed colophon: mono, spaced, rule above */
+.hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  width: 100%;
+  margin-top: var(--space-2xs);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.hero-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--color-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.hero-trust-item .icon { color: var(--color-accent); font-size: 0.85em; }
+
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  width: 100%;
+}
+
+.hero-stats .stat-value { font-size: var(--fs-2xl); }
+
+.hero-stats .stat-label {
+  color: var(--color-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Hero artefact — a plain editor window. Flat, hairline, no glow.
+   -------------------------------------------------------------------------- */
+.hero-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.hero-orbit { display: none; }
+
+.hero-window {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.hero-window-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+}
+
+.hero-window-url {
+  flex: 1;
+  color: var(--color-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--tracking-snug);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hero-code {
+  margin: 0;
+  padding: var(--space-md);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: var(--fs-sm);
+  line-height: 1.85;
+  overflow: hidden;
+}
+
+.hero-code .ln { display: block; white-space: pre; }
+.hero-code .tok-tag { color: var(--blue-300); }
+.hero-code .tok-attr { color: var(--orange-300); }
+.hero-code .tok-str { color: var(--green-500); }
+.hero-code .tok-kw { color: var(--violet-500); }
+.hero-code .tok-fn { color: var(--blue-200); }
+.hero-code .tok-com { color: var(--color-faint); font-style: italic; }
+.hero-code .tok-op,
+.hero-code .tok-txt { color: var(--color-text); }
+
+:root[data-theme="light"] .hero-code .tok-tag { color: var(--blue-700); }
+:root[data-theme="light"] .hero-code .tok-attr { color: var(--orange-700); }
+:root[data-theme="light"] .hero-code .tok-kw { color: #6C4BD8; }
+:root[data-theme="light"] .hero-code .tok-fn { color: var(--blue-600); }
+:root[data-theme="light"] .hero-code .tok-str { color: #12855D; }
+
+/* Metadata strips attached to the window edge rather than floating badges */
+.hero-card {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-background);
+  white-space: nowrap;
+}
+
+.hero-card .icon-tile { display: none; }
+
+.hero-card-label {
+  display: block;
+  color: var(--color-heading);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.hero-card-value { display: block; color: var(--color-faint); font-size: var(--fs-2xs); }
+
+.hero-card--top-right { top: -1.25rem; right: -1.25rem; }
+.hero-card--bottom-left { bottom: -1.25rem; left: -1.25rem; }
+.hero-card--bottom-right { display: none; }
+
+/* ==========================================================================
+   TRUST STRIP
+   ========================================================================== */
+.trust-strip {
+  padding-block: var(--space-md);
+  border-block: 1px solid var(--color-border);
+  background: var(--color-background-alt);
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+  gap: 0;
+}
+
+.trust-grid .value-item { border-right: 1px solid var(--color-border-subtle); }
+.trust-grid .value-item:last-child { border-right: 0; }
+
+/* ==========================================================================
+   WEBSITE TYPES
+   ========================================================================== */
+.types-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 205px), 1fr)); }
+
+/* ==========================================================================
+   PROCESS TIMELINE
+   ========================================================================== */
+.process {
+  position: relative;
+}
+
+.process-list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Vertical spine */
+.process-list::before {
+  content: "";
+  position: absolute;
+  left: 1.4rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--color-border), var(--color-border), transparent);
+}
+
+.process-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.8rem minmax(0, 1fr);
+  gap: var(--space-md);
+  margin: 0;
+  align-items: start;
+}
+
+.process-marker {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-background);
+  color: var(--color-primary);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  transition: var(--transition-base);
+}
+
+.process-step:hover .process-marker {
+  border-color: transparent;
+  background: var(--gradient-brand);
+  color: var(--white);
+  transform: scale(1.06);
+}
+
+.process-body {
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.process-step:last-child .process-body { border-bottom: 0; padding-bottom: 0; }
+
+.process-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.25rem;
+  font-size: var(--fs-xl);
+}
+
+.process-title .icon { color: var(--color-accent); font-size: 0.85em; }
+
+.process-text { margin: 0; max-width: var(--measure); color: var(--color-muted); font-size: var(--fs-base); }
+
+.process-deliverables { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: var(--space-2xs); }
+
+/* ==========================================================================
+   PERFORMANCE
+   ========================================================================== */
+.perf-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: var(--grid-gap-lg);
+  align-items: start;
+}
+
+.perf-metrics { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: var(--space-sm); }
+
+.perf-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.perf-metric-head { display: flex; align-items: center; gap: 0.5rem; }
+.perf-metric-head .icon { color: var(--color-primary); }
+.perf-metric-name { color: var(--color-heading); font-size: var(--fs-base); font-weight: var(--fw-semibold); }
+.perf-metric-score { margin-left: auto; font-family: var(--font-mono); font-size: var(--fs-sm); color: var(--color-accent); }
+.perf-metric-caption { color: var(--color-faint); font-size: var(--fs-xs); line-height: 1.45; }
+
+.perf-highlights { display: flex; flex-direction: column; gap: var(--space-sm); }
+
+.perf-highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.perf-highlight:last-child { border-bottom: 0; padding-bottom: 0; }
+.perf-highlight-title { display: block; color: var(--color-heading); font-weight: var(--fw-semibold); font-size: var(--fs-base); }
+.perf-highlight-text { display: block; color: var(--color-muted); font-size: var(--fs-sm); line-height: 1.5; }
+
+.perf-note {
+  margin-top: var(--space-sm);
+  color: var(--color-faint);
+  font-size: var(--fs-xs);
+  font-style: italic;
+}
+
+/* ==========================================================================
+   TESTIMONIALS CAROUSEL
+   ========================================================================== */
+/* One slide per view, so the viewport clips flush to the container. The old
+   negative-margin bleed existed to let card shadows breathe in a 3-up grid;
+   with a single pull-quote it just leaked the next slide into view. */
+.testimonials-viewport { overflow: hidden; }
+
+.testimonials-track {
+  display: flex;
+  gap: var(--grid-gap);
+  transition: transform var(--dur-slow) var(--ease-out);
+  will-change: transform;
+}
+
+.testimonials-track > * { flex: 0 0 calc((100% - var(--grid-gap) * 2) / 3); min-width: 0; }
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.carousel-dots { display: flex; gap: 0.4rem; }
+
+.carousel-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-border-strong);
+  transition: var(--transition-base);
+}
+
+.carousel-dot.is-active { width: 1.6rem; background: var(--gradient-brand); }
+
+.carousel-arrows { display: flex; gap: 0.4rem; }
+
+/* ==========================================================================
+   CONTACT
+   ========================================================================== */
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: var(--grid-gap-lg);
+  align-items: start;
+}
+
+.contact-panel {
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  background-image: var(--gradient-surface);
+}
+
+.contact-aside { display: flex; flex-direction: column; gap: var(--space-md); }
+
+.contact-info-list { display: flex; flex-direction: column; gap: var(--space-sm); margin: 0; padding: 0; list-style: none; }
+.contact-info-list li { display: flex; align-items: center; gap: var(--space-xs); margin: 0; }
+.contact-info-label { display: block; color: var(--color-faint); font-size: var(--fs-xs); letter-spacing: var(--tracking-wide); text-transform: uppercase; }
+.contact-info-value { display: block; color: var(--color-heading); font-size: var(--fs-base); font-weight: var(--fw-medium); }
+a.contact-info-value:hover { color: var(--color-accent); }
+
+.assurance-list { display: flex; flex-direction: column; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
+.assurance-list li { display: flex; align-items: flex-start; gap: 0.6rem; margin: 0; color: var(--color-muted); font-size: var(--fs-sm); line-height: 1.5; }
+.assurance-list .icon { margin-top: 0.2em; color: var(--color-success); }
+
+.form-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-sm); }
+.form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm); }
+
+/* ==========================================================================
+   INSTAGRAM / SOCIAL
+   ========================================================================== */
+.instagram-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: var(--grid-gap-lg);
+  align-items: center;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  background:
+    radial-gradient(90% 120% at 100% 0%, rgba(255, 138, 30, 0.10) 0%, transparent 60%),
+    radial-gradient(80% 120% at 0% 100%, rgba(43, 127, 255, 0.12) 0%, transparent 60%),
+    var(--color-surface);
+}
+
+.instagram-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-xs); }
+
+.instagram-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-md);
+  aspect-ratio: 1;
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-2);
+  color: var(--color-muted);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  transition: var(--transition-base);
+}
+
+.instagram-tile .icon { color: var(--color-accent); font-size: 1.35rem; }
+.instagram-tile:hover { transform: translateY(-3px); border-color: var(--color-accent-line); color: var(--color-heading); }
+
+.instagram-handle {
+  font-family: var(--font-mono);
+  color: var(--color-accent);
+  font-size: var(--fs-base);
+}
+
+/* ==========================================================================
+   FINAL CTA
+   ========================================================================== */
+.cta-panel {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.75rem, 4vw, 3.25rem);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-2xl);
+  background:
+    radial-gradient(100% 140% at 0% 0%, rgba(43, 127, 255, 0.18) 0%, transparent 55%),
+    radial-gradient(90% 130% at 100% 100%, rgba(255, 138, 30, 0.16) 0%, transparent 55%),
+    var(--color-surface);
+  text-align: center;
+}
+
+.cta-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(70% 70% at 50% 50%, #000, transparent);
+  -webkit-mask-image: radial-gradient(70% 70% at 50% 50%, #000, transparent);
+  pointer-events: none;
+}
+
+.cta-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); }
+
+.cta-title { margin: 0; font-size: var(--fs-4xl); max-width: 18ch; }
+.cta-text { margin: 0; max-width: 52ch; color: var(--color-muted); font-size: var(--fs-lg); }
+.cta-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem; margin-top: var(--space-2xs); }
+
+.cta-assurances {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.25rem;
+  margin-top: var(--space-xs);
+  color: var(--color-faint);
+  font-size: var(--fs-sm);
+}
+
+.cta-assurances span { display: inline-flex; align-items: center; gap: 0.35rem; }
+.cta-assurances .icon { color: var(--color-success); font-size: 0.9em; }
+
+/* ==========================================================================
+   ABOUT
+   ========================================================================== */
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: var(--grid-gap-lg);
+  align-items: start;
+}
+
+.about-lead {
+  color: var(--color-heading);
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-snug);
+}
+
+.about-body { color: var(--color-muted); font-size: var(--fs-lg); line-height: var(--lh-base); max-width: var(--measure); }
+.about-body p + p { margin-top: var(--space-sm); }
+
+.about-signature {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+}
+
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: var(--grid-gap); }
+
+/* ==========================================================================
+   BLOG ARTICLE
+   ========================================================================== */
+.article {
+  max-width: 74ch;
+  margin-inline: auto;
+}
+
+.article-head { margin-bottom: var(--space-lg); }
+.article-title { margin: var(--space-2xs) 0 var(--space-xs); font-size: var(--fs-4xl); }
+.article-excerpt { color: var(--color-muted); font-size: var(--fs-xl); line-height: var(--lh-snug); }
+
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-faint);
+  font-size: var(--fs-sm);
+}
+
+.article-body { font-size: var(--fs-lg); line-height: var(--lh-base); color: var(--color-muted); }
+.article-body h2 { margin: var(--space-lg) 0 var(--space-xs); font-size: var(--fs-2xl); }
+.article-body h3 { margin: var(--space-md) 0 var(--space-2xs); font-size: var(--fs-xl); }
+.article-body p { margin-bottom: var(--space-sm); }
+.article-body ul, .article-body ol { margin-bottom: var(--space-sm); padding-left: 1.35rem; }
+.article-body li { margin-bottom: 0.5rem; }
+.article-body li::marker { color: var(--color-accent); }
+
+.article-body blockquote {
+  margin: var(--space-md) 0;
+  padding: var(--space-sm) var(--space-md);
+  border-left: 2px solid var(--color-accent);
+  background: var(--color-surface);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-snug);
+}
+
+.article-body blockquote cite {
+  display: block;
+  margin-top: var(--space-2xs);
+  color: var(--color-faint);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-style: normal;
+}
+
+.article-callout {
+  display: flex;
+  gap: var(--space-sm);
+  margin: var(--space-md) 0;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-left-width: 2px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font-size: var(--fs-base);
+}
+
+.article-callout--info { border-left-color: var(--color-primary); }
+.article-callout--info .icon { color: var(--color-primary); }
+.article-callout--warning { border-left-color: var(--color-warning); }
+.article-callout--warning .icon { color: var(--color-warning); }
+.article-callout-title { display: block; margin-bottom: 0.15rem; color: var(--color-heading); font-weight: var(--fw-semibold); }
+
+.article-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+/* ==========================================================================
+   LEGAL DOCUMENT
+   ========================================================================== */
+.legal-layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: var(--grid-gap-lg);
+  align-items: start;
+}
+
+.legal-toc {
+  position: sticky;
+  top: calc(var(--navbar-height) + 1rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.legal-toc-title {
+  margin-bottom: 0.35rem;
+  color: var(--color-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+}
+
+.legal-toc a {
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+}
+
+.legal-toc a:hover { background: var(--color-surface-2); color: var(--color-heading); }
+
+.legal-content { max-width: 74ch; color: var(--color-muted); font-size: var(--fs-lg); line-height: var(--lh-base); }
+.legal-content h2 { margin: var(--space-lg) 0 var(--space-2xs); font-size: var(--fs-2xl); scroll-margin-top: calc(var(--navbar-height) + 1.5rem); }
+.legal-content h2:first-of-type { margin-top: 0; }
+.legal-content li::marker { color: var(--color-accent); }
+.legal-updated { color: var(--color-faint); font-size: var(--fs-sm); font-family: var(--font-mono); }
+
+/* ==========================================================================
+   TOOLS
+   ========================================================================== */
+.tool-panel { display: flex; flex-direction: column; gap: var(--space-sm); }
+
+.tool-output {
+  min-height: 8rem;
+  max-height: 22rem;
+  overflow: auto;
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.tool-output:empty::before { content: "Output appears here."; color: var(--color-faint); }
+.tool-output.is-error { border-color: color-mix(in srgb, var(--color-danger) 45%, transparent); color: var(--color-danger); }
+
+.tool-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-sm); }
+.tool-row > * { flex: 1 1 160px; min-width: 0; }
+.tool-row > .btn { flex: 0 0 auto; }
+
+.tool-swatch {
+  width: 100%;
+  height: 4.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.tool-range { width: 100%; accent-color: var(--color-primary); }
+
+.tool-stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: var(--space-xs); }
+
+.tool-stat {
+  padding: var(--space-xs);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  text-align: center;
+}
+
+.tool-stat-value { display: block; color: var(--color-heading); font-family: var(--font-display); font-size: var(--fs-xl); font-weight: var(--fw-bold); line-height: 1.1; }
+.tool-stat-label { display: block; color: var(--color-faint); font-size: var(--fs-xs); }
+
+/* ==========================================================================
+   SERVICE DETAIL (services page anchors)
+   ========================================================================== */
+.service-detail { scroll-margin-top: calc(var(--navbar-height) + 1.5rem); }
+
+/* ==========================================================================
+   SECTION IDENTITY PASS
+   --------------------------------------------------------------------------
+   Every section below keeps its existing markup, data, JavaScript hooks and
+   behaviour untouched — filters, carousels, modals and forms all still bind to
+   the same classes. What changes is the visual register, so the page has
+   rhythm instead of eleven identical card grids stacked on each other.
+
+   The pattern language, top to bottom:
+     hero          cinematic full-bleed video
+     trust         thin typographic ticker
+     services      minimal bordered grid (cards genuinely help here)
+     why           numbered editorial list
+     types         dense typographic index
+     projects      image-led compositions
+     process       editorial timeline, oversized numerals
+     performance   split: statement left, measured data right
+     testimonials  one large pull-quote at a time
+     cta           full-bleed cinematic band
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   TRUST — a typographic ticker, not five boxes
+   -------------------------------------------------------------------------- */
+.trust-strip {
+  padding-block: var(--space-md);
+  border-block: 1px solid var(--color-border);
+  background: var(--color-background);
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+  gap: 0;
+}
+
+.trust-grid .value-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0 var(--space-md);
+  border-right: 1px solid var(--color-border-subtle);
+  border-bottom: 0;
+}
+
+.trust-grid .value-item:first-child { padding-left: 0; }
+.trust-grid .value-item:last-child { border-right: 0; }
+
+/* The icon tile is redundant at ticker scale — the words carry it */
+.trust-grid .value-item .icon-tile {
+  width: auto;
+  height: auto;
+  border: 0;
+  color: var(--color-accent);
+  font-size: 0.8rem;
+}
+
+.trust-grid .value-item-title {
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-heading);
+}
+
+.trust-grid .value-item-text {
+  color: var(--color-faint);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   WHY US — a numbered editorial list. Same cards, no boxes.
+   The index comes from a CSS counter, so the markup is untouched.
+   -------------------------------------------------------------------------- */
+#why .grid {
+  counter-reset: why-item;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  column-gap: var(--grid-gap-lg);
+  row-gap: 0;
+}
+
+/* Grid, not flex: the title and description are siblings in the markup, so a
+   row-direction flex would sit them side by side. The grid puts the numeral in
+   its own column spanning both, with the text stacked beside it — and it does
+   so without touching the shared feature-card component. */
+#why .feature-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  column-gap: var(--space-md);
+  row-gap: 0.35rem;
+  align-content: start;
+  padding: var(--space-lg) 0;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  border-radius: 0;
+  background: transparent;
+}
+
+#why .feature-card .card-title,
+#why .feature-card .card-text { grid-column: 2; }
+
+#why .feature-card::after { display: none; }
+#why .feature-card:hover { background: transparent; }
+
+#why .feature-card::before {
+  counter-increment: why-item;
+  content: counter(why-item, decimal-leading-zero);
+  position: static;
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: auto;
+  height: auto;
+  inset: auto;
+  transform: none;
+  background: none;
+  color: var(--color-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  padding-top: 0.3rem;
+  transition: color var(--dur-base) var(--ease-out);
+}
+
+#why .feature-card:hover::before { color: var(--color-accent); }
+#why .feature-card .icon-tile { display: none; }
+#why .feature-card .card-title { font-size: var(--fs-lg); margin-bottom: 0.35rem; }
+#why .feature-card .card-text { max-width: 44ch; }
+
+/* --------------------------------------------------------------------------
+   WEBSITE TYPES — a dense typographic index, closer to a contents page than
+   to twenty little tiles.
+   -------------------------------------------------------------------------- */
+.types-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  column-gap: var(--grid-gap-lg);
+  row-gap: 0;
+}
+
+.type-card {
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding: 0.9rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+  border-radius: 0;
+  background: transparent;
+}
+
+.type-card::before { display: none; }
+
+.type-card:hover,
+.type-card:focus-within {
+  background: transparent;
+  border-bottom-color: var(--color-accent-line);
+}
+
+.type-card .icon-tile {
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 0;
+  background: none;
+  color: var(--color-faint);
+  font-size: 0.9rem;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.type-card:hover .icon-tile { color: var(--color-accent); }
+
+.type-card .card-title {
+  flex: 1;
+  font-size: var(--fs-md);
+  font-weight: var(--fw-medium);
+}
+
+.type-card .card-text {
+  flex-shrink: 0;
+  max-width: 18ch;
+  text-align: right;
+  color: var(--color-faint);
+  font-size: var(--fs-sm);
+}
+
+/* --------------------------------------------------------------------------
+   PROCESS — editorial timeline, oversized numerals
+   -------------------------------------------------------------------------- */
+.process-list { gap: 0; }
+.process-list::before { display: none; }
+
+.process-step {
+  grid-template-columns: minmax(5rem, 8vw) minmax(0, 1fr);
+  gap: var(--grid-gap-lg);
+  padding-block: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+  align-items: start;
+}
+
+.process-step:last-child { border-bottom: 1px solid var(--color-border); }
+
+.process-marker {
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  justify-self: start;
+  color: var(--color-border-strong);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  font-weight: var(--fw-regular);
+  line-height: 0.85;
+  letter-spacing: var(--tracking-display);
+  transition: color var(--dur-slow) var(--ease-out);
+}
+
+.process-step:hover .process-marker {
+  background: none;
+  transform: none;
+  color: var(--color-accent);
+}
+
+.process-body { padding-bottom: 0; border-bottom: 0; }
+
+.process-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-display);
+}
+
+.process-title .icon { display: none; }
+.process-text { font-size: var(--fs-md); max-width: 58ch; }
+
+/* --------------------------------------------------------------------------
+   PERFORMANCE — statement left, measured data right
+   -------------------------------------------------------------------------- */
+.perf-grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+
+.perf-metrics {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+.perf-metric {
+  display: grid;
+  grid-template-columns: 1.6rem minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--space-sm);
+  row-gap: 0.5rem;
+  padding: var(--space-md) 0;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  border-radius: 0;
+  background: transparent;
+}
+
+.perf-metric:last-child { border-bottom: 1px solid var(--color-border); }
+.perf-metric-head { display: contents; }
+.perf-metric-head .icon { color: var(--color-faint); }
+.perf-metric-name { font-size: var(--fs-md); font-weight: var(--fw-medium); }
+
+.perf-metric-score {
+  margin-left: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  color: var(--color-heading);
+}
+
+.perf-metric .meter { grid-column: 2 / -1; }
+.perf-metric-caption { grid-column: 2 / -1; }
+
+/* --------------------------------------------------------------------------
+   TESTIMONIALS — one large pull-quote at a time (carousel shows 1 per view)
+   -------------------------------------------------------------------------- */
+.testimonials-track > * { flex: 0 0 100%; }
+
+.testimonial-card {
+  gap: var(--space-lg);
+  padding: var(--space-lg) 0;
+  max-width: 46rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.testimonial-card::before,
+.testimonial-card::after { display: none; }
+
+.testimonial-quote {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-regular);
+  line-height: 1.28;
+  letter-spacing: var(--tracking-display);
+  color: var(--color-heading);
+  text-wrap: pretty;
+}
+
+.testimonial-author {
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+/* --------------------------------------------------------------------------
+   FINAL CTA — full-bleed cinematic band
+   -------------------------------------------------------------------------- */
+.cta-panel {
+  padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-background-deep);
+}
+
+.cta-panel::before {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--grid-line) 0 1px,
+    transparent 1px calc(100% / 8)
+  );
+  background-size: auto;
+  mask-image: linear-gradient(to bottom, transparent, #000 40%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 40%, transparent);
+}
+
+.cta-title { font-size: var(--fs-4xl); max-width: 16ch; }
+.cta-text { font-size: var(--fs-lg); max-width: 46ch; }
+
+.cta-assurances {
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   NAVBAR — cinematic over the hero, refined solid once scrolled
+   -------------------------------------------------------------------------- */
+.site-header.is-scrolled .navbar {
+  background: color-mix(in srgb, var(--color-background) 82%, transparent);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-bottom-color: var(--color-border);
+}
+
+.nav-link {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  letter-spacing: var(--tracking-snug);
+}
+
+.nav-link.is-active::after {
+  background: var(--color-accent);
+  height: 1px;
+}
+
+/* ==========================================================================
+   PROJECT CASE STUDY
+   --------------------------------------------------------------------------
+   The one page type that gets to be genuinely cinematic: an oversized title,
+   a full-width visual, a fact table set like a colophon, and the narrative
+   told in numbered chapters rather than a wall of prose.
+   ========================================================================== */
+.case-hero { padding-top: var(--space-lg); }
+
+.case-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+/* The measure belongs to each element, not the wrapper — constraining the
+   container squeezed the lead paragraph into the title's narrow column. */
+.case-title { max-width: 16ch; }
+
+.case-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-4xl);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-heading);
+}
+
+.case-lead {
+  margin: 0;
+  max-width: 56ch;
+  color: var(--color-muted);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-snug);
+}
+
+/* Full-bleed visual — the composition, not a thumbnail in a card */
+.case-media {
+  position: relative;
+  aspect-ratio: 16 / 7;
+  margin-top: var(--section-gap);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.case-media img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Facts set like a printed colophon */
+.case-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+  gap: 0;
+  margin: var(--section-gap) 0 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.case-facts > div {
+  padding: var(--space-md) var(--space-md) 0 0;
+  border-right: 1px solid var(--color-border-subtle);
+}
+
+.case-facts > div:last-child { border-right: 0; }
+
+.case-facts dt {
+  margin-bottom: 0.35rem;
+  color: var(--color-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+}
+
+.case-facts dd {
+  margin: 0;
+  color: var(--color-heading);
+  font-size: var(--fs-base);
+  line-height: 1.45;
+}
+
+/* --- narrative chapters -------------------------------------------------- */
+.case-chapters {
+  display: flex;
+  flex-direction: column;
+  max-width: 78ch;
+  margin-inline: auto;
+}
+
+.case-chapter {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  gap: var(--space-md);
+  padding-block: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+.case-chapter:last-child { border-bottom: 1px solid var(--color-border); }
+
+.case-chapter-index {
+  color: var(--color-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  padding-top: 0.5rem;
+}
+
+.case-chapter-title {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-display);
+}
+
+.case-chapter-text {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-base);
+}
+
+/* --- detail + actions ---------------------------------------------------- */
+.case-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: var(--grid-gap-lg);
+  align-items: start;
+}
+
+.case-sub {
+  margin: 0 0 var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.case-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.case-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--fs-md);
+}
+
+.case-list .icon { margin-top: 0.3em; color: var(--color-accent); font-size: 0.85em; }
+
+.case-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: var(--section-gap);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+@media (max-width: 767.98px) {
+  .case-intro { max-width: none; }
+  .case-media { aspect-ratio: 4 / 3; }
+  .case-facts > div { border-right: 0; border-bottom: 1px solid var(--color-border-subtle); padding-bottom: var(--space-sm); }
+  .case-chapter { grid-template-columns: minmax(0, 1fr); gap: var(--space-2xs); }
+  .case-chapter-index { padding-top: 0; }
+  .case-actions .btn { width: 100%; }
+}
+
+/* ==========================================================================
+   CINEMATIC HERO
+   --------------------------------------------------------------------------
+   A title card, not a landing-page hero.
+
+   The conventional arrangement — eyebrow pill, headline left, paragraph under
+   it, two buttons, a mockup floating right — is what nearly every product site
+   ships, and no amount of restyling makes it feel bespoke. So the composition
+   changes instead:
+
+     · the video holds the whole viewport rather than a boxed band
+     · the headline runs across the frame at display scale
+     · supporting copy and actions are offset into the lower right, so the eye
+       travels diagonally rather than straight down a centre column
+     · every piece of metadata — scroll cue, figures, trust line — collapses
+       into a single rail pinned to the bottom edge
+   ========================================================================== */
+.hero--cinematic {
+  display: flex;
+  align-items: stretch;
+  min-height: 100svh;               /* a cinematic frame genuinely needs it */
+  padding-block: 0;
+}
+
+.hero-shell {
+  position: relative;
+  z-index: var(--z-raised);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: calc(var(--navbar-height) + clamp(2rem, 7vh, 5rem));
+  padding-bottom: clamp(1rem, 3vh, 2rem);
+}
+
+/* One content column held to the left half of the frame.
+   The previous arrangement pushed the supporting copy into the right-hand
+   column, which is exactly where this video puts its subject — so the text
+   sat on the busiest, brightest part of the footage and the artwork was
+   covered by a paragraph. Anchoring everything left keeps the type on the
+   quiet side and leaves the right of the frame to the video. */
+.hero--cinematic .hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  justify-items: start;
+  row-gap: clamp(1.25rem, 3vh, 2.25rem);
+  flex: 1;
+  max-width: min(56%, 46rem);
+}
+
+/* --- eyebrow: a ruled mono line, not a pill ----------------------------- */
+.hero-eyebrow {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+}
+
+.hero-eyebrow::after {
+  content: "";
+  flex: 1;
+  max-width: 12vw;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-accent), transparent);
+}
+
+/* --- the headline carries the frame ------------------------------------- */
+.hero--cinematic .hero-title {
+  grid-column: 1;
+  margin: 0;
+  font-size: var(--fs-hero);
+  line-height: 0.96;
+  letter-spacing: -0.024em;
+  max-width: 14ch;
+}
+
+.hero--cinematic .hero-title span { display: block; }
+
+/* The accent line is indented like a pulled quote — the single detail that
+   stops two stacked lines reading as a wrapped paragraph. */
+.hero--cinematic .hero-title span:last-child { padding-left: 0.14em; }
+
+/* --- supporting copy offset into the lower right ------------------------ */
+.hero-aside {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.hero--cinematic .hero-description {
+  margin: 0;
+  max-width: 44ch;
+  color: var(--color-text);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-snug);
+}
+
+.hero--cinematic .hero-actions { gap: 0.75rem; }
+
+/* --- bottom rail: one line for every piece of metadata ------------------ */
+.hero-rail {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.hero-scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--color-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+}
+
+.hero-scroll:hover { color: var(--color-accent); }
+
+.hero-scroll-line {
+  position: relative;
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  overflow: hidden;
+  background: var(--color-border-strong);
+}
+
+/* A travelling tick along the rule — the only looping motion in the hero */
+.hero-scroll-line::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 40%;
+  background: var(--color-accent);
+  animation: ui-scroll-tick 2.4s var(--ease-in-out) infinite;
+}
+
+.hero--cinematic .hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.25rem, 3vw, 2.75rem);
+  width: auto;
+  margin: 0;
+}
+
+.hero--cinematic .hero-stats .stat { flex-direction: row; align-items: baseline; gap: 0.5rem; }
+.hero--cinematic .hero-stats .stat-value { font-size: var(--fs-xl); }
+
+.hero--cinematic .hero-trust {
+  justify-content: flex-end;
+  gap: 0.4rem 1.25rem;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* --- the code window becomes a corner artefact when re-enabled ---------- */
+.hero--cinematic .hero-visual {
+  grid-column: 2;
+  grid-row: 3;
+  justify-self: end;
+  width: min(100%, 30rem);
+}
+
+@keyframes ui-scroll-tick {
+  0%   { transform: translateX(-100%); }
+  60%  { transform: translateX(250%); }
+  100% { transform: translateX(250%); }
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   Mobile is restructured, not shrunk: a single column, the copy directly under
+   the headline, and the rail stacked into two readable rows.
+   ========================================================================== */
+@media (max-width: 991.98px) {
+  .hero--cinematic .hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    /* The 56% cap exists to keep type off the video's subject on wide
+       screens. Below the breakpoint there is no second column to protect,
+       and leaving it on squeezed the copy into a ribbon and wrapped the
+       eyebrow onto two lines. */
+    max-width: none;
+  }
+
+  .hero--cinematic .hero-title { max-width: 16ch; }
+  .hero-aside { grid-column: 1; padding-bottom: 0; }
+  .hero--cinematic .hero-description { max-width: 52ch; }
+  .hero--cinematic .hero-visual { grid-column: 1; grid-row: auto; justify-self: stretch; width: 100%; }
+
+  .hero-rail {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-sm);
+    text-align: left;
+  }
+
+  .hero--cinematic .hero-trust { justify-content: flex-start; }
+}
+
+@media (max-width: 767.98px) {
+  .hero--cinematic { min-height: 100svh; }
+  .hero--cinematic .hero-title { max-width: none; line-height: 0.98; }
+  .hero-eyebrow::after { max-width: 30vw; }
+  .hero--cinematic .hero-actions { width: 100%; }
+  .hero--cinematic .hero-actions .btn { flex: 1 1 auto; justify-content: center; }
+
+  /* The scroll cue is redundant on touch — the gesture is obvious */
+  .hero-scroll { display: none; }
+  .hero-rail { padding-top: var(--space-sm); }
+  .hero--cinematic .hero-stats { gap: 1.25rem; }
+  .hero--cinematic .hero-stats .stat-value { font-size: var(--fs-lg); }
+}
+
+@media (max-height: 700px) and (min-width: 992px) {
+  /* Short laptop screens: let the frame breathe rather than clipping the rail */
+  .hero--cinematic { min-height: 44rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll-line::after { animation: none; transform: none; width: 100%; opacity: 0.5; }
+}
+
+/* ==========================================================================
+   PAGE HEADER — inner pages
+   --------------------------------------------------------------------------
+   Carries the hero's composition language at a quieter volume: a ruled mono
+   eyebrow, a display-serif title, supporting copy offset into a second
+   column, and the breadcrumb on a rail along the bottom edge. Consistent
+   enough to feel like one site, restrained enough that it never competes
+   with the page's actual content.
+   ========================================================================== */
+.page-header {
+  position: relative;
+  padding-block: calc(var(--navbar-height) + clamp(2.5rem, 6vw, 4.5rem)) 0;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-background-deep);
+}
+
+/* A faint column grid, matching the hero's — the page's structure showing
+   through rather than a decorative gradient blob. */
+.page-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--grid-line) 0 1px,
+    transparent 1px calc(100% / 6)
+  );
+  mask-image: linear-gradient(to bottom, #000, transparent 90%);
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 90%);
+  pointer-events: none;
+}
+
+.page-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--vignette);
+  pointer-events: none;
+}
+
+.page-header-shell {
+  position: relative;
+  z-index: var(--z-raised);
+}
+
+.page-header-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+  align-items: end;
+  column-gap: var(--grid-gap-lg);
+  row-gap: var(--space-md);
+  padding-bottom: clamp(2rem, 5vw, 3.5rem);
+  max-width: none;
+}
+
+.page-header-eyebrow {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+}
+
+.page-header-eyebrow::after {
+  content: "";
+  flex: 1;
+  max-width: 20vw;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-accent), transparent);
+}
+
+.page-header-title {
+  grid-column: 1;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-4xl);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+  max-width: 15ch;
+}
+
+.page-header-aside { grid-column: 2; padding-bottom: 0.4rem; }
+
+.page-header-description {
+  margin: 0;
+  max-width: 42ch;
+  color: var(--color-muted);
+  font-size: var(--fs-md);
+  line-height: var(--lh-snug);
+}
+
+/* Breadcrumb rail along the bottom edge */
+.page-header-rail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding-block: var(--space-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.page-header-rail .breadcrumb {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+@media (max-width: 991.98px) {
+  .page-header-inner { grid-template-columns: minmax(0, 1fr); }
+  .page-header-title { max-width: 16ch; }
+  .page-header-aside { grid-column: 1; padding-bottom: 0; }
+}
+
+@media (max-width: 767.98px) {
+  .page-header { padding-top: calc(var(--navbar-height) + var(--space-lg)); }
+  .page-header-title { max-width: none; }
+  .page-header-eyebrow::after { max-width: 28vw; }
+}
+
+/* ==========================================================================
+   TORN SECTION EDGES
+   --------------------------------------------------------------------------
+   Where two sections change tone, the boundary is a hand-drawn irregular
+   contour rather than a ruled line — the way one sheet of paper sits on top
+   of another.
+
+   How it works: the section paints its *own* background colour into a strip
+   that overhangs the section above it, then masks that strip with an
+   irregular SVG contour. Because the strip is painted with a live token and
+   only the shape comes from the data URI, the edge follows the palette and
+   works in both themes with no second asset.
+
+   It is applied automatically wherever the tonal alternation happens, so no
+   section markup changes and nothing has to be remembered when a new section
+   is added to pages.json.
+   ========================================================================== */
+:root {
+  --edge-height: 22px;
+
+  /* Mixed-frequency contour — evenly spaced waves read as a decorative
+     scallop; irregular ones read as a tear. */
+  --edge-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 40' preserveAspectRatio='none'%3E%3Cpath d='M0 22 C 40 12 70 27 110 20 C 150 13 175 29 215 21 C 255 13 290 31 330 23 C 375 14 400 28 445 19 C 490 10 520 30 565 22 C 610 14 640 27 685 20 C 730 13 760 31 805 23 C 850 15 885 27 930 19 C 975 11 1005 29 1050 21 C 1095 13 1130 28 1175 20 C 1220 12 1255 30 1300 22 C 1345 14 1395 25 1440 17 L1440 40 L0 40 Z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+/* The strip itself. `--edge-color` is set per-case below to whichever
+   background this section is bringing with it. */
+.section--alt,
+.section--alt + .section,
+.section--deep,
+.trust-strip {
+  position: relative;
+}
+
+/* Two stacked strips share the same contour. The lower one is painted in the
+   border colour and sits a pixel higher, so exactly one pixel of it shows
+   along the top of the tear — a drawn edge.
+
+   This is what makes the effect survive a dark palette: the two alternating
+   tones here differ by about three values per channel, so the shape alone is
+   invisible. The reference this is modelled on gets away without a line
+   because its two creams are far further apart. */
+.section--alt::before,
+.section--alt::after,
+.section--alt + .section::before,
+.section--alt + .section::after,
+.trust-strip::before,
+.trust-strip::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: var(--edge-height);
+  -webkit-mask-image: var(--edge-mask);
+  mask-image: var(--edge-mask);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  pointer-events: none;
+}
+
+/* the drawn contour, one pixel proud */
+.section--alt::before,
+.section--alt + .section::before,
+.trust-strip::before {
+  transform: translateY(calc(-100% - 1px));
+  background: var(--color-border-strong);
+  z-index: var(--z-base);
+}
+
+/* the tone, laid over it */
+.section--alt::after,
+.section--alt + .section::after,
+.trust-strip::after {
+  transform: translateY(-100%);
+  background: var(--edge-color, var(--color-background));
+  z-index: var(--z-raised);
+}
+
+/* Each case brings its own tone up into the section above it */
+.section--alt   { --edge-color: var(--color-background-alt); }
+.trust-strip    { --edge-color: var(--color-background); }
+.section--alt + .section { --edge-color: var(--color-background); }
+
+/* The hairline rules that used to mark these boundaries would now read as a
+   seam sitting under the tear. */
+.section--alt + .section,
+.section--alt { border-top: 0; }
+
+.trust-strip {
+  border-top: 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+/* The divided modifier is a deliberate ruled line — leave it alone. */
+.section--divided::before {
+  transform: none;
+  height: 1px;
+  mask-image: none;
+  -webkit-mask-image: none;
+  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+}
+
+/* Sections that sit on their own artwork must not have a strip painted over
+   the top of it. */
+.hero::before,
+.page-header::before,
+.hero-bg::before { mask-image: none; }
+
+@media (max-width: 767.98px) {
+  :root { --edge-height: 14px; }
+}
+
+/* The tear is decoration. If someone would rather have the ruled line back,
+   this is the single switch. */
+:root[data-edges="ruled"] .section--alt::before,
+:root[data-edges="ruled"] .section--alt::after,
+:root[data-edges="ruled"] .section--alt + .section::before,
+:root[data-edges="ruled"] .section--alt + .section::after,
+:root[data-edges="ruled"] .trust-strip::before,
+:root[data-edges="ruled"] .trust-strip::after { display: none; }
+
+:root[data-edges="ruled"] .section--alt,
+:root[data-edges="ruled"] .section--alt + .section { border-top: 1px solid var(--color-border); }
+
+/* ==========================================================================
+   HERO CARDS — metadata over the video panel
+   --------------------------------------------------------------------------
+   Three small labels placed down the video half on a loose diagonal, so the
+   right side has something to read without covering the footage's subject.
+   They animate in from the right via data-reveal, staggered by the existing
+   Motion pipeline, and they are decorative — aria-hidden, no links, out of
+   the tab order.
+   ========================================================================== */
+.hero-cards {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-raised);
+  pointer-events: none;
+}
+
+.hero--split .hero-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.95rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-background-deep) 88%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: var(--shadow-lg);
+  white-space: nowrap;
+}
+
+/* A loose diagonal down the right panel — even spacing would read as a list */
+.hero--split .hero-card--1 { top: 22%; left: 56%; }
+.hero--split .hero-card--2 { top: 47%; right: 6%; }
+.hero--split .hero-card--3 { top: 70%; left: 62%; }
+
+.hero--split .hero-card .icon-tile {
+  display: inline-grid;
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.9rem;
+  border-color: var(--color-accent-line);
+  color: var(--color-accent);
+}
+
+.hero--split .hero-card-label {
+  display: block;
+  color: var(--color-heading);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.hero--split .hero-card-value {
+  display: block;
+  margin-top: 0.1rem;
+  color: var(--color-faint);
+  font-size: var(--fs-2xs);
+}
+
+/* Narrower desktops: pull them in so they cannot touch the viewport edge */
+@media (max-width: 1279.98px) {
+  .hero--split .hero-card--1 { top: 20%; left: 54%; }
+  .hero--split .hero-card--2 { top: 46%; right: 3%; }
+  .hero--split .hero-card--3 { top: 70%; left: 58%; }
+}
+
+/* No second column below the breakpoint — the cards would land on the copy */
+@media (max-width: 991.98px) {
+  .hero-cards { display: none; }
+}
+
+/* ==========================================================================
+   HERO — HARD SPLIT
+   --------------------------------------------------------------------------
+   Type on solid ink, video full-height beside it, one sharp vertical seam
+   between them. No gradient blend, no scrim over the footage: the two halves
+   simply meet.
+
+   Why this reads as designed rather than templated: the standard hero floats
+   text on top of an image and softens the boundary until neither is committed
+   to. A hard edge commits to both — the type gets a clean ground and the
+   video is never covered.
+
+   Implemented entirely in CSS. The markup and the data are untouched: the
+   existing full-bleed backdrop layer is simply constrained to the right of
+   the seam.
+   ========================================================================== */
+.hero--split {
+  background: var(--color-background-deep);
+}
+
+/* The backdrop layer becomes the right-hand panel */
+.hero--split .hero-bg {
+  left: auto;
+  right: 0;
+  width: 48%;
+  border-left: 1px solid var(--color-border-strong);
+}
+
+/* Nothing sits on the footage, so it needs no scrim. A shallow feather at the
+   seam and along the bottom stops the panel ending abruptly against the ink. */
+.hero--split .hero-video-overlay {
+  background:
+    linear-gradient(90deg, var(--color-background-deep) 0%, transparent 14%),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-background-deep) 55%, transparent) 0%, transparent 22%);
+}
+
+/* The column grid on the backdrop would fight the footage here */
+.hero--split .hero-bg::before { display: none; }
+.hero--split .hero-bg::after { background: none; }
+
+/* --- the ink half ------------------------------------------------------- */
+.hero--split .hero-inner {
+  max-width: min(44%, 40rem);
+  padding-right: var(--space-lg);
+}
+
+.hero--split .hero-title {
+  max-width: 12ch;
+  font-size: clamp(2.75rem, 5.4vw, 5rem);
+}
+
+.hero--split .hero-description { max-width: 40ch; }
+.hero--split .hero-eyebrow::after { max-width: 7vw; }
+
+/* --- the rail becomes a full-width band across both halves -------------- */
+.hero--split .hero-rail {
+  position: relative;
+  z-index: var(--z-raised);
+  border-top: 0;
+}
+
+/* A viewport-wide ink band behind the rail, so the video panel runs from the
+   navbar down to a clean horizontal edge — the frame gets a base. */
+.hero--split .hero-rail::before {
+  content: "";
+  position: absolute;
+  inset-block: calc(var(--space-md) * -1) calc(var(--space-md) * -1);
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  border-top: 1px solid var(--color-border-strong);
+  background: var(--color-background-deep);
+  z-index: -1;
+}
+
+.hero--split .hero-shell { padding-bottom: var(--space-lg); }
+
+/* ==========================================================================
+   RESPONSIVE
+   A vertical seam needs two columns. Below the breakpoint the video returns
+   to a full-bleed backdrop with the scrim over it — restructured, not shrunk.
+   ========================================================================== */
+@media (max-width: 991.98px) {
+  .hero--split .hero-bg {
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-left: 0;
+  }
+
+  .hero--split .hero-video-overlay {
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--color-background-deep) 84%, transparent) 0%,
+        color-mix(in srgb, var(--color-background-deep) 62%, transparent) 38%,
+        color-mix(in srgb, var(--color-background-deep) 90%, transparent) 78%,
+        var(--color-background) 100%
+      );
+  }
+
+  .hero--split .hero-inner {
+    max-width: none;
+    padding-right: 0;
+  }
+
+  .hero--split .hero-title { max-width: 16ch; font-size: var(--fs-hero); }
+  .hero--split .hero-description { max-width: 52ch; }
+  .hero--split .hero-eyebrow::after { max-width: 28vw; }
+  .hero--split .hero-rail::before { display: none; }
+  .hero--split .hero-rail { border-top: 1px solid var(--color-border); }
+}

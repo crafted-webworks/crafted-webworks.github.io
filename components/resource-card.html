@@ -1,0 +1,28 @@
+<!--
+  Component: resource-card
+  Runtime builder: components.resourceCard(resource)  ·  Data: resources.json → items[]
+-->
+<article class="card resource-card card--interactive"
+         data-reveal="up" data-id="{{ id }}" data-category="{{ category }}" id="{{ slug }}">
+
+  <div class="resource-card-top">
+    <span class="icon-tile icon-tile--sm">
+      <svg class="icon" aria-hidden="true"><use href="#ui-i-{{ icon }}"></use></svg>
+    </span>
+    <span class="badge badge--accent">{{ type_label }}</span>
+  </div>
+
+  <div class="card-body">
+    <h3 class="card-title">{{ title }}</h3>
+    <p class="card-text">{{ description }}</p>
+  </div>
+
+  <div class="card-footer flex items-center justify-between gap-sm">
+    <span class="card-meta">
+      <svg class="icon" aria-hidden="true"><use href="#ui-i-clock"></use></svg>{{ readingTime }}
+    </span>
+    <a class="card-link" href="{{ url }}">
+      Open <svg class="icon" aria-hidden="true"><use href="#ui-i-arrow-right"></use></svg>
+    </a>
+  </div>
+</article>
