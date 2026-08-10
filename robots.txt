@@ -14,4 +14,4 @@ Disallow: /data/bundle.js
 Disallow: /pages/blog.html?*&
 Allow: /pages/blog.html?post=
 
-Sitemap: https://craftedwebworks.example/sitemap.xml
+Sitemap: https://crafted-webworks.github.io/sitemap.xml
