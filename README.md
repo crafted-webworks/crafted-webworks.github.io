@@ -323,7 +323,7 @@ translation job, not a rewrite.
 
 ## Before you launch
 
-- [ ] Replace the placeholder domain `https://craftedwebworks.example/` in `data/site.json`
+- [ ] Replace the placeholder domain `https://crafted-webworks.github.io//` in `data/site.json`
       and `robots.txt`
 - [ ] Replace the placeholder email and phone in `data/site.json`, `data/social.json` and
       `data/contact.json`
