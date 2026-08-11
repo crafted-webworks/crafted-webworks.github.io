@@ -1230,15 +1230,18 @@ a.contact-info-value:hover { color: var(--color-accent); }
 .case-hero { padding-top: var(--space-lg); }
 
 .case-intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-sm);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xs);
+  align-items: start;
+  margin-bottom: var(--space-md);
 }
 
-/* The measure belongs to each element, not the wrapper — constraining the
-   container squeezed the lead paragraph into the title's narrow column. */
-.case-title { max-width: 16ch; }
+.case-intro > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
 
 .case-title {
   margin: 0;
@@ -1252,39 +1255,38 @@ a.contact-info-value:hover { color: var(--color-accent); }
 
 .case-lead {
   margin: 0;
-  max-width: 56ch;
   color: var(--color-muted);
   font-size: var(--fs-lg);
   line-height: var(--lh-snug);
 }
 
-/* Full-bleed visual — the composition, not a thumbnail in a card */
+/* Full-bleed visual with better aspect ratio */
 .case-media {
   position: relative;
-  aspect-ratio: 16 / 7;
-  margin-top: var(--section-gap);
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
 }
 
 .case-media img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Facts set like a printed colophon */
+/* Facts grid - more compact, better use of space */
 .case-facts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
-  gap: 0;
-  margin: var(--section-gap) 0 0;
-  border-top: 1px solid var(--color-border);
+  grid-template-columns: 1fr;
+  gap: var(--space-xs);
+  margin: var(--space-xl) 0 0;
+  padding: var(--space-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
 }
 
 .case-facts > div {
-  padding: var(--space-md) var(--space-md) 0 0;
-  border-right: 1px solid var(--color-border-subtle);
+  padding: 0;
 }
-
-.case-facts > div:last-child { border-right: 0; }
 
 .case-facts dt {
   margin-bottom: 0.35rem;
@@ -1300,53 +1302,101 @@ a.contact-info-value:hover { color: var(--color-accent); }
   color: var(--color-heading);
   font-size: var(--fs-base);
   line-height: 1.45;
+  font-weight: var(--fw-medium);
 }
 
-/* --- narrative chapters -------------------------------------------------- */
+/* --- narrative chapters - improved layout -------------------------------- */
 .case-chapters {
   display: flex;
   flex-direction: column;
-  max-width: 78ch;
+  max-width: 100%;
   margin-inline: auto;
 }
 
 .case-chapter {
   display: grid;
-  grid-template-columns: 3.5rem minmax(0, 1fr);
-  gap: var(--space-md);
-  padding-block: var(--space-lg);
+  grid-template-columns: 80px minmax(0, 1fr);
+  gap: var(--space-lg);
+  padding-block: var(--space-xl);
   border-top: 1px solid var(--color-border);
 }
 
 .case-chapter:last-child { border-bottom: 1px solid var(--color-border); }
 
 .case-chapter-index {
-  color: var(--color-faint);
+  color: var(--color-accent);
   font-family: var(--font-mono);
-  font-size: var(--fs-xs);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
   letter-spacing: var(--tracking-wide);
-  padding-top: 0.5rem;
+  padding-top: 0.25rem;
 }
 
 .case-chapter-title {
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--space-md);
   font-family: var(--font-display);
   font-size: var(--fs-2xl);
-  font-weight: var(--fw-regular);
+  font-weight: var(--fw-semibold);
   letter-spacing: var(--tracking-display);
+  color: var(--color-heading);
 }
 
 .case-chapter-text {
-  margin: 0;
-  color: var(--color-muted);
+  margin: 0 0 var(--space-md);
+  color: var(--color-text);
+  font-size: var(--fs-md);
+  line-height: var(--lh-relaxed);
+}
+
+.case-chapter-text:last-child {
+  margin-bottom: 0;
+}
+
+.case-chapter-subheading {
+  margin: var(--space-lg) 0 var(--space-sm);
+  font-family: var(--font-body);
   font-size: var(--fs-lg);
-  line-height: var(--lh-base);
+  font-weight: var(--fw-semibold);
+  color: var(--color-heading);
+  letter-spacing: var(--tracking-tight);
+}
+
+.case-chapter-subheading:first-child {
+  margin-top: 0;
+}
+
+.case-chapter-list {
+  margin: var(--space-md) 0;
+  padding-left: var(--space-lg);
+  list-style: none;
+}
+
+.case-chapter-list li {
+  position: relative;
+  margin-bottom: var(--space-xs);
+  padding-left: var(--space-sm);
+  color: var(--color-text);
+  font-size: var(--fs-md);
+  line-height: var(--lh-relaxed);
+}
+
+.case-chapter-list li:before {
+  content: '→';
+  position: absolute;
+  left: calc(-1 * var(--space-sm));
+  color: var(--color-accent);
+  font-weight: var(--fw-bold);
+}
+
+.case-chapter-text strong {
+  font-weight: var(--fw-semibold);
+  color: var(--color-heading);
 }
 
 /* --- detail + actions ---------------------------------------------------- */
 .case-detail-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  grid-template-columns: 1fr;
   gap: var(--grid-gap-lg);
   align-items: start;
 }
@@ -1391,11 +1441,29 @@ a.contact-info-value:hover { color: var(--color-accent); }
 }
 
 @media (max-width: 767.98px) {
-  .case-intro { max-width: none; }
+  .case-intro { 
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
   .case-media { aspect-ratio: 4 / 3; }
-  .case-facts > div { border-right: 0; border-bottom: 1px solid var(--color-border-subtle); padding-bottom: var(--space-sm); }
-  .case-chapter { grid-template-columns: minmax(0, 1fr); gap: var(--space-2xs); }
-  .case-chapter-index { padding-top: 0; }
+  .case-facts { 
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+  }
+  .case-chapter { 
+    grid-template-columns: 60px minmax(0, 1fr);
+    gap: var(--space-md);
+    padding-block: var(--space-lg);
+  }
+  .case-chapter-index { 
+    font-size: var(--fs-lg);
+  }
+  .case-chapter-title {
+    font-size: var(--fs-xl);
+  }
+  .case-chapter-text {
+    font-size: var(--fs-base);
+  }
   .case-actions .btn { width: 100%; }
 }
 
@@ -1479,6 +1547,7 @@ a.contact-info-value:hover { color: var(--color-accent); }
   line-height: 0.96;
   letter-spacing: -0.024em;
   max-width: 14ch;
+  font-weight: 700;
 }
 
 .hero--cinematic .hero-title span { display: block; }
