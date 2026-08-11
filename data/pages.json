@@ -7,7 +7,12 @@
       "title": "{{site.name}} — Custom Website & Web Application Development",
       "useTitleTemplate": false,
       "description": "Custom websites, web applications and digital experiences built for performance, growth and real-world use. Business websites, e-commerce, portals and more.",
-      "canonical": "/"
+      "keywords": ["custom website development", "web application development", "business websites", "e-commerce development", "web development agency"],
+      "canonical": "/",
+      "ogType": "website",
+      "ogTitle": "{{site.name}} — Professional Web Development Services",
+      "ogDescription": "Transform your online presence with custom websites and web applications. Expert development focused on performance, SEO, and business growth.",
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1"
     },
     "sections": [
       "hero",
@@ -36,7 +41,12 @@
     "template": "inner",
     "seo": {
       "title": "About",
-      "description": "{{site.name}} is a web development studio focused on custom, maintainable websites and web applications built around real business goals."
+      "description": "{{site.name}} is a web development studio focused on custom, maintainable websites and web applications built around real business goals.",
+      "keywords": ["web development studio", "about crafted webworks", "web design agency", "custom web solutions"],
+      "canonical": "/pages/about.html",
+      "ogType": "website",
+      "ogTitle": "About {{site.name}} — Custom Web Development Studio",
+      "ogDescription": "Learn about our approach to web development. We build custom, maintainable websites and applications focused on real business outcomes."
     },
     "header": {
       "eyebrow": "About Us",
@@ -62,7 +72,12 @@
     "template": "inner",
     "seo": {
       "title": "Services",
-      "description": "Website and web application development services: business websites, e-commerce, landing pages, CMS, web portals, redesigns, SEO foundations and performance work."
+      "description": "Website and web application development services: business websites, e-commerce, landing pages, CMS, web portals, redesigns, SEO foundations and performance work.",
+      "keywords": ["web development services", "custom website design", "e-commerce development", "CMS development", "website redesign services", "SEO services"],
+      "canonical": "/pages/services.html",
+      "ogType": "website",
+      "ogTitle": "Web Development Services | {{site.name}}",
+      "ogDescription": "Comprehensive web development services from landing pages to complex applications. E-commerce, CMS, portals, redesigns, and performance optimization."
     },
     "header": {
       "eyebrow": "Services",
@@ -86,7 +101,12 @@
     "template": "inner",
     "seo": {
       "title": "Projects",
-      "description": "Selected website and web application projects by {{site.name}} across business, e-commerce, real estate, CMS and custom application work."
+      "description": "Selected website and web application projects by {{site.name}} across business, e-commerce, real estate, CMS and custom application work.",
+      "keywords": ["web development portfolio", "website projects", "e-commerce projects", "custom web applications", "case studies"],
+      "canonical": "/pages/projects.html",
+      "ogType": "website",
+      "ogTitle": "Our Work — Web Development Projects | {{site.name}}",
+      "ogDescription": "Explore our portfolio of custom websites and web applications. Real projects across business, e-commerce, and specialized industries."
     },
     "header": {
       "eyebrow": "Our Work",
@@ -108,7 +128,12 @@
     "template": "inner",
     "seo": {
       "title": "Website Demos",
-      "description": "Explore website demo concepts by industry — business, restaurant, real estate, portfolio, e-commerce, healthcare, education, SaaS and more."
+      "description": "Explore website demo concepts by industry — business, restaurant, real estate, portfolio, e-commerce, healthcare, education, SaaS and more.",
+      "keywords": ["website demos", "website templates", "industry website examples", "demo websites", "website concepts"],
+      "canonical": "/pages/demos.html",
+      "ogType": "website",
+      "ogTitle": "Website Demos by Industry | {{site.name}}",
+      "ogDescription": "Browse concept websites across industries. Each demo showcases layout, functionality, and design patterns adaptable to your needs."
     },
     "header": {
       "eyebrow": "Demos",
@@ -129,7 +154,12 @@
     "template": "inner",
     "seo": {
       "title": "Free Resources for Web Creators",
-      "description": "Free checklists, guides, references and curated tools for planning, building, optimizing and maintaining better websites."
+      "description": "Free checklists, guides, references and curated tools for planning, building, optimizing and maintaining better websites.",
+      "keywords": ["web development resources", "free web tools", "website checklists", "web design guides", "developer resources"],
+      "canonical": "/pages/resources.html",
+      "ogType": "website",
+      "ogTitle": "Free Web Development Resources & Guides | {{site.name}}",
+      "ogDescription": "Checklists, planning guides, and curated tools for web creators. Free resources we use ourselves — no sign-up required."
     },
     "header": {
       "eyebrow": "Free Resources",
@@ -158,7 +188,12 @@
     "template": "inner",
     "seo": {
       "title": "General Tools",
-      "description": "Free browser-based tools for everyday web, content and development tasks — formatters, converters, generators, color and SEO utilities."
+      "description": "Free browser-based tools for everyday web, content and development tasks — formatters, converters, generators, color and SEO utilities.",
+      "keywords": ["web tools", "developer tools", "online utilities", "JSON formatter", "color converter", "SEO tools", "free web utilities"],
+      "canonical": "/pages/tools.html",
+      "ogType": "website",
+      "ogTitle": "Free Web Development Tools & Utilities | {{site.name}}",
+      "ogDescription": "Fast, browser-based tools for web development. JSON formatters, color utilities, converters, and generators. All client-side, nothing uploaded."
     },
     "header": {
       "eyebrow": "General Tools",
@@ -180,7 +215,12 @@
     "template": "inner",
     "seo": {
       "title": "Blog",
-      "description": "Practical articles on web development, SEO foundations, website performance, design decisions and running a website as a business asset."
+      "description": "Practical articles on web development, SEO foundations, website performance, design decisions and running a website as a business asset.",
+      "keywords": ["web development blog", "SEO tips", "website performance", "web design articles", "technical blog"],
+      "canonical": "/pages/blog.html",
+      "ogType": "website",
+      "ogTitle": "Web Development Blog | {{site.name}}",
+      "ogDescription": "Practical insights on building, optimizing, and maintaining websites. No filler, just actionable advice from real projects."
     },
     "header": {
       "eyebrow": "Blog",
@@ -201,7 +241,12 @@
     "template": "inner",
     "seo": {
       "title": "Contact",
-      "description": "Tell us about your project. Share your goals and timeline and we'll respond with a practical recommendation."
+      "description": "Tell us about your project. Share your goals and timeline and we'll respond with a practical recommendation.",
+      "keywords": ["contact web developer", "hire web developer", "web development inquiry", "project consultation"],
+      "canonical": "/pages/contact.html",
+      "ogType": "website",
+      "ogTitle": "Contact Us — Start Your Project | {{site.name}}",
+      "ogDescription": "Ready to discuss your web project? Share your goals and we'll provide a clear, practical approach tailored to your needs."
     },
     "header": {
       "eyebrow": "Contact",
@@ -223,7 +268,12 @@
     "template": "inner",
     "seo": {
       "title": "Frequently Asked Questions",
-      "description": "Answers about cost, timelines, custom development, redesigns, SEO, maintenance, e-commerce, integrations and how projects start."
+      "description": "Answers about cost, timelines, custom development, redesigns, SEO, maintenance, e-commerce, integrations and how projects start.",
+      "keywords": ["web development FAQ", "website cost", "development timeline", "web development questions"],
+      "canonical": "/pages/faq.html",
+      "ogType": "website",
+      "ogTitle": "Frequently Asked Questions | {{site.name}}",
+      "ogDescription": "Common questions about web development costs, timelines, processes, and services. Clear, honest answers to help you plan your project."
     },
     "header": {
       "eyebrow": "FAQ",
