@@ -198,10 +198,83 @@
                    '<div class="container">' +
                      '<div class="case-chapters">' +
                        chapters.map(function (chapter, i) {
+                         /* Process chapter text with full HTML support:
+                            - \n\n = paragraph breaks
+                            - **text** = bold
+                            - ### heading = h3
+                            - - list item = ul/li
+                         */
+                         var text = String(chapter.text || "");
+                         var output = '';
+                         var lines = text.split('\n');
+                         var inList = false;
+                         var currentParagraph = '';
+                         
+                         for (var j = 0; j < lines.length; j++) {
+                           var line = lines[j].trim();
+                           
+                           if (!line) {
+                             // Empty line - close paragraph or list
+                             if (currentParagraph) {
+                               var formatted = U.escape(currentParagraph).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                               output += '<p class="case-chapter-text">' + formatted + '</p>';
+                               currentParagraph = '';
+                             }
+                             if (inList) {
+                               output += '</ul>';
+                               inList = false;
+                             }
+                             continue;
+                           }
+                           
+                           // Check for heading (###)
+                           if (line.match(/^###\s+(.+)/)) {
+                             if (currentParagraph) {
+                               output += '<p class="case-chapter-text">' + U.escape(currentParagraph) + '</p>';
+                               currentParagraph = '';
+                             }
+                             if (inList) {
+                               output += '</ul>';
+                               inList = false;
+                             }
+                             var heading = line.replace(/^###\s+/, '');
+                             output += '<h3 class="case-chapter-subheading">' + U.escape(heading) + '</h3>';
+                             continue;
+                           }
+                           
+                           // Check for list item (- or •)
+                           if (line.match(/^[-•]\s+(.+)/)) {
+                             if (currentParagraph) {
+                               output += '<p class="case-chapter-text">' + U.escape(currentParagraph) + '</p>';
+                               currentParagraph = '';
+                             }
+                             if (!inList) {
+                               output += '<ul class="case-chapter-list">';
+                               inList = true;
+                             }
+                             var item = line.replace(/^[-•]\s+/, '');
+                             var formatted = U.escape(item).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                             output += '<li>' + formatted + '</li>';
+                             continue;
+                           }
+                           
+                           // Regular text - add to current paragraph
+                           currentParagraph += (currentParagraph ? ' ' : '') + line;
+                         }
+                         
+                         // Close any remaining open elements
+                         if (currentParagraph) {
+                           var formatted = U.escape(currentParagraph).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                           output += '<p class="case-chapter-text">' + formatted + '</p>';
+                         }
+                         if (inList) {
+                           output += '</ul>';
+                         }
+                         
                          return '<article class="case-chapter" data-reveal="up">' +
                                   '<span class="case-chapter-index">' + ("0" + (i + 1)).slice(-2) + "</span>" +
                                   '<div><h2 class="case-chapter-title">' + U.escape(chapter.label) + "</h2>" +
-                                  '<p class="case-chapter-text">' + U.escape(chapter.text) + "</p></div>" +
+                                  output + "</div>" +
                                 "</article>";
                        }).join("") +
                      "</div>" +

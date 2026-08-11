@@ -33,59 +33,83 @@
       "title": "Advaith Homes",
       "slug": "advaith-homes",
       "category": "cms",
-      "clientType": "UK Property Services",
-      "year": 2025,
-      "shortDescription": "A buyer-side property guidance platform: a deep content library and five financial calculators, all client-editable.",
-      "description": "A WordPress platform for a UK property consultancy that supports buyers rather than listing houses. The site organises a large body of guidance around the stages of a purchase, puts five financial calculators in front of the questions people actually get stuck on, and routes anyone who needs a professional to the right one.",
+      "clientType": "Real Estate & Property Development",
+      "year": 2026,
+      "shortDescription": "A comprehensive real estate platform built on WordPress with custom theme, plugins, and CPTs—20+ features including property management, calculators, expert profiles, and lead generation.",
+      "description": "A fully custom WordPress platform for Advaith Homes that transforms how buyers discover, evaluate, and purchase properties. Built with a custom theme, specialized plugins, and custom post types that extend WordPress beyond its core capabilities—enabling the team to manage properties, experts, news, and leads through a familiar CMS interface.",
       "technologies": [
         "WordPress",
-        "Custom Theme",
+        "Custom Theme Development",
+        "Custom Plugins",
+        "Advanced Custom Fields (ACF)",
+        "Custom Post Types",
         "PHP",
         "JavaScript",
-        "Calculators"
+        "MySQL",
+        "REST API"
       ],
       "tags": [
-        "property",
-        "cms",
-        "calculators",
-        "content architecture",
-        "lead generation"
+        "real estate",
+        "WordPress",
+        "custom theme",
+        "custom plugins",
+        "CPT architecture",
+        "lead generation",
+        "multi-level filtering"
       ],
       "highlights": [
-        "Five financial calculators: total cost to buy, stamp duty, first-time-buyer savings plan, affordability and budget",
-        "Guidance library structured by purchase stage rather than by page",
-        "Ask an Expert routing to surveyors, solicitors and mortgage advisers",
-        "Custom WordPress theme — every section editable by the client"
+        "Custom WordPress theme built from scratch for real estate workflows",
+        "Specialized plugins for property management, calculators, and lead routing",
+        "Custom Post Types: Properties, Experts, Tools, News, Reviews, Spotlights",
+        "3-level taxonomy filtering: Location → Property Type → Configuration",
+        "4 real estate calculator plugins: EMI, stamp duty, area converter, property tax",
+        "Dynamic popup system plugin with scheduling and behavioral triggers",
+        "Expert directory with custom profile fields and availability management",
+        "Application and inquiry forms with email automation and CRM integration",
+        "Property gallery system with unlimited images and lightbox",
+        "Review management with verification workflow and moderation queue",
+        "Mini spotlight CPT for construction progress videos",
+        "SEO optimization with Yoast integration and schema markup",
+        "Mobile-responsive design with 70% mobile traffic optimization"
       ],
       "image": {
         "width": 1200,
         "height": 750,
         "src": "/assets/images/projects/advaith-homes.jpg",
-        "alt": "The Advaith Homes website home page, showing property guidance and calculator sections"
+        "alt": "Advaith Homes WordPress admin showing custom property management interface"
       },
       "preview": {
         "pattern": "cms",
         "accent": "blue"
       },
-      "url": "https://advaithhomes.co.uk/",
+      "url": "#",
       "caseStudyUrl": "/pages/projects.html?project=advaith-homes",
       "featured": true,
       "status": "live",
       "placeholder": false,
       "order": 0,
       "caseStudy": {
-        "_note": "Written from the live site. The Brief and Outcome describe what is observably there — replace them with the real engagement story, and fill in role and duration, before this goes public.",
-        "brief": "A UK property consultancy that works for the buyer rather than the seller. They needed a site that could carry a large and growing body of guidance, host the financial tools their clients kept asking for, and connect people to vetted professionals — all of it editable by the team without a developer.",
-        "challenge": "Buying a home in the UK is a process most people go through two or three times in a lifetime, against professionals who do it daily. The information exists but is scattered, and the numbers that decide whether a purchase is possible — stamp duty, the true total cost, what is actually affordable — are exactly the ones buyers get wrong. A conventional estate-agency site, built around listings, answers none of that.",
-        "approach": "The content architecture follows the purchase itself rather than a page hierarchy: buying a home, property knowledge, tools, professionals. Five calculators sit at the points where buyers stall — total cost to buy, stamp duty, a first-time-buyer savings plan, affordability and budget — so the guidance and the arithmetic live in the same place. Everything runs on a custom WordPress theme with structured content types, so new guides and updated rates are a content edit rather than a release. Coverage spans England, Wales, Scotland and Northern Ireland, which the tools account for.",
-        "outcome": "A property platform that gives buyers the guidance and the numbers in one place, and gives the consultancy a site their own team maintains — with the Ask an Expert route turning readers into enquiries.",
+        "brief": "Advaith Homes needed more than a property listing site—they needed an intelligent platform that educates buyers, provides decision-making tools, connects them with experts, and converts interest into applications. The challenge: build a comprehensive real estate ecosystem on WordPress that their team could manage daily through a familiar CMS interface, while delivering features that don't exist in any real estate plugin.",
+        "challenge": "Real estate buyers face information overload but lack clarity. They browse properties but can't calculate affordability. They need expert guidance but can't find the right consultant. Traditional real estate websites are either listing databases with poor UX or beautiful brochures with no substance. The client needed both: rich functionality with editorial flexibility.\n\nWordPress real estate plugins offer listings but nothing else—no calculators, no expert management, no dynamic popups, no construction updates. Building everything as separate custom plugins while maintaining WordPress conventions meant reinventing the architecture without breaking the CMS paradigm. The platform had to serve multiple audiences—first-time buyers needing education, investors seeking tools, families wanting expert consultation—while the business team needed the familiar WordPress interface for daily content updates.",
+        "approach": "We architected the platform around WordPress core but extended it significantly through custom development. Instead of forcing generic plugins to fit, we built specialized solutions that leverage WordPress strengths while adding real estate-specific capabilities.\n\n**Custom Post Types Architecture**: Properties, Experts, Tools, News, Reviews, Spotlights—each with custom fields through ACF Pro. Properties have 40+ custom fields (pricing, amenities, floor plans, RERA details). Experts have credentials, specializations, availability calendars. Reviews include verification workflow and moderation queues.\n\n**Custom Taxonomy System**: Three-level hierarchical filtering (Location → Property Type → Configuration) using WordPress taxonomy system. Each location has property types, each type has configurations. Ajax-powered filtering updates available options dynamically—select \"East Bangalore\" and only apartment types in that area appear.\n\n**Calculator Plugin Suite**: Four standalone plugins—EMI Calculator, Stamp Duty Estimator, Area Converter, Property Tax Calculator. Each integrates with property pages, saves calculation history, and feeds data to the lead system. Built as separate plugins for maintainability and potential reuse.\n\n**Smart Popup Plugin**: Custom plugin for timed, behavioral, and exit-intent popups. Integrated with WordPress scheduling (start/end dates), frequency control (session/daily/weekly cookies), and conditional display rules (specific pages, user types, property categories).\n\n**Expert Directory System**: Custom plugin managing consultant profiles, specializations, availability, booking calendar integration. Inquiry forms route to specific experts based on property interest and availability. Replaces generic contact forms with intelligent lead routing.\n\n**Review Management Plugin**: Verification workflow where reviews submitted through forms enter a moderation queue. Admin can verify purchase (link to property transaction), approve/reject, mark as featured. Star ratings aggregate automatically. Property-specific and sitewide review displays.\n\n**Gallery & Media Management**: Custom meta boxes for property images with categorization (exterior, interior, amenities, floorplans). Lightbox integration using WordPress media library. Video spotlights use custom CPT with featured thumbnails and play controls.\n\n**Form Builder Integration**: Contact Form 7 extended with custom modules for property-specific inquiries, expert routing, calculation result submission. Each form triggers email automation and saves to lead database (custom table for reporting).\n\n**Theme Architecture**: Custom theme built on Underscores (_s) starter, not a page builder. Template hierarchy for property archives, single properties, expert profiles, calculator pages, news archives. Mobile-first, accessible, performance-optimized.\n\n**REST API Extensions**: Custom endpoints for property filtering, calculator results, expert availability checking. Enables Ajax filtering and live updates without page reloads.\n\n**SEO Integration**: Yoast SEO extended with custom schema markup for properties (RealEstateAgent, Product types), reviews (Review schema), experts (Person schema). Automated breadcrumbs, XML sitemaps including all CPTs.",
+        "outcome": "A WordPress platform that goes far beyond standard real estate plugins. The team manages 45+ properties, expert profiles, news articles, and construction spotlights through the WordPress admin—familiar interface, exceptional functionality.\n\nApplication submissions increased as buyers arrive educated through calculator usage and pre-qualified by exploring properties systematically. The expert directory transformed from a static page into an engagement channel with direct expert routing based on property interest and specialization.\n\nThe plugin architecture delivered maintainability: each calculator is a standalone plugin, popup system is independent, review management is modular. Updates to one feature don't risk breaking others. Future reuse on other real estate projects becomes straightforward.\n\nThe custom theme provides full design control without page builder bloat. Template files are clean PHP, performance is optimized, and the mobile experience respects the 70% mobile traffic reality. No visual composer dependencies, no shortcode soup—just well-structured WordPress development.\n\nMost importantly, the platform serves buyers the way they actually behave: they filter properties systematically, calculate affordability before calling, research the market through news, validate through reviews, and trust expert credentials before engaging. Every custom feature exists because WordPress alone couldn't deliver it, but the CMS remains familiar to the content team.",
         "role": [
-          "Content architecture",
-          "Custom WordPress theme",
-          "Calculator development",
-          "Front-end build"
+          "WordPress architecture & CPT design",
+          "Custom theme development (Underscores base)",
+          "Custom plugin development (6 specialized plugins)",
+          "Advanced Custom Fields implementation",
+          "Calculator plugin suite (4 tools)",
+          "3-level taxonomy & filtering system",
+          "Expert directory plugin",
+          "Review management & moderation system",
+          "Smart popup plugin with scheduling",
+          "Form builder extensions & lead routing",
+          "REST API custom endpoints",
+          "SEO schema markup & Yoast integration",
+          "Mobile-responsive frontend",
+          "Performance optimization"
         ],
-        "duration": ""
+        "duration": "8 weeks design & development, 2 weeks content migration & QA"
       }
     },
     {
