@@ -86,6 +86,7 @@
     var description = pageSeo.description || base.description;
     var canonical = absolute(pageSeo.canonical || page.url || "/");
     var image = absolute(pageSeo.ogImage || U.get(base, "openGraph.image", ""));
+    var keywords = pageSeo.keywords || base.keywords || [];
 
     document.title = title;
     document.documentElement.setAttribute("lang", base.language || "en");
@@ -93,7 +94,8 @@
     setMeta("description", description);
     setMeta("robots", pageSeo.robots || base.robots);
     setMeta("author", base.author);
-    setMeta("keywords", (pageSeo.keywords || base.keywords || []).join(", "));
+    setMeta("keywords", keywords.join(", "));
+    setMeta("publisher", base.publisher);
     setLink("canonical", canonical);
 
     /* Open Graph */
@@ -107,6 +109,7 @@
     setMeta("og:image:alt", U.get(base, "openGraph.imageAlt", brand.name), true);
     setMeta("og:image:width", U.get(base, "openGraph.imageWidth", ""), true);
     setMeta("og:image:height", U.get(base, "openGraph.imageHeight", ""), true);
+    setMeta("og:image:type", U.get(base, "openGraph.imageType", ""), true);
 
     /* Twitter / X */
     setMeta("twitter:card", U.get(base, "twitter.card", "summary_large_image"));
@@ -114,11 +117,13 @@
     setMeta("twitter:description", pageSeo.ogDescription || description);
     setMeta("twitter:image", image);
     if (U.get(base, "twitter.site")) setMeta("twitter:site", base.twitter.site);
+    if (U.get(base, "twitter.creator")) setMeta("twitter:creator", base.twitter.creator);
 
     setMeta("theme-color", base.themeColor);
 
     applyBaseSchema(context);
     if (U.get(page, "header.breadcrumb")) applyBreadcrumbSchema(page.header.breadcrumb);
+    applyWebPageSchema(context, title, description, canonical);
   }
 
   /* ==================================================================
@@ -126,6 +131,7 @@
      ================================================================== */
   function applyBaseSchema(context) {
     var structured = App.data.get("seo", "structuredData", {}) || {};
+    var business = App.data.get("seo", "businessInfo", {}) || {};
     var brand = site();
     var social = App.data.get("social") || {};
 
@@ -136,30 +142,68 @@
       .map(function (key) { return social[key].url; });
 
     if (U.get(structured, "organization.enabled", true)) {
+      var orgConfig = structured.organization;
       var org = {
         "@context": "https://schema.org",
-        "@type": U.get(structured, "organization.type", "ProfessionalService"),
+        "@type": U.get(orgConfig, "type", "ProfessionalService"),
         "@id": absolute("/") + "#organization",
         name: brand.name,
+        alternateName: brand.shortName,
+        legalName: business.legalName || brand.name,
         description: brand.description,
         url: absolute("/"),
         email: brand.email,
+        telephone: brand.phone,
         slogan: brand.tagline,
-        areaServed: U.get(structured, "organization.areaServed", "Worldwide"),
-        serviceType: U.get(structured, "organization.serviceType", "Web Development"),
-        priceRange: U.get(structured, "organization.priceRange", "$$"),
-        knowsAbout: [
+        foundingDate: business.foundingDate,
+        areaServed: U.get(orgConfig, "areaServed", "Worldwide"),
+        serviceType: U.get(orgConfig, "serviceType", "Web Development"),
+        priceRange: U.get(orgConfig, "priceRange", "$$"),
+        knowsAbout: business.knowsAbout || [
           "Web development", "Website design", "Web applications",
           "E-commerce development", "Technical SEO", "Website performance"
         ]
       };
+
+      if (U.get(orgConfig, "additionalTypes")) {
+        org.additionalType = orgConfig.additionalTypes.map(function(t) {
+          return "https://schema.org/" + t;
+        });
+      }
+
       if (sameAs.length) org.sameAs = sameAs;
-      if (brand.location) org.address = { "@type": "PostalAddress", addressCountry: "IN" };
+      
+      if (brand.location || business.areaServed) {
+        org.address = {
+          "@type": "PostalAddress",
+          addressCountry: U.get(business, "areaServed.name", "IN")
+        };
+      }
+
+      if (U.get(orgConfig, "includeContactPoint")) {
+        org.contactPoint = {
+          "@type": "ContactPoint",
+          contactType: orgConfig.contactType || "customer service",
+          email: brand.email,
+          telephone: brand.phone,
+          availableLanguage: orgConfig.availableLanguage || ["English"]
+        };
+      }
+
+      if (brand.logo && brand.logo.src) {
+        org.logo = {
+          "@type": "ImageObject",
+          url: absolute(brand.logo.src),
+          width: brand.logo.width,
+          height: brand.logo.height
+        };
+      }
+
       addSchema("schema-organization", org);
     }
 
     if (U.get(structured, "website.enabled", true)) {
-      addSchema("schema-website", {
+      var websiteSchema = {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "@id": absolute("/") + "#website",
@@ -168,12 +212,28 @@
         description: brand.description,
         publisher: { "@id": absolute("/") + "#organization" },
         inLanguage: defaults().language || "en"
-      });
+      };
+
+      if (U.get(structured, "website.searchAction")) {
+        var searchConfig = U.get(structured, "website.potentialAction");
+        if (searchConfig) {
+          websiteSchema.potentialAction = {
+            "@type": "SearchAction",
+            target: {
+              "@type": "EntryPoint",
+              urlTemplate: searchConfig.target.urlTemplate
+            },
+            "query-input": searchConfig["query-input"]
+          };
+        }
+      }
+
+      addSchema("schema-website", websiteSchema);
     }
 
     /* Services offered — derived from services.json, never duplicated */
     var services = App.data.items("services");
-    if (context.pageId === "home" && services.length) {
+    if (context.pageId === "home" && services.length && U.get(structured, "service.enabled")) {
       addSchema("schema-services", {
         "@context": "https://schema.org",
         "@type": "ItemList",
@@ -213,6 +273,43 @@
     });
   }
 
+  function applyWebPageSchema(context, title, description, url) {
+    var config = App.data.get("seo", "structuredData.webPage", {});
+    if (!config.enabled) return;
+
+    var pageId = context.pageId || "home";
+    var pageType = config.defaultType || "WebPage";
+
+    // Specific page types
+    if (pageId === "about") pageType = "AboutPage";
+    else if (pageId === "contact") pageType = "ContactPage";
+    else if (pageId === "faq") pageType = "FAQPage";
+    else if (pageId === "blog") pageType = "CollectionPage";
+
+    var schema = {
+      "@context": "https://schema.org",
+      "@type": pageType,
+      "@id": url + "#webpage",
+      url: url,
+      name: title,
+      description: description,
+      isPartOf: { "@id": absolute("/") + "#website" },
+      inLanguage: defaults().language || "en",
+      datePublished: new Date().toISOString().split('T')[0],
+      dateModified: new Date().toISOString().split('T')[0]
+    };
+
+    var image = absolute(U.get(defaults(), "openGraph.image", ""));
+    if (image) {
+      schema.primaryImageOfPage = {
+        "@type": "ImageObject",
+        url: image
+      };
+    }
+
+    addSchema("schema-webpage", schema);
+  }
+
   function addFaqSchema(items) {
     var config = App.data.get("seo", "structuredData.faqPage", {}) || {};
     if (config.enabled === false) return;
@@ -237,19 +334,67 @@
   function addArticleSchema(post) {
     if (!post) return;
     var brand = site();
+    var config = App.data.get("seo", "structuredData.article", {});
+    if (config.enabled === false) return;
 
-    addSchema("schema-article", {
+    var schema = {
       "@context": "https://schema.org",
-      "@type": "BlogPosting",
+      "@type": config.defaultType || "BlogPosting",
       headline: post.title,
       description: post.excerpt,
       datePublished: post.date,
       dateModified: post.modifiedDate || post.date,
-      author: { "@type": "Organization", name: brand.name, url: absolute("/") },
+      author: {
+        "@type": "Organization",
+        name: brand.name,
+        url: absolute("/")
+      },
       publisher: { "@id": absolute("/") + "#organization" },
-      mainEntityOfPage: absolute(App.components.postUrl(post).replace(App.config.base, "/")),
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": absolute(App.components.postUrl(post).replace(App.config.base, "/"))
+      },
       inLanguage: defaults().language || "en"
-    });
+    };
+
+    // Add image if available
+    if (config.includeImages && post.image) {
+      schema.image = {
+        "@type": "ImageObject",
+        url: absolute(post.image),
+        width: 1200,
+        height: 630
+      };
+    } else if (config.includeImages) {
+      // Fallback to default OG image
+      var defaultImage = absolute(U.get(defaults(), "openGraph.image", ""));
+      if (defaultImage) {
+        schema.image = {
+          "@type": "ImageObject",
+          url: defaultImage,
+          width: U.get(defaults(), "openGraph.imageWidth", 1200),
+          height: U.get(defaults(), "openGraph.imageHeight", 630)
+        };
+      }
+    }
+
+    // Add word count if enabled and available
+    if (config.wordCountEnabled && post.content) {
+      var wordCount = 0;
+      post.content.forEach(function(block) {
+        if (block.type === "paragraph" && block.text) {
+          wordCount += block.text.split(/\s+/).length;
+        }
+      });
+      if (wordCount > 0) schema.wordCount = wordCount;
+    }
+
+    // Add keywords if available
+    if (post.tags && post.tags.length) {
+      schema.keywords = post.tags.join(", ");
+    }
+
+    addSchema("schema-article", schema);
   }
 
   App.seo = {

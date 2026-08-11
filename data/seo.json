@@ -12,38 +12,225 @@
       "responsive web design",
       "SEO friendly website",
       "website redesign",
-      "landing page development"
+      "landing page development",
+      "web portal development",
+      "CMS development",
+      "WordPress development",
+      "React development",
+      "website maintenance",
+      "technical SEO services",
+      "website performance optimization",
+      "mobile responsive design",
+      "progressive web apps",
+      "API development",
+      "custom web solutions"
     ],
-    "robots": "index, follow, max-image-preview:large",
+    "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
     "language": "en",
     "locale": "en_IN",
     "themeColor": "#070B16",
     "author": "{{site.name}}",
+    "publisher": "{{site.name}}",
+    "copyright": "© {{site.copyrightYear}} {{site.copyrightHolder}}. All rights reserved.",
     "openGraph": {
       "type": "website",
       "siteName": "{{site.name}}",
       "image": "/assets/images/og/og-default.svg",
       "imageAlt": "{{site.name}} — custom website and web application development",
+      "imageType": "image/png",
       "imageWidth": 1200,
       "imageHeight": 630
     },
     "twitter": {
       "card": "summary_large_image",
-      "site": "",
-      "creator": ""
+      "site": "@crafted_webworks",
+      "creator": "@crafted_webworks"
+    }
+  },
+  "businessInfo": {
+    "legalName": "{{site.name}}",
+    "foundingDate": "{{site.foundedYear}}",
+    "email": "{{site.email}}",
+    "telephone": "{{site.phone}}",
+    "areaServed": {
+      "type": "Country",
+      "name": "India"
+    },
+    "additionalType": "https://schema.org/WebDesignAgency",
+    "knowsAbout": [
+      "Web Development",
+      "Website Design",
+      "Web Applications",
+      "E-commerce Development",
+      "Technical SEO",
+      "Website Performance Optimization",
+      "Responsive Design",
+      "User Experience Design",
+      "Content Management Systems",
+      "API Development",
+      "Progressive Web Apps",
+      "Website Maintenance",
+      "Digital Strategy"
+    ],
+    "hasOfferCatalog": {
+      "type": "OfferCatalog",
+      "name": "Web Development Services",
+      "itemListElement": [
+        {
+          "type": "Offer",
+          "itemOffered": {
+            "type": "Service",
+            "name": "Custom Website Development",
+            "description": "Tailored websites built from scratch to meet specific business requirements"
+          }
+        },
+        {
+          "type": "Offer",
+          "itemOffered": {
+            "type": "Service",
+            "name": "E-commerce Development",
+            "description": "Complete online store solutions with payment integration and inventory management"
+          }
+        },
+        {
+          "type": "Offer",
+          "itemOffered": {
+            "type": "Service",
+            "name": "Web Application Development",
+            "description": "Custom web applications for business processes and workflows"
+          }
+        },
+        {
+          "type": "Offer",
+          "itemOffered": {
+            "type": "Service",
+            "name": "Website Redesign",
+            "description": "Modernization of existing websites with improved design and functionality"
+          }
+        },
+        {
+          "type": "Offer",
+          "itemOffered": {
+            "type": "Service",
+            "name": "Technical SEO",
+            "description": "Search engine optimization focusing on technical foundations"
+          }
+        }
+      ]
     }
   },
   "structuredData": {
     "organization": {
       "enabled": true,
       "type": "ProfessionalService",
-      "serviceType": "Web Development",
+      "additionalTypes": [
+        "WebDesignAgency",
+        "TechnologyCompany"
+      ],
+      "serviceType": "Web Development & Design",
       "areaServed": "Worldwide",
-      "priceRange": "$$"
+      "priceRange": "$$",
+      "includeContactPoint": true,
+      "contactType": "customer service",
+      "contactOption": "TollFree",
+      "availableLanguage": ["English", "Hindi"]
     },
-    "website": { "enabled": true, "searchAction": false },
-    "faqPage": { "enabled": true, "onPages": ["home", "faq"] },
-    "breadcrumbs": { "enabled": true }
+    "website": {
+      "enabled": true,
+      "searchAction": true,
+      "searchUrlTemplate": "{{site.url}}/pages/services.html?q={search_term_string}",
+      "potentialAction": {
+        "type": "SearchAction",
+        "target": {
+          "type": "EntryPoint",
+          "urlTemplate": "{{site.url}}/pages/services.html?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    "webPage": {
+      "enabled": true,
+      "includeOnAllPages": true,
+      "defaultType": "WebPage",
+      "includeBreadcrumbs": true,
+      "includeMainEntity": true
+    },
+    "article": {
+      "enabled": true,
+      "defaultType": "BlogPosting",
+      "includeImages": true,
+      "includeAuthor": true,
+      "includePublisher": true,
+      "wordCountEnabled": true
+    },
+    "faqPage": {
+      "enabled": true,
+      "onPages": ["home", "faq", "services", "about", "contact"]
+    },
+    "breadcrumbs": {
+      "enabled": true,
+      "includeHome": true
+    },
+    "service": {
+      "enabled": true,
+      "asItemList": true,
+      "includeProvider": true,
+      "includeAggregateRating": false
+    },
+    "creativeWork": {
+      "enabled": true,
+      "forProjects": true,
+      "type": "CreativeWork",
+      "includeAuthor": true
+    }
   },
-  "notes": "Replace the placeholder domain in site.json before launch. Canonical URLs, Open Graph and Twitter tags are generated from site.json + pages.json by assets/js/seo.js — never write meta tags by hand in a page."
+  "analytics": {
+    "googleAnalytics": {
+      "enabled": false,
+      "measurementId": "",
+      "note": "Add your GA4 measurement ID (e.g., G-XXXXXXXXXX) when ready"
+    },
+    "googleSearchConsole": {
+      "enabled": true,
+      "verificationFile": "google1267f8e9ac507dc1.html",
+      "verificationMeta": "google-site-verification",
+      "note": "Verification file exists in root directory"
+    },
+    "bingWebmaster": {
+      "enabled": false,
+      "verificationMeta": ""
+    }
+  },
+  "social": {
+    "profiles": {
+      "instagram": {
+        "handle": "@crafted_webworks",
+        "url": "https://www.instagram.com/crafted_webworks/"
+      }
+    }
+  },
+  "richSnippets": {
+    "enableAutomaticImageObject": true,
+    "enableVideoObject": false,
+    "enableHowTo": true,
+    "enableReview": false,
+    "reviewNote": "Review schema intentionally disabled until real, verified testimonials are collected",
+    "enableLocalBusiness": false,
+    "localBusinessNote": "Enable this when physical location information is available"
+  },
+  "crawling": {
+    "respectCrawlDelay": false,
+    "crawlDelay": 0,
+    "maxImagePreview": "large",
+    "maxSnippet": -1,
+    "maxVideoPreview": -1
+  },
+  "notes": [
+    "Replace the placeholder domain in site.json before launch.",
+    "Canonical URLs, Open Graph and Twitter tags are generated from site.json + pages.json by assets/js/seo.js.",
+    "Never write meta tags by hand in a page — everything is data-driven from JSON.",
+    "All {{tokens}} are resolved at runtime from site.json and social.json.",
+    "Structured data schemas are automatically generated based on page content and enabled flags.",
+    "Remember to convert og-default.svg to PNG (1200×630) for social media compatibility."
+  ]
 }
