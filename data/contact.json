@@ -33,9 +33,10 @@
     { "value": "planning", "label": "Just planning for now" }
   ],
   "form": {
-    "mode": "demo",
-    "endpoint": "",
+    "mode": "live",
+    "endpoint": "https://script.google.com/macros/s/AKfycbw7oMzG3FD9D_fKlF99zZy359b77yUR3q9PP3rH01f-rq60-6cPcMWS9KP6kGAx7hPD/exec",
     "method": "POST",
+    "contentType": "text/plain;charset=utf-8",
     "timeout": 15000,
     "fallbackMailto": true,
     "minSubmitSeconds": 3,
@@ -47,6 +48,7 @@
     "errorTitle": "That didn't send",
     "errorMessage": "Something went wrong on our side. Please try again, or email us directly.",
     "honeypot": "company_website_url",
-    "note": "The endpoint should be a server-side handler (PHP, Node, Laravel route, form service). Never place API keys, SMTP credentials or tokens in this file — it is served to the browser."
+    "note": "The endpoint is a Google Apps Script web app (deployed as 'Anyone', which is what lets the browser post to it). That URL is public by design — it is a write-only door, not a secret, but it can be posted to directly, so repeat the honeypot and rate checks inside doPost. Never place API keys, SMTP credentials or tokens in this file — it is served to the browser.",
+    "endpointNote": "contentType stays text/plain: Apps Script cannot answer a CORS preflight, and application/json would trigger one. The body is still JSON — doPost reads e.postData.contents with JSON.parse."
   }
 }

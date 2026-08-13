@@ -212,6 +212,31 @@
     return payload;
   }
 
+  /* ------------------------------------------------------------------
+     POST — Apps Script cannot answer a CORS preflight, so the body goes
+     out as text/plain. It is still JSON; the handler reads it with
+     JSON.parse either way. `preferFetch` matters: the jQuery path would
+     force application/json and provoke the preflight we are avoiding.
+     ------------------------------------------------------------------ */
+  function send(config, payload) {
+    return App.ajax.post(config.endpoint, JSON.stringify(payload), {
+      preferFetch: true,
+      headers: { "Content-Type": config.contentType || "text/plain;charset=utf-8" },
+      credentials: "omit",
+      timeout: config.timeout || 15000,
+      retries: 0                                  /* never risk a duplicate enquiry */
+    }).then(function (result) {
+      if (typeof result === "string") {
+        try { result = JSON.parse(result); } catch (err) { result = null; }
+      }
+      /* A 200 with {status:"error"} is still a failure */
+      if (result && result.status && result.status !== "success") {
+        throw new Error(result.message || "The server could not record this enquiry.");
+      }
+      return result;
+    });
+  }
+
   function mailtoFallback(payload) {
     var site = App.data.get("site") || {};
     var lines = Object.keys(payload).map(function (key) {
@@ -232,7 +257,6 @@
     var submitButton = form.querySelector("[data-form-submit]");
     var loadedAt = Date.now();
     var submitting = false;
-    var completed = false;
 
     /* Validate on blur, then live-correct once a field has been flagged */
     U.$$("input, select, textarea", form).forEach(function (input) {
@@ -249,12 +273,10 @@
     form.addEventListener("submit", function (event) {
       event.preventDefault();
 
+      /* The only hard block is a request already in flight. A sent enquiry
+         does NOT lock the form — someone with a second project to discuss
+         can fill it in again without reloading the page. */
       if (submitting) return;
-
-      if (completed) {
-        C.showToast("This enquiry has already been sent.", { type: "info" });
-        return;
-      }
 
       clearStatus(form);
 
@@ -287,8 +309,9 @@
 
       /* --- submit --- */
       var payload = collect(form);
-      payload._page = location.href;
       payload._submittedAt = new Date().toISOString();
+      payload.userAgent = navigator.userAgent;
+      payload.pageUrl = location.href;
 
       submitting = true;
       submitButton.classList.add("is-loading");
@@ -298,10 +321,9 @@
 
       var request = isDemo
         ? new Promise(function (resolve) { setTimeout(resolve, 700); })
-        : App.ajax.post(config.endpoint, payload, { timeout: config.timeout || 15000, retries: 0 });
+        : send(config, payload);
 
       request.then(function () {
-        completed = true;
         showStatus(form, "success",
           config.successTitle || "Enquiry received",
           (config.successMessage || "Thanks — we'll be in touch.") + (isDemo ? " " + (config.demoNotice || "") : ""));
@@ -310,6 +332,12 @@
         U.$$(".form-group", form).forEach(function (group) {
           group.classList.remove("is-valid", "has-error");
         });
+
+        /* Restart the clock: the emptied form is a new one, so the
+           minimum time-to-submit guard applies to the next enquiry too
+           rather than being trivially satisfied by the first one's age. */
+        loadedAt = Date.now();
+
         App.emit("form:submitted", { form: form, payload: payload, demo: isDemo });
       }).catch(function (error) {
         var message = App.ajax.handleError(error, "Contact form submission");
@@ -326,8 +354,7 @@
       }).finally(function () {
         submitting = false;
         submitButton.classList.remove("is-loading");
-        submitButton.disabled = completed;
-        if (completed) submitButton.textContent = "Enquiry sent";
+        submitButton.disabled = false;
       });
     });
   }

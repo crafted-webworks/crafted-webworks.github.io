@@ -682,9 +682,18 @@
       var profile = App.data.get("social", "instagram", {}) || {};
       var url = profile.url || (data.button && data.button.url);
 
+      /* Label and blurb travel together in one block so space-between keeps the
+         icon at the top and the whole text group at the foot of the tile —
+         rather than stranding a lone label with a void above it. */
       var tiles = (data.tiles || []).map(function (tile) {
         return '<a class="instagram-tile" href="' + U.attr(url) + '" target="_blank" rel="noopener noreferrer">' +
-                 icon(tile.icon) + "<span>" + U.escape(tile.label) + "</span>" +
+                 icon(tile.icon) +
+                 '<span class="instagram-tile-text">' +
+                   '<span class="instagram-tile-label">' + U.escape(tile.label) + "</span>" +
+                   (tile.text
+                     ? '<span class="instagram-tile-note">' + U.escape(tile.text) + "</span>"
+                     : "") +
+                 "</span>" +
                "</a>";
       }).join("");
 

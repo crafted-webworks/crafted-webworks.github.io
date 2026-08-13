@@ -105,6 +105,10 @@
   --color-primary-soft:  rgba(43, 127, 255, 0.12);
   --color-primary-line:  rgba(43, 127, 255, 0.34);
   --color-on-primary:    var(--white);
+  /* The blue a solid button fills with. --color-primary is tuned for text and
+     hairlines on the page ground; as a full field behind white it only reaches
+     3.8:1, so button fills step down to a deeper blue that clears 7:1. */
+  --color-primary-deep:  var(--blue-700);
 
   --color-accent:        var(--orange-500);
   --color-accent-hover:  var(--orange-400);
@@ -136,6 +140,17 @@
      ---------------------------------------------------------------------- */
   --gradient-rule: linear-gradient(90deg, var(--color-accent), var(--color-primary) 55%, transparent);
   --gradient-brand: linear-gradient(100deg, var(--blue-500), var(--orange-500));
+
+  /* The logo gradient as a full field to put white text on. --gradient-brand
+     uses the 500s, which are tuned for 2px rules and text — as a wash behind
+     white, the orange end drops to 2.3:1. These deeper stops hold the same
+     blue→orange identity while clearing 5.2:1 at their weakest point, and the
+     extra blue stop at 38% compresses the desaturated middle that a straight
+     blue-to-orange interpolation passes through. */
+  --gradient-brand-deep: linear-gradient(100deg,
+                           var(--blue-700),
+                           var(--blue-600) 38%,
+                           var(--orange-800));
   --gradient-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0));
   --gradient-fade-b: linear-gradient(to bottom, transparent, var(--color-background));
 
@@ -318,6 +333,7 @@
   --color-primary-hover: var(--blue-800);
   --color-primary-soft:  rgba(12, 79, 191, 0.08);
   --color-primary-line:  rgba(12, 79, 191, 0.26);
+  --color-primary-deep:  var(--blue-700);   /* already deep on paper — unchanged */
 
   --color-accent:        var(--orange-700);
   --color-accent-hover:  var(--orange-800);

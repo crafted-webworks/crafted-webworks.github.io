@@ -5,6 +5,22 @@
     "defaultFilter": "all",
     "caseStudyUrlPattern": "/pages/projects.html?project={slug}"
   },
+  "galleryNote": {
+    "what": "Any project may carry a `gallery` array of extra screens and clips, shown as a 'A closer look' section on its case study page. `image` stays the single cover shot used by cards and the case hero. Stills open full size in a lightbox; videos play inline.",
+    "galleryBase": "Optional folder prefix. Set it once and every bare filename in `gallery` resolves against it, so a folder of screenshots costs one line each. Entries starting with http(s):// are left untouched, and entries starting with / are treated as site-root paths — both ignore the base.",
+    "types": "`type` is optional. A src ending .mp4/.webm/.ogv/.mov is detected as a video; anything else is an image. Use \"type\": \"youtube\" or \"vimeo\" with an `id` for a hosted embed — those load lazily and YouTube is served from youtube-nocookie.com, so no cookie is set until a visitor presses play.",
+    "example": {
+      "galleryBase": "/assets/images/projects/advaith-homes/",
+      "gallery": [
+        "01-home.jpg",
+        { "src": "02-listing.jpg", "alt": "Property listing with 3-level filters", "caption": "Location → type → configuration filtering." },
+        { "src": "https://cdn.example.com/hosted-shot.png", "alt": "Shot hosted elsewhere" },
+        { "type": "youtube", "id": "dQw4w9WgXcQ", "title": "Construction progress walkthrough", "caption": "Mini spotlight CPT in use." },
+        { "src": "admin-tour.mp4", "poster": "admin-tour.jpg", "caption": "Managing properties from the CMS." }
+      ]
+    },
+    "alt": "Give every still an `alt`. It is the only description a screen-reader user gets, and the lightbox reuses it as the dialog title."
+  },
   "categories": [
     {
       "id": "business",
@@ -75,14 +91,14 @@
       "image": {
         "width": 1200,
         "height": 750,
-        "src": "/assets/images/projects/advaith-homes.jpg",
-        "alt": "Advaith Homes WordPress admin showing custom property management interface"
+        "src": "/assets/images/projects/advaith-homes-home.jpg",
+        "alt": "Advaith Homes homepage: the property journey orbit linking budget, search, offer, survey, solicitor and completion stages"
       },
       "preview": {
         "pattern": "cms",
         "accent": "blue"
       },
-      "url": "#",
+      "url": "https://advaithhomes.co.uk/",
       "caseStudyUrl": "/pages/projects.html?project=advaith-homes",
       "featured": true,
       "status": "live",

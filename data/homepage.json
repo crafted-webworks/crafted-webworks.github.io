@@ -454,22 +454,27 @@
       "icon": "instagram"
     },
     "handle": "{{social.instagram.handle}}",
+    "tilesNote": "`text` is what fills the tile — without it each one renders as an icon, a label and a large empty middle. Keep it to a single short line; the tile is a square in a narrow column.",
     "tiles": [
       {
         "icon": "code",
-        "label": "Build notes"
+        "label": "Build notes",
+        "text": "Decisions, trade-offs and the occasional dead end."
       },
       {
         "icon": "palette",
-        "label": "UI experiments"
+        "label": "UI experiments",
+        "text": "Layouts, motion and type tried in public first."
       },
       {
         "icon": "lightbulb",
-        "label": "Practical tips"
+        "label": "Practical tips",
+        "text": "Small changes that move speed, SEO and access."
       },
       {
         "icon": "rocket",
-        "label": "New launches"
+        "label": "New launches",
+        "text": "Sites going live, and what the brief asked for."
       }
     ]
   },

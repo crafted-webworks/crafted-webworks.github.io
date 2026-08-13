@@ -214,6 +214,113 @@
     return mockup(item && item.preview, altFallback);
   }
 
+  /* ==================================================================
+     GALLERY MEDIA
+     A project carries a cover `image` plus an optional `gallery` list of
+     screens and clips. Entries are deliberately loose so a folder of
+     screenshots costs one line each:
+
+       "galleryBase": "/assets/images/projects/advaith-homes/",
+       "gallery": [
+         "01-home.jpg",                                  ← resolved against base
+         { "src": "02-listing.jpg", "alt": "Listing" },  ← same, with alt text
+         { "src": "https://cdn.example.com/shot.png" },  ← external, left as-is
+         { "type": "youtube", "id": "dQw4w9WgXcQ" },     ← lazy embed
+         { "type": "vimeo",   "id": "76979871" },
+         { "src": "walkthrough.mp4", "poster": "walkthrough.jpg" }
+       ]
+
+     `type` is optional — a src ending in a video extension is detected. IDs are
+     pattern-checked before they reach an embed URL: they arrive from a data
+     file, and anything unvalidated interpolated into a URL is an injection
+     waiting to happen.
+     ================================================================== */
+  var VIDEO_FILE = /\.(mp4|webm|ogv|mov)(\?|#|$)/i;
+  var YOUTUBE_ID = /^[A-Za-z0-9_-]{6,24}$/;
+  var VIMEO_ID = /^\d{6,12}$/;
+
+  /** External and root-relative srcs pass through; bare names join the base. */
+  function galleryUrl(src, base) {
+    var value = String(src || "").trim();
+    if (!value) return "";
+    if (/^(https?:)?\/\//i.test(value)) return value;
+    if (value.charAt(0) === "/") return U.url(value);
+    return U.url(base + value);
+  }
+
+  function galleryItems(project) {
+    var list = (project && project.gallery) || [];
+    if (!Array.isArray(list)) return [];
+
+    var base = String((project && project.galleryBase) || "");
+    if (base && base.slice(-1) !== "/") base += "/";
+
+    return list.map(function (raw) {
+      var entry = typeof raw === "string" ? { src: raw } : (raw || {});
+      var type = entry.type || (VIDEO_FILE.test(entry.src || "") ? "video" : "image");
+
+      if (type === "youtube" || type === "vimeo") {
+        var id = String(entry.id || "");
+        if (!(type === "youtube" ? YOUTUBE_ID : VIMEO_ID).test(id)) {
+          App.log.warn("Gallery entry skipped — not a valid " + type + " id:", id);
+          return null;
+        }
+        return { type: type, id: id, title: entry.title || "", caption: entry.caption || "" };
+      }
+
+      if (!entry.src) return null;
+
+      return {
+        type: type,
+        src: galleryUrl(entry.src, base),
+        poster: entry.poster ? galleryUrl(entry.poster, base) : "",
+        alt: entry.alt || "",
+        title: entry.title || "",
+        caption: entry.caption || "",
+        width: entry.width || null,
+        height: entry.height || null
+      };
+    }).filter(Boolean);
+  }
+
+  function galleryFigure(item, index) {
+    var inner;
+    var isImage = item.type === "image";
+
+    if (item.type === "youtube" || item.type === "vimeo") {
+      var embed = item.type === "youtube"
+        ? "https://www.youtube-nocookie.com/embed/" + item.id   /* no cookies until play */
+        : "https://player.vimeo.com/video/" + item.id;
+
+      inner = '<iframe src="' + U.attr(embed) + '"' +
+                ' title="' + U.attr(item.title || "Project walkthrough") + '"' +
+                ' loading="lazy" referrerpolicy="strict-origin-when-cross-origin"' +
+                ' allow="autoplay; encrypted-media; picture-in-picture; fullscreen"' +
+                " allowfullscreen></iframe>";
+    } else if (item.type === "video") {
+      inner = "<video" +
+                ' src="' + U.attr(item.src) + '"' +
+                (item.poster ? ' poster="' + U.attr(item.poster) + '"' : "") +
+                ' controls preload="metadata" playsinline></video>';
+    } else {
+      inner = '<img src="' + U.attr(item.src) + '" alt="' + U.attr(item.alt) + '"' +
+                (item.width ? ' width="' + U.attr(item.width) + '"' : "") +
+                (item.height ? ' height="' + U.attr(item.height) + '"' : "") +
+                ' loading="lazy" decoding="async">';
+    }
+
+    /* Only stills open in the lightbox — a video already owns its own
+       controls, and swallowing the first click would break play. */
+    return '<figure class="case-shot' + (isImage ? "" : " case-shot--video") + '" data-reveal="up">' +
+             (isImage
+               ? '<button type="button" class="case-shot-frame" data-lightbox="' + U.attr(index) + '"' +
+                   ' aria-label="' + U.attr("Enlarge: " + (item.alt || item.caption || "project image")) + '">' +
+                   inner + icon("search", "case-shot-zoom") + "</button>"
+               : '<div class="case-shot-frame">' + inner + "</div>") +
+             (item.caption ? "<figcaption>" + U.escape(item.caption) + "</figcaption>" : "") +
+           "</figure>";
+  }
+
   function avatar(name, src) {
     if (src) {
       return '<span class="avatar"><img src="' + U.attr(U.url(src)) + '" alt="" loading="lazy" decoding="async"></span>';
@@ -664,6 +771,8 @@
     /* media */
     mockup: mockup,
     media: media,
+    galleryItems: galleryItems,
+    galleryFigure: galleryFigure,
     avatar: avatar,
     rating: rating,
 
