@@ -1,38 +1,13 @@
 # Crafted WebWorks — robots.txt
-# Replace the placeholder domain below with the live one before launch.
 
 User-agent: *
 Allow: /
-
-# Generated build artefacts and source tooling have no search value
 Disallow: /tools/
 Disallow: /components/
 Disallow: /data/bundle.js
 Disallow: /data/*.json
 
-# Query-string variants of the blog listing are duplicates of the canonical
-# article URLs, which are emitted by seo.js — no need to crawl both.
-Disallow: /pages/blog.html?*&
-Allow: /pages/blog.html?post=
-
-# Allow CSS and JS for proper rendering
 Allow: /assets/css/
 Allow: /assets/js/
-
-# Common crawlers
-User-agent: Googlebot
-Allow: /
-
-User-agent: Googlebot-Image
-Allow: /assets/images/
-
-User-agent: Bingbot
-Allow: /
-
-# Block bad bots (optional - uncomment if needed)
-# User-agent: AhrefsBot
-# Disallow: /
-# User-agent: SemrushBot
-# Disallow: /
 
 Sitemap: https://crafted-webworks.github.io/sitemap.xml
