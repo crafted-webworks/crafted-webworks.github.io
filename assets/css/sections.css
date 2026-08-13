@@ -588,6 +588,23 @@ a.contact-info-value:hover { color: var(--color-accent); }
 .instagram-tile .icon { color: var(--color-accent); font-size: 1.35rem; }
 .instagram-tile:hover { transform: translateY(-3px); border-color: var(--color-accent-line); color: var(--color-heading); }
 
+/* The tile is a square with space-between, so without a second line the label
+   sat alone at the foot under a large void. The blurb fills it and gives the
+   label something to head. */
+.instagram-tile-text { display: flex; flex-direction: column; gap: 0.3rem; }
+
+.instagram-tile-label { color: inherit; }   /* inherits the tile's hover brighten */
+
+.instagram-tile-note {
+  color: var(--color-faint);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-snug);
+  text-wrap: pretty;
+}
+
+.instagram-tile:hover .instagram-tile-note { color: var(--color-muted); }
+
 .instagram-handle {
   font-family: var(--font-mono);
   color: var(--color-accent);
@@ -1261,8 +1278,14 @@ a.contact-info-value:hover { color: var(--color-accent); }
 }
 
 /* Full-bleed visual with better aspect ratio */
+/* Capped rather than container-width: at 1900px the full-bleed version stood
+   ~960px tall and pushed the whole case study below the fold. 880px keeps the
+   16/10 ratio — so the 1200×750 cover is never cropped — while leaving the
+   facts and story visible on a laptop screen. */
 .case-media {
   position: relative;
+  width: min(100%, 880px);
+  margin-inline: auto;
   aspect-ratio: 16 / 10;
   overflow: hidden;
   border: 1px solid var(--color-border);
@@ -1271,6 +1294,82 @@ a.contact-info-value:hover { color: var(--color-accent); }
 }
 
 .case-media img { width: 100%; height: 100%; object-fit: cover; }
+
+/* --------------------------------------------------------------------------
+   Case gallery — screens and clips beside the cover image.
+   Videos take a full row because a 16/9 embed shrunk into a half column is
+   unwatchable; stills pair up.
+   -------------------------------------------------------------------------- */
+.case-shots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--grid-gap);
+}
+
+.case-shots .case-shot--video { grid-column: 1 / -1; }
+
+.case-shot { margin: 0; display: flex; flex-direction: column; gap: var(--space-2xs, 0.4rem); }
+
+/* One selector for both the <button> stills and the <div> video wrappers, so
+   the frame geometry is stated once. The button reset matters: a UA button
+   brings its own font, padding and border into an image frame. */
+.case-shot-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-2);
+  box-shadow: var(--shadow-sm);
+}
+
+.case-shot--video .case-shot-frame { aspect-ratio: 16 / 9; }
+
+.case-shot-frame > img,
+.case-shot-frame > video,
+.case-shot-frame > iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+}
+
+/* Video is letterboxed rather than cropped — cover would cut the frame. */
+.case-shot-frame > video { object-fit: contain; background: #000; }
+
+button.case-shot-frame { cursor: zoom-in; }
+
+button.case-shot-frame > img { transition: transform var(--dur-base) var(--ease-out); }
+button.case-shot-frame:hover > img { transform: scale(1.03); }
+
+.case-shot-zoom {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.45rem;
+  border-radius: 999px;
+  background: rgba(8, 9, 13, 0.62);
+  color: #fff;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+button.case-shot-frame:hover .case-shot-zoom,
+button.case-shot-frame:focus-visible .case-shot-zoom { opacity: 1; }
+
+.case-shot figcaption {
+  color: var(--color-muted);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+}
+
+.case-lightbox-img { display: block; width: 100%; height: auto; border-radius: var(--radius-md); }
 
 /* Facts grid - more compact, better use of space */
 .case-facts {

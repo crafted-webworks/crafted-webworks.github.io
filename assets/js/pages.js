@@ -170,12 +170,27 @@
         .filter(function (item) { return item.id !== project.id; })
         .slice(0, 3);
 
+      /* "#" is the placeholder this data file uses for a project with no
+         public URL yet, so it must not become a link that goes nowhere. */
+      var liveUrl = project.url && project.url !== "#" ? project.url : "";
+      var shots = C.galleryItems(project);
+
       return '<section class="section case-hero" id="case">' +
                '<div class="container">' +
                  '<div class="case-intro">' +
                    C.badge(C.categoryLabel("projects", project.category), "primary") +
                    '<h1 class="case-title">' + U.escape(project.title) + "</h1>" +
                    '<p class="case-lead">' + U.escape(project.description || project.shortDescription) + "</p>" +
+                   (liveUrl
+                     ? '<div class="case-actions">' +
+                         C.button({
+                           label: "Visit live site",
+                           url: liveUrl,
+                           variant: "btn-gradient",
+                           icon: "external-link"
+                         }) +
+                       "</div>"
+                     : "") +
                  "</div>" +
 
                  '<div class="case-media" data-reveal="scale">' +
@@ -297,11 +312,20 @@
                      : "") +
                  "</div>" +
                  '<div class="case-actions">' +
-                   C.button({ label: "Start a project like this", url: "/pages/contact.html", variant: "btn-primary", icon: "arrow-right" }) +
+                   C.button({ label: "Start a project like this", url: "/pages/contact.html", variant: "btn-gradient", icon: "arrow-right" }) +
                    C.button({ label: "All projects", url: "/pages/projects.html", variant: "btn-secondary" }) +
                  "</div>" +
                "</div>" +
              "</section>" +
+
+             (shots.length
+               ? '<section class="section" id="case-gallery">' +
+                   '<div class="container">' +
+                     C.sectionHeader({ eyebrow: "Screens", title: "A closer <em>look</em>" }) +
+                     '<div class="case-shots">' + shots.map(C.galleryFigure).join("") + "</div>" +
+                   "</div>" +
+                 "</section>"
+               : "") +
 
              (related.length
                ? '<section class="section section--alt" id="case-related">' +
@@ -311,6 +335,26 @@
                    "</div>" +
                  "</section>"
                : "");
+    },
+
+    /* Stills open full size in the existing modal. The handler reads the src
+       off the thumbnail rather than being handed the project, so it needs no
+       data threaded through mount() — and it stays correct if the gallery is
+       ever rendered from somewhere else. */
+    mount: function (el) {
+      U.$$("[data-lightbox]", el).forEach(function (trigger) {
+        trigger.addEventListener("click", function () {
+          var img = trigger.querySelector("img");
+          if (!img) return;
+
+          C.showModal({
+            title: img.alt || "Project image",
+            wide: true,
+            body: '<img class="case-lightbox-img" src="' +
+                    U.attr(img.currentSrc || img.src) + '" alt="' + U.attr(img.alt) + '">'
+          });
+        });
+      });
     }
   };
 

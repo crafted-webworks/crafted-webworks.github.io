@@ -81,7 +81,7 @@
   overflow: hidden;
   transition: background-color var(--dur-fast) var(--ease-out),
               border-color var(--dur-fast) var(--ease-out),
-              color var(--dur-fast) var(--ease-out);
+              color var(--dur-fast) var(--ease-out) var(--btn-color-delay, 0s);
 }
 
 /* Fill sweep instead of a lift — the button reacts in place, which reads as
@@ -101,13 +101,44 @@
 .btn:hover::before { opacity: 0.08; transform: translateY(0); }
 .btn:active { scale: 0.985; }
 
-.btn:disabled,
+/* --------------------------------------------------------------------------
+   Full-fill variants (primary, gradient) — the sweep stays SOLID.
+
+   It used to cross-fade opacity 0 → 1 over --dur-base while the label
+   recoloured over --dur-fast. The two never lined up, and a half-opaque blue
+   over a near-white face is precisely the washed-out mid-tone that made the
+   hover look cheap. Here the fill is opaque from the start and simply parked
+   below the box (clipped by overflow:hidden), so nothing ever blends: only
+   transform animates, and it travels in --dur-fast so the wipe edge crosses
+   the label too quickly to read as a half-covered word.
+
+   --btn-color-delay holds the label's colour change until the wipe is behind
+   it. It sits on the variant rather than on :hover so leaving is covered too:
+   the label stays white until the fill has dropped back past it.
+   -------------------------------------------------------------------------- */
+.btn-primary::before,
+.btn-gradient::before {
+  opacity: 1;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.btn-primary,
+.btn-gradient {
+  --btn-color-delay: 70ms;
+}
+
+/* `.is-loading` is applied alongside `disabled`, and a 55% wash on a button
+   that is actively working reads as dead rather than busy. The spinner needs
+   full strength; genuine disabled states keep the fade. */
+.btn:disabled:not(.is-loading),
 .btn.is-disabled,
 .btn[aria-disabled="true"] {
   opacity: 0.55;
   pointer-events: none;
   transform: none;
 }
+
+.btn:disabled { pointer-events: none; }
 
 .btn .icon { font-size: 1.05em; transition: transform var(--dur-base) var(--ease-out); }
 .btn:hover .icon--shift { transform: translateX(3px); }
@@ -119,9 +150,9 @@
   --btn-border: transparent;
 }
 
-.btn-primary::before { background: var(--color-primary); }
+.btn-primary::before { background: var(--color-primary-deep); }
 .btn-primary:hover::before { opacity: 1; }
-.btn-primary:hover { --btn-color: var(--white); }
+.btn-primary:hover { --btn-color: var(--color-on-primary); }
 
 /* Accent — the orange from the mark, for the highest-intent action */
 .btn-accent {
@@ -152,9 +183,12 @@
   background: var(--gradient-brand);
 }
 
-.btn-gradient::before { background: var(--color-primary); }
+/* This is the one control that wears the logo's blue→orange gradient as a full
+   field — hence the class name. At rest it is the hairline-ruled solid; on
+   hover the brand gradient wipes up and takes the whole face. */
+.btn-gradient::before { background: var(--gradient-brand-deep); }
 .btn-gradient:hover::before { opacity: 1; }
-.btn-gradient:hover { --btn-color: var(--white); }
+.btn-gradient:hover { --btn-color: var(--color-on-primary); }
 
 /* Secondary — outlined, sits beside a primary */
 .btn-secondary {
@@ -193,19 +227,43 @@
 .btn-block { width: 100%; }
 .btn-icon { width: 2.65rem; height: 2.65rem; padding: 0; border-radius: 50%; }
 
-/* Loading state */
+/* These padding shorthands sit after .btn-gradient in the cascade at equal
+   specificity, so they wipe out its 2px bottom reserve and the brand rule
+   ends up crowding the label. Re-reserve it at each size. */
+.btn-gradient.btn-sm { padding-bottom: calc(0.5rem + 2px); }
+.btn-gradient.btn-lg { padding-bottom: calc(0.9rem + 2px); }
+
+/* Loading state — label and icon both fade out (the icon strokes in
+   currentColor) and a ring takes their place. The text stays in the flow while
+   transparent, so the button holds its width and nothing on the page shifts.
+
+   This rule wins on specificity over the variant ::after rules, and there is
+   only ever one ::after per element — so every property those rules set has to
+   be neutralised here. .btn-gradient::after paints the 2px brand rule using
+   inset-inline / bottom / background; left un-reset, those turned the spinner
+   into a gradient-filled blob pinned to the bottom-left corner. */
 .btn.is-loading { pointer-events: none; color: transparent; }
 
 .btn.is-loading::after {
   content: "";
   position: absolute;
-  width: 1.05em;
-  height: 1.05em;
-  border: 2px solid currentColor;
-  border-top-color: transparent;
+  inset: 0;                                  /* clears inset-inline + bottom */
+  width: 1.15em;
+  height: 1.15em;
+  margin: auto;                              /* with inset:0 — true centring */
+  border: 2px solid color-mix(in srgb, var(--btn-color) 28%, transparent);
+  border-top-color: var(--btn-color);
   border-radius: 50%;
-  color: var(--btn-color);
+  background: none;                          /* clears --gradient-brand */
   animation: ui-spin 0.65s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Animations are neutralised globally here, so the ring cannot turn — and a
+     frozen circle reads as decoration, not progress. Drop it and keep the
+     label, letting the dimmed non-interactive button carry the busy signal. */
+  .btn.is-loading { color: var(--btn-color); opacity: 0.65; }
+  .btn.is-loading::after { display: none; }
 }
 
 /* Text link with animated arrow — used on every card */
@@ -1062,8 +1120,71 @@
    ========================================================================== */
 .site-footer {
   position: relative;
+  isolation: isolate;                /* lets the motif layers sit above the
+                                        footer's own background, below content */
   border-top: 1px solid var(--color-border);
   background: var(--color-background-deep);
+}
+
+/* --------------------------------------------------------------------------
+   Footer motif — two layers, both decorative and inert. The vocabulary is the
+   studio's own: a design canvas and a page wireframe, not ornament.
+
+   The SVG is carried in a mask rather than a background-image so the pattern
+   draws its colour from a theme token: a data-URI SVG cannot read custom
+   properties, but masking a painted box lets the paint underneath do it. One
+   declaration therefore works on both the light and the dark theme.
+
+   Layer 1 (::before) is the blueprint grid every design tool opens with —
+   a 32px rule with a registration tick at each cell centre. Drawing the rule
+   only on the right and bottom edges of the tile means neighbours supply the
+   left and top, so the repeat is seamless and lines stay exactly 1px.
+   -------------------------------------------------------------------------- */
+.site-footer::before,
+.site-footer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.site-footer::before {
+  background: var(--color-border);
+  opacity: 0.9;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cg fill='none' stroke='%23000' stroke-width='1'%3E%3Cpath d='M32 0v32H0'/%3E%3Cpath d='M16 13.5v5M13.5 16h5' opacity='.6'/%3E%3C/g%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cg fill='none' stroke='%23000' stroke-width='1'%3E%3Cpath d='M32 0v32H0'/%3E%3Cpath d='M16 13.5v5M13.5 16h5' opacity='.6'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-size: 32px 32px;
+          mask-size: 32px 32px;
+  -webkit-mask-repeat: repeat;
+          mask-repeat: repeat;
+}
+
+/* Layer 2 (::after) is a page wireframe — browser chrome, a hero block, text
+   rules, a side panel — bleeding off the bottom-right corner so it reads as a
+   sketch left on the canvas rather than a placed sticker. Brand blue at line
+   strength: it belongs to the same family as the CTA without competing with
+   the links. mask-size keeps `auto` on the second axis so the 300×220 artwork
+   never stretches. */
+.site-footer::after {
+  background: var(--color-primary-line, var(--color-border-strong));
+  opacity: 0.5;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='220'%3E%3Cg fill='none' stroke='%23000' stroke-width='2'%3E%3Crect x='1' y='1' width='298' height='218' rx='10'/%3E%3Cpath d='M1 34h298'/%3E%3Ccircle cx='20' cy='17.5' r='4'/%3E%3Ccircle cx='36' cy='17.5' r='4'/%3E%3Ccircle cx='52' cy='17.5' r='4'/%3E%3Crect x='72' y='10' width='150' height='15' rx='7.5'/%3E%3Crect x='18' y='52' width='120' height='60' rx='6'/%3E%3Cpath d='M18 128h120M18 144h90M18 160h108'/%3E%3Crect x='158' y='52' width='124' height='108' rx='6'/%3E%3Cpath d='M18 182h264'/%3E%3C/g%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='220'%3E%3Cg fill='none' stroke='%23000' stroke-width='2'%3E%3Crect x='1' y='1' width='298' height='218' rx='10'/%3E%3Cpath d='M1 34h298'/%3E%3Ccircle cx='20' cy='17.5' r='4'/%3E%3Ccircle cx='36' cy='17.5' r='4'/%3E%3Ccircle cx='52' cy='17.5' r='4'/%3E%3Crect x='72' y='10' width='150' height='15' rx='7.5'/%3E%3Crect x='18' y='52' width='120' height='60' rx='6'/%3E%3Cpath d='M18 128h120M18 144h90M18 160h108'/%3E%3Crect x='158' y='52' width='124' height='108' rx='6'/%3E%3Cpath d='M18 182h264'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-size: clamp(260px, 26vw, 400px) auto;
+          mask-size: clamp(260px, 26vw, 400px) auto;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: right -6% bottom -12%;
+          mask-position: right -6% bottom -12%;
+}
+
+/* No mask support (older Safari/Firefox builds): the layers would paint as
+   two solid blocks over the footer, so drop them entirely rather than ship
+   a slab of colour. */
+@supports not ((mask-image: none) or (-webkit-mask-image: none)) {
+  .site-footer::before,
+  .site-footer::after { display: none; }
 }
 
 .footer-cta {
@@ -1297,7 +1418,11 @@ textarea.form-control { min-height: 7.5rem; resize: vertical; }
 .form-status.is-visible { display: flex; }
 .form-status--success { border-color: color-mix(in srgb, var(--color-success) 40%, transparent); background: var(--color-success-soft); }
 .form-status--error { border-color: color-mix(in srgb, var(--color-danger) 40%, transparent); background: var(--color-danger-soft); }
-.form-status-title { color: var(--color-heading); font-weight: var(--fw-semibold); }
+.form-status-title { 
+  color: var(--color-heading); font-weight: var(--fw-semibold);
+  display: block; 
+  width:max-content;
+}
 .form-status-text { color: var(--color-muted); font-size: var(--fs-sm); margin-top: 0.15rem; }
 .form-status--success .icon { color: var(--color-success); }
 .form-status--error .icon { color: var(--color-danger); }
@@ -1405,12 +1530,12 @@ textarea.form-control { min-height: 7.5rem; resize: vertical; }
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  padding: 0.4rem ;
+  padding: 0.4rem 0.8rem;
   border: 1px solid var(--color-border);
   border-radius: 0.4rem;
   font-family: var(--font-mono);
   letter-spacing: var(--tracking-snug);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--color-surface-2);
   color: var(--color-muted);
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
@@ -1421,15 +1546,23 @@ textarea.form-control { min-height: 7.5rem; resize: vertical; }
 .filter-btn:hover {
   color: var(--color-heading);
   border-color: var(--color-border-strong);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--color-surface-3);
   transform: translateY(-1px);
 }
 
+/* Selected chip — wears the same brand gradient as the primary CTA's hover, so
+   "this one is active" is stated in the one visual language the site reserves
+   for its strongest control. Only ever one chip at a time, so it reads as a
+   marker rather than decoration.
+
+   This replaced a hardcoded grey→khaki gradient carrying --color-muted text:
+   grey on grey at roughly 1.2:1, which is why the active filter was
+   unreadable. Every value here is a token, so both themes track. */
 .filter-btn.is-active {
-  border-color: rgba(17, 24, 39, 0.9);
-  background: linear-gradient(180deg, #9a9b9d 0%, #948f7e 100%);
-  color: var(--color-muted);
-  box-shadow: 0 10px 26px rgba(2, 6, 23, 0.28);
+  border-color: transparent;
+  background: var(--gradient-brand-deep);
+  color: var(--color-on-primary);
+  box-shadow: var(--shadow-sm);
 }
 
 .filter-btn .count {
@@ -1447,9 +1580,12 @@ textarea.form-control { min-height: 7.5rem; resize: vertical; }
   line-height: 1;
 }
 
+/* The active chip's fill is the same deep gradient in both themes, so a
+   translucent white pill is correct here rather than a theme token —
+   --color-background would put near-black on it in the dark theme. */
 .filter-btn.is-active .count {
-  background: rgba(255, 255, 255, 0.12);
-  color: var(--color-background);
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--color-on-primary);
 }
 
 .search-field { position: relative; min-width: min(100%, 260px); }
