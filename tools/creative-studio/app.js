@@ -211,6 +211,55 @@
     };
   };
 
+  /** Decodes a File into an <img> via FileReader — the one surviving copy
+      of a FileReader→Image boilerplate that used to be duplicated near-
+      identically in Meme, Filters and Enhance modes' own upload handlers
+      (STANDARDS.md §10). onLoad(img) fires once fully decoded; onError
+      (message) fires for a non-image file, an unreadable file, or a file
+      that fails to decode as an image. */
+  CS.decodeImageFile = function (file, onLoad, onError) {
+    if (!file || !/^image\//.test(file.type)) {
+      if (onError) onError("Please choose an image file.");
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var img = new Image();
+      img.onload = function () { onLoad(img); };
+      img.onerror = function () { if (onError) onError("Could not load that image."); };
+      img.src = e.target.result;
+    };
+    reader.onerror = function () { if (onError) onError("Could not read that file."); };
+    reader.readAsDataURL(file);
+  };
+
+  /** ONE shared photo, loaded once (via the app-bar's "Add Image" control,
+      or via any of Meme/Filters/Enhance's own local pickers) and reused by
+      default across those three photo-editing modes, instead of the user
+      uploading the same image separately into each one. Gradient &
+      Palette's "Extract from Image" sub-tab and Logo mode are a different
+      concern (an arbitrary reference image / no photo at all) and are
+      deliberately not wired to this.
+
+      Each of the three photo modes registers itself with `CS.onSharedImage`
+      under its own name; `CS.setSharedImage` fans a newly-loaded image out
+      to every OTHER registered mode (the mode that originated the load —
+      passed as `sourceMode` — already applied it to itself directly, so
+      it's skipped to avoid a redundant re-render). The app-bar's own
+      control has no "home" mode, so it passes `null` and reaches all
+      three. */
+  CS.sharedImage = null;
+  var sharedImageListeners = [];
+  CS.onSharedImage = function (modeName, fn) {
+    sharedImageListeners.push({ mode: modeName, fn: fn });
+  };
+  CS.setSharedImage = function (img, sourceMode) {
+    CS.sharedImage = img;
+    sharedImageListeners.forEach(function (listener) {
+      if (listener.mode !== sourceMode) listener.fn(img);
+    });
+  };
+
   /* ========================================================================
      MEME MODE (ported from tools/meme-maker/app.js). One paint() routine
      draws both the live preview and the PNG export (STANDARDS.md §6).
@@ -376,31 +425,35 @@
       render();
     }
 
+    /** Applies an already-decoded image to the meme canvas — the one
+        surviving copy of "an image just became this mode's active image"
+        logic, used both by this mode's own file/drop upload AND by an
+        image loaded through the shared app-bar control or another photo
+        mode's picker (see CS.onSharedImage below). */
+    function applyImage(img, label) {
+      state.image = img;
+      var w = img.naturalWidth || img.width || 1, h = img.naturalHeight || img.height || 1;
+      var scale = Math.min(1, MAX_IMAGE_DIM / Math.max(w, h));
+      state.canvasW = Math.max(1, Math.round(w * scale));
+      state.canvasH = Math.max(1, Math.round(h * scale));
+      applyCanvasSize();
+      els.dropzone.classList.add("has-file");
+      els.dropLabel.textContent = label || "Image loaded";
+      showStatus("Image loaded.");
+      render();
+    }
+
     function loadImageFile(file) {
-      if (!file || !/^image\//.test(file.type)) {
-        showStatus("Please choose an image file.", true);
-        return;
-      }
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        var img = new Image();
-        img.onload = function () {
-          state.image = img;
-          var w = img.naturalWidth || 1, h = img.naturalHeight || 1;
-          var scale = Math.min(1, MAX_IMAGE_DIM / Math.max(w, h));
-          state.canvasW = Math.max(1, Math.round(w * scale));
-          state.canvasH = Math.max(1, Math.round(h * scale));
-          applyCanvasSize();
-          els.dropzone.classList.add("has-file");
-          els.dropLabel.textContent = file.name || "Image loaded";
-          showStatus("Image loaded.");
-          render();
-        };
-        img.onerror = function () { showStatus("Could not load that image.", true); };
-        img.src = e.target.result;
-      };
-      reader.onerror = function () { showStatus("Could not read that file.", true); };
-      reader.readAsDataURL(file);
+      CS.decodeImageFile(file, function (img) {
+        applyImage(img, file.name || "Image loaded");
+        // This mode's own picker also becomes the shared photo other
+        // photo modes default to (STANDARDS.md fix: one upload, not one
+        // per mode). "meme" is excluded from the fan-out since it already
+        // applied the image to itself above.
+        CS.setSharedImage(img, "meme");
+      }, function (message) {
+        showStatus(message, true);
+      });
     }
 
     function getSelectedBox() {
@@ -732,9 +785,19 @@
       renderBoxesList();
       renderBoxEditor();
       render();
+
+      // A photo loaded elsewhere (the app-bar's shared control, or
+      // Filters'/Enhance's own picker) shows up here too — captions and
+      // text boxes are left untouched, only the underlying photo changes.
+      CS.onSharedImage("meme", function (img) { applyImage(img, "Shared photo"); });
     }
 
-    return { init: init };
+    return {
+      init: init,
+      /** Public entry point used by the shared app-bar control and by the
+          other two photo modes' pickers. */
+      setImage: function (img) { applyImage(img, "Shared photo"); }
+    };
   })();
 
   /* ========================================================================
@@ -1062,17 +1125,17 @@
         var file = els.fileInput.files && els.fileInput.files[0];
         if (!file) return;
 
-        var reader = new FileReader();
-        reader.onload = function () {
-          var img = new Image();
-          img.onload = function () {
-            els.dropZone.classList.add("has-file");
-            els.dropLabel.textContent = file.name;
-            setImage(img, "Editing " + file.name);
-          };
-          img.src = reader.result;
-        };
-        reader.readAsDataURL(file);
+        CS.decodeImageFile(file, function (img) {
+          els.dropZone.classList.add("has-file");
+          els.dropLabel.textContent = file.name;
+          setImage(img, "Editing " + file.name);
+          // This mode's own picker also becomes the shared photo Meme and
+          // Enhance default to. "filters" is excluded from the fan-out
+          // since it already applied the image to itself above.
+          CS.setSharedImage(img, "filters");
+        }, function (message) {
+          els.status.textContent = message;
+        });
       });
 
       bindSlider(els.brightness, els.brightnessVal, "brightness");
@@ -1125,9 +1188,26 @@
 
       renderCategoryTabs();
       setImage(generateSampleImage(), "Showing a built-in sample photo — upload your own to filter it.");
+
+      // A photo loaded elsewhere (the app-bar's shared control, or Meme's/
+      // Enhance's own picker) replaces the built-in sample here too —
+      // preset/adjustment choices are left as they are, only the photo
+      // underneath changes.
+      CS.onSharedImage("filters", applySharedImage);
     }
 
-    return { init: init };
+    function applySharedImage(img) {
+      els.dropZone.classList.add("has-file");
+      els.dropLabel.textContent = "Shared photo";
+      setImage(img, "Editing shared photo");
+    }
+
+    return {
+      init: init,
+      /** Public entry point used by the shared app-bar control and by the
+          other two photo modes' pickers. */
+      setImage: applySharedImage
+    };
   })();
 
   /* ========================================================================
@@ -1375,6 +1455,21 @@
 
     var sourceImage, sourceW, sourceH;
 
+    /** Applies an already-decoded image as this mode's active source image
+        — the one surviving copy of "an image just became this mode's
+        active image" logic, used both by this mode's own file picker AND
+        by an image loaded through the shared app-bar control or another
+        photo mode's picker (see CS.onSharedImage below). Existing look/
+        clarity/sharpen/denoise/upscale choices are left untouched, only
+        the underlying photo changes. */
+    function applyImage(img) {
+      sourceImage = img;
+      sourceW = img.naturalWidth || img.width;
+      sourceH = img.naturalHeight || img.height;
+      renderLookGrid();
+      renderPreview();
+    }
+
     function outputSize() { return { w: sourceW * state.upscale, h: sourceH * state.upscale }; }
 
     function renderPreview() {
@@ -1486,19 +1581,15 @@
         var file = els.file.files && els.file.files[0];
         if (!file) return;
 
-        var reader = new FileReader();
-        reader.onload = function () {
-          var img = new Image();
-          img.onload = function () {
-            sourceImage = img;
-            sourceW = img.naturalWidth || img.width;
-            sourceH = img.naturalHeight || img.height;
-            renderLookGrid();
-            renderPreview();
-          };
-          img.src = reader.result;
-        };
-        reader.readAsDataURL(file);
+        CS.decodeImageFile(file, function (img) {
+          applyImage(img);
+          // This mode's own picker also becomes the shared photo Meme and
+          // Filters default to. "enhance" is excluded from the fan-out
+          // since it already applied the image to itself above.
+          CS.setSharedImage(img, "enhance");
+        }, function (message) {
+          els.status.textContent = message;
+        });
         els.file.value = "";
       });
 
@@ -1514,9 +1605,18 @@
 
       renderLookGrid();
       renderPreview();
+
+      // A photo loaded elsewhere (the app-bar's shared control, or Meme's/
+      // Filters' own picker) becomes this mode's active image too.
+      CS.onSharedImage("enhance", applyImage);
     }
 
-    return { init: init };
+    return {
+      init: init,
+      /** Public entry point used by the shared app-bar control and by the
+          other two photo modes' pickers. */
+      setImage: applyImage
+    };
   })();
 
   /* ========================================================================
@@ -2576,6 +2676,28 @@
         panel.hidden = panel.getAttribute("data-app-panel") !== mode;
       });
     });
+
+    // The ONE shared "Add Image" control (STANDARDS.md fix: upload once,
+    // reuse across Meme/Filters/Enhance instead of once per mode). It has
+    // no "home" mode of its own, so it passes `null` as the source — every
+    // registered photo mode picks it up via CS.setSharedImage's fan-out.
+    // Gradient & Palette's "Extract from Image" picker and Logo mode are
+    // untouched by this — a different concern, per the task.
+    var sharedInput = CS.$("cs-shared-file-input");
+    var sharedStatus = CS.$("cs-shared-upload-status");
+    if (sharedInput) {
+      sharedInput.addEventListener("change", function () {
+        var file = sharedInput.files && sharedInput.files[0];
+        if (!file) return;
+        CS.decodeImageFile(file, function (img) {
+          CS.setSharedImage(img, null);
+          if (sharedStatus) sharedStatus.textContent = "Loaded " + (file.name || "image") + ".";
+        }, function (message) {
+          if (sharedStatus) sharedStatus.textContent = message;
+        });
+        sharedInput.value = "";
+      });
+    }
   }
 
   /* ========================================================================

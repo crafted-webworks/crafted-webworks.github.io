@@ -150,14 +150,48 @@ button, input, select, textarea { font-family: inherit; }
 
 .cs-appbar-left svg { color: var(--cs-accent); flex: 0 0 auto; }
 
+.cs-appbar-right {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  /* Reserves the host's floating restore/close controls (fullscreen tool,
+     top-right ~84x40px) — see tools/STANDARDS.md §5. This is the single
+     place that clearance is applied for the whole combined tool: it wraps
+     both the mode tabs and the shared "Add Image" control so neither one
+     can drift under the host's buttons. */
+  margin-right: 84px;
+}
+
 .cs-mode-tabs {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
-  /* Reserves the host's floating restore/close controls (fullscreen tool,
-     top-right ~84x40px) — see tools/STANDARDS.md §5. This is the single
-     place that clearance is applied for the whole combined tool. */
-  margin-right: 84px;
+}
+
+.cs-shared-upload {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--cs-border);
+  background: var(--cs-surface);
+  color: var(--cs-text);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--cs-radius);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.cs-shared-upload:hover { border-color: var(--cs-accent); }
+.cs-shared-upload svg { color: var(--cs-accent); flex: 0 0 auto; }
+
+.cs-shared-upload-status {
+  font-size: 0.76rem;
+  color: var(--cs-muted);
 }
 
 .cs-tab {
@@ -182,7 +216,7 @@ button, input, select, textarea { font-family: inherit; }
 }
 
 @media (max-width: 900px) {
-  .cs-mode-tabs { margin-right: 0; width: 100%; }
+  .cs-appbar-right { margin-right: 0; width: 100%; }
 }
 
 .cs-main {
