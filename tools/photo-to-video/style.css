@@ -261,6 +261,8 @@ input[type="range"]:disabled { opacity: 0.4; }
   width: auto;
   height: auto;
   display: block;
+  cursor: crosshair;
+  touch-action: none;
 }
 
 .pv-transport {
