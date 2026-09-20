@@ -274,6 +274,7 @@
     "meme-maker": { render: framedTool.render, mount: framedTool.mount },
     "gradient-palette-studio": { render: framedTool.render, mount: framedTool.mount },
     "image-enhancer": { render: framedTool.render, mount: framedTool.mount },
+    "logo-maker": { render: framedTool.render, mount: framedTool.mount },
 
     /* ---------------------------------------------------------------- */
     "json-formatter": {
