@@ -1,21 +1,22 @@
 /* Self-contained styling — its own tokens, no dependency on a parent
    stylesheet, so this folder renders correctly on its own or in an iframe.
-   Palette matches this site's actual brand identity (dark ground, brand
-   blue/orange) per tools/STANDARDS.md §3 — literal values duplicated here,
-   not a reference to the parent site's stylesheet. */
+   Palette matches this site's actual brand identity (warm-paper light
+   ground, brand blue/orange) per tools/STANDARDS.md §3 — literal values
+   duplicated here, not a reference to the parent site's stylesheet. */
 :root {
-  --qr-page: #08090D;
-  --qr-card: #0C0E14;
-  --qr-card-2: #111319;
-  --qr-border: rgba(255, 255, 255, 0.08);
-  --qr-text: #F5F6F8;
-  --qr-text-body: #C9CDD5;
-  --qr-muted: #8A9099;
-  --qr-accent: #2B7FFF;
-  --qr-accent-hover: #4C8CFF;
+  --qr-page: #FBFAF8;
+  --qr-card: #FFFFFF;
+  --qr-card-2: #F6F4F1;
+  --qr-border: rgba(20, 18, 14, 0.11);
+  --qr-text: #14120E;
+  --qr-muted: #6B675F;
+  --qr-accent: #0C4FBF;
+  --qr-accent-hover: #0A3B8F;
   --qr-accent-ink: #FFFFFF;
-  --qr-accent-2: #FF8A1E;
+  --qr-accent-2: #C55705;
   --qr-danger: #E8604C;
+  --qr-checker-a: #F0EDE7;
+  --qr-checker-b: #E8E4DC;
   --qr-radius-card: 4px;
   --qr-radius-control: 4px;
   --qr-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -232,7 +233,7 @@ input[type="range"] { width: 100%; accent-color: var(--qr-accent); }
   display: grid;
   place-items: center;
   border-radius: 4px;
-  background: repeating-conic-gradient(rgba(255, 255, 255, 0.06) 0% 25%, rgba(255, 255, 255, 0.12) 0% 50%) 0 0 / 8px 8px;
+  background: repeating-conic-gradient(var(--qr-checker-a) 0% 25%, var(--qr-checker-b) 0% 50%) 0 0 / 8px 8px;
 }
 
 .qr-choice-icon::before {
@@ -507,7 +508,7 @@ input[type="range"] { width: 100%; accent-color: var(--qr-accent); }
   align-items: center;
   justify-content: center;
   padding: 0.75rem;
-  background: repeating-conic-gradient(rgba(255, 255, 255, 0.05) 0% 25%, rgba(255, 255, 255, 0.09) 0% 50%) 0 0 / 20px 20px;
+  background: repeating-conic-gradient(var(--qr-checker-a) 0% 25%, var(--qr-checker-b) 0% 50%) 0 0 / 20px 20px;
   border-radius: var(--qr-radius-control);
 }
 
@@ -516,7 +517,7 @@ input[type="range"] { width: 100%; accent-color: var(--qr-accent); }
   max-width: 100%;
   height: auto;
   border-radius: 4px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 24px rgba(20, 18, 14, 0.18);
 }
 
 .qr-caption {

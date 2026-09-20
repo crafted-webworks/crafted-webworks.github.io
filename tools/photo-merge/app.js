@@ -413,7 +413,7 @@
     overlayCtx.fillStyle = "rgba(0,0,0,0.35)";
     overlayCtx.fillRect(0, 0, DOC_W, DOC_H);
     overlayCtx.clearRect(cropRect.x, cropRect.y, cropRect.w, cropRect.h);
-    overlayCtx.strokeStyle = "#e2972e";
+    overlayCtx.strokeStyle = "#C55705";
     overlayCtx.lineWidth = 2;
     overlayCtx.strokeRect(cropRect.x, cropRect.y, cropRect.w, cropRect.h);
     overlayCtx.restore();

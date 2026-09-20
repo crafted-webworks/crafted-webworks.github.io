@@ -83,24 +83,30 @@ scatter color literals through the rest of the file. These tokens must be the to
 literal `:root` block, never a reference to the parent site's `assets/css/variables.css` file
 or its custom property names — a tool folder still has to work copy-pasted into another
 project with zero changes (see §1). What changes is the *values*: they should match this
-site's actual brand identity (dark ground, brand blue/orange) instead of an arbitrary palette
-invented per tool, so every tool reads as part of the same product family. Duplicate the literal
-hex values below into each tool's own token block — don't import or reference the parent file:
+site's actual brand identity (warm-paper light ground, brand blue/orange) instead of an
+arbitrary palette invented per tool, so every tool reads as part of the same product family.
+Duplicate the literal hex values below into each tool's own token block — don't import or
+reference the parent file:
 ```css
 :root {
-  --tool-page: #08090D;       /* site's --ink-900 background */
-  --tool-card: #0C0E14;       /* site's --color-surface */
-  --tool-card-2: #111319;     /* site's --color-surface-2, for nested panels */
-  --tool-border: rgba(255, 255, 255, 0.08);
-  --tool-text: #F5F6F8;       /* headings */
-  --tool-text-body: #C9CDD5;  /* body text */
-  --tool-muted: #8A9099;
-  --tool-accent: #2B7FFF;     /* site brand blue — used for active states + primary button */
-  --tool-accent-hover: #4C8CFF;
+  --tool-page: #FBFAF8;       /* site's --color-background, warm paper (not pure white) */
+  --tool-card: #FFFFFF;       /* site's --color-surface */
+  --tool-card-2: #F6F4F1;     /* site's --color-surface-2, for nested panels */
+  --tool-border: rgba(20, 18, 14, 0.11);
+  --tool-text: #14120E;       /* headings */
+  --tool-text-body: #35322C;  /* body text */
+  --tool-muted: #6B675F;
+  --tool-accent: #0C4FBF;     /* site brand blue (--blue-700) — used for active states + primary button */
+  --tool-accent-hover: #0A3B8F; /* --blue-800 */
   --tool-accent-ink: #FFFFFF; /* text color that reads on top of --tool-accent */
-  --tool-accent-2: #FF8A1E;   /* site brand orange — secondary/warning-style accent only */
+  --tool-accent-2: #C55705;   /* site brand orange (--orange-700) — secondary/warning-style accent only */
+  --tool-accent-2-hover: #8F3F06; /* --orange-800 */
 }
 ```
+The blue/orange here are the darker 700/800-weight steps of the brand ramp, not the raw
+500-weight used for large decorative fields on the dark theme this replaces — on a white/paper
+surface the 500-weight falls short of accessible contrast, so tools reuse the same deeper steps
+the main site's light theme settled on.
 Rules that follow from this:
 - **One accent color.** Active/selected states, the primary button, and any highlight all
   reuse the same accent token — use the blue (`--tool-accent`). Don't introduce a second

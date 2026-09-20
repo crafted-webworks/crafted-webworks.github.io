@@ -3,7 +3,7 @@
    Gradient & Palette / Logo) merged from five formerly-separate tools.
    Self-contained styling, its own tokens (see tools/STANDARDS.md §3).
 
-   Token strategy: ONE shared dark palette is declared at the top as
+   Token strategy: ONE shared light palette is declared at the top as
    --cs-*. Each mode's CSS below was ported from its own original
    stylesheet, written against that mode's own token names (--mm-*,
    --pf-*, --ie-*, --gps-*, --lm-*) — rather than rewrite every var()
@@ -15,18 +15,19 @@
 :root {
   /* Brand palette (see tools/STANDARDS.md §3) — the site's actual blue/
      orange brand colors, declared as this tool's own literal values. */
-  --cs-page: #08090D;
-  --cs-card: #0C0E14;
-  --cs-surface: #111319;      /* input/control surface, one step up from card */
-  --cs-checker-a: #14161d;    /* transparency-checkerboard, dark variant */
-  --cs-checker-b: #0e1016;
-  --cs-border: rgba(255, 255, 255, 0.08);
-  --cs-text: #F5F6F8;
-  --cs-muted: #8A9099;
-  --cs-accent: #2B7FFF;       /* site brand blue — the one primary accent */
-  --cs-accent-hover: #4C8CFF;
+  --cs-page: #FBFAF8;         /* warm paper, not pure white */
+  --cs-card: #FFFFFF;
+  --cs-surface: #F6F4F1;      /* input/control surface, one step off card */
+  --cs-checker-a: #F0EDE7;    /* transparency-checkerboard, light variant */
+  --cs-checker-b: #E8E4DC;
+  --cs-border: rgba(20, 18, 14, 0.11);
+  --cs-text: #14120E;
+  --cs-muted: #6B675F;
+  --cs-accent: #0C4FBF;       /* site brand blue (--blue-700) — the one primary accent */
+  --cs-accent-hover: #0A3B8F; /* --blue-800 */
   --cs-accent-ink: #FFFFFF;   /* text color that reads on top of --cs-accent */
-  --cs-accent-2: #FF8A1E;     /* site brand orange — secondary use only */
+  --cs-accent-2: #C55705;     /* site brand orange (--orange-700) — secondary use only */
+  --cs-accent-2-hover: #8F3F06; /* --orange-800 */
   --cs-danger: #E8604C;
   --cs-success: #3FBF87;
   --cs-radius: 4px;
@@ -557,7 +558,7 @@ button, input, select, textarea { font-family: inherit; }
   width: auto;
   height: auto;
   border-radius: 4px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 24px rgba(20, 18, 14, 0.18);
   background: #fff;
   cursor: default;
   touch-action: none;
@@ -755,7 +756,7 @@ button, input, select, textarea { font-family: inherit; }
   width: auto;
   height: auto;
   border-radius: 2px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px rgba(20, 18, 14, 0.18);
 }
 
 .pf-status { margin: 0; font-size: 0.78rem; color: var(--pf-muted); text-align: center; min-height: 1em; }
@@ -1044,24 +1045,24 @@ button, input, select, textarea { font-family: inherit; }
   display: grid;
   place-items: center;
   border-radius: 4px;
-  background: repeating-conic-gradient(#2f2d36 0% 25%, #26242c 0% 50%) 0 0 / 8px 8px;
+  background: repeating-conic-gradient(var(--cs-checker-a) 0% 25%, var(--cs-checker-b) 0% 50%) 0 0 / 8px 8px;
 }
 
 .gps-choice-icon::before {
   content: "";
   width: 1.3rem;
   height: 1.3rem;
-  background: linear-gradient(90deg, #2b7fff, #e2972e);
+  background: linear-gradient(90deg, var(--cs-accent), var(--cs-accent-2));
 }
 
 .gps-choice-icon[data-preview="radial"]::before,
 .gps-choice-icon[data-preview="circle"]::before {
-  background: radial-gradient(circle, #2b7fff, #e2972e);
+  background: radial-gradient(circle, var(--cs-accent), var(--cs-accent-2));
   border-radius: 50%;
 }
 
 .gps-choice-icon[data-preview="ellipse"]::before {
-  background: radial-gradient(ellipse, #2b7fff, #e2972e);
+  background: radial-gradient(ellipse, var(--cs-accent), var(--cs-accent-2));
   border-radius: 50%;
   width: 1.6rem;
   height: 1.1rem;
@@ -1154,13 +1155,13 @@ button, input, select, textarea { font-family: inherit; }
   transform: translateY(-50%);
   border-radius: 50%;
   border: 2px solid #fff;
-  box-shadow: 0 0 0 1px var(--gps-border), 0 1px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 1px var(--gps-border), 0 1px 3px rgba(20, 18, 14, 0.3);
   cursor: grab;
   background: var(--stop-color, #000);
 }
 
 .gps-stop-handle:active { cursor: grabbing; }
-.gps-stop-handle.is-active { box-shadow: 0 0 0 2px var(--gps-accent), 0 1px 3px rgba(0, 0, 0, 0.5); }
+.gps-stop-handle.is-active { box-shadow: 0 0 0 2px var(--gps-accent), 0 1px 3px rgba(20, 18, 14, 0.3); }
 
 .gps-stop-editor-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
 .gps-stop-pos-group { display: flex; align-items: center; gap: 0.4rem; }
@@ -1199,7 +1200,8 @@ button, input, select, textarea { font-family: inherit; }
 
 .gps-css-output {
   display: block;
-  background: #100e0a;
+  background: var(--cs-surface);
+  border: 1px solid var(--gps-border);
   color: var(--cs-text);
   font-family: var(--gps-mono);
   font-size: 0.8rem;
@@ -1386,6 +1388,13 @@ button, input, select, textarea { font-family: inherit; }
   color: var(--lm-text);
 }
 
+/* These two mini-preview tiles (icon swatch + layout mockup) are
+   deliberately a fixed dark plate regardless of the surrounding theme —
+   like a small icon badge — with a hardcoded light icon fill (see
+   app.js, ICONS[...].svg(..., "#f1efe9", ...)) painted on top. Keeping
+   the plate dark keeps that fixed light icon legible; only the dot/bar
+   mockup color below needed to change, since it used to piggyback on
+   --lm-text back when that token was itself light. */
 .lm-icon-mini {
   width: 2rem;
   height: 2rem;
@@ -1413,11 +1422,14 @@ button, input, select, textarea { font-family: inherit; }
 .lm-layout-mini[data-preview="text-only"] { flex-direction: column; }
 .lm-layout-mini[data-preview="icon-left-of-text"] { flex-direction: row; }
 
-.lm-layout-mini i { display: block; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--lm-text); flex: 0 0 auto; }
+/* Fixed light dots/bars — this mockup sits on the fixed dark plate above,
+   not on the page background, so it stays independent of --lm-text (which
+   is now dark ink and would otherwise vanish against that dark plate). */
+.lm-layout-mini i { display: block; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: #f1efe9; flex: 0 0 auto; }
 .lm-layout-mini i.lm-i-big { width: 1.1rem; height: 1.1rem; }
 
 .lm-layout-mini .lm-mini-lines { display: flex; flex-direction: column; gap: 0.18rem; }
-.lm-layout-mini b { display: block; width: 1rem; height: 0.22rem; border-radius: 1px; background: var(--lm-text); }
+.lm-layout-mini b { display: block; width: 1rem; height: 0.22rem; border-radius: 1px; background: #f1efe9; }
 .lm-layout-mini b.lm-b2 { width: 0.65rem; opacity: 0.55; }
 
 .lm-fill-mode { display: flex; gap: 0.4rem; margin-bottom: 0.6rem; }
@@ -1515,14 +1527,16 @@ button, input, select, textarea { font-family: inherit; }
   justify-content: center;
   padding: 0.75rem;
   /* Logo mode's default icon/text colors are dark ink, meant to read
-     against a light or transparent background (a logo's usual context) —
-     unlike the other modes' checkerboards, this one stays LIGHT so the
-     default dark-on-transparent logo stays legible instead of nearly
-     vanishing against a dark checker. */
-  background: repeating-conic-gradient(#e7e2d8 0% 25%, #f2efe8 0% 50%) 0 0 / 20px 20px;
+     against a light or transparent background (a logo's usual context).
+     Back when the rest of this tool was dark-themed, this checkerboard
+     was deliberately kept light so a dark-ink logo didn't vanish against
+     a dark checker — now the whole tool is light, so it just uses the
+     same shared --cs-checker-a/b pair as every other mode; the dark-ink
+     default logo still reads clearly against it either way. */
+  background: repeating-conic-gradient(var(--cs-checker-a) 0% 25%, var(--cs-checker-b) 0% 50%) 0 0 / 20px 20px;
   border-radius: var(--lm-radius-control);
 }
 
-#lm-canvas { width: 100%; max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); }
+#lm-canvas { width: 100%; max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 8px 24px rgba(20, 18, 14, 0.18); }
 
 .lm-tabs--format { margin-bottom: 0; justify-content: center; width: 100%; }
