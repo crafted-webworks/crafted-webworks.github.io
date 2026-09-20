@@ -269,6 +269,7 @@
     "png-brusher": { render: framedTool.render, mount: framedTool.mount },
     "color-magic": { render: framedTool.render, mount: framedTool.mount },
     "photo-merge": { render: framedTool.render, mount: framedTool.mount },
+    "photo-to-video": { render: framedTool.render, mount: framedTool.mount },
 
     /* ---------------------------------------------------------------- */
     "json-formatter": {

@@ -133,6 +133,28 @@
       "featured": true,
       "active": true,
       "order": 4
+    },
+    {
+      "id": "photo-to-video",
+      "title": "Photo to Video",
+      "slug": "photo-to-video",
+      "category": "image",
+      "description": "Turn a sequence of photos into an animated Ken Burns slideshow, preview it playing, and export it as a video.",
+      "icon": "play-circle",
+      "url": "/pages/tools.html#photo-to-video",
+      "src": "/tools/photo-to-video/index.html",
+      "fullscreen": true,
+      "tags": [
+        "video",
+        "slideshow",
+        "animation",
+        "photos",
+        "ken burns"
+      ],
+      "status": "live",
+      "featured": true,
+      "active": true,
+      "order": 5
     }
   ]
 }

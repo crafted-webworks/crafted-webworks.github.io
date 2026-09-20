@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Photo to Video</title>
+<meta name="description" content="Turn a sequence of photos into an animated Ken Burns slideshow and export it as a video — entirely in your browser.">
+
+<!--
+  Fully self-contained tool — see tools/STANDARDS.md. Nothing here
+  references the parent site's assets/js or assets/css.
+-->
+<script>
+  document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');
+</script>
+</head>
+<body>
+
+  <main class="pv">
+    <div class="pv-card pv-toolbar">
+
+      <button type="button" class="pv-btn pv-btn--primary" id="pv-add-photos">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+        Add Photos
+      </button>
+      <input type="file" id="pv-file-input" accept="image/png,image/jpeg,image/webp" multiple hidden>
+
+      <div class="pv-divider">Slides</div>
+      <p class="pv-note" id="pv-empty-note">Add photos to build your slideshow — drag to reorder them below.</p>
+      <div class="pv-slides" id="pv-slides"></div>
+
+      <div class="pv-field" id="pv-motion-field" hidden>
+        <label>Motion for this slide</label>
+        <div class="pv-card-group" data-choice="motion">
+          <button type="button" class="pv-choice-card" data-value="zoom-in" title="Zoom in">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+            <span>Zoom In</span>
+          </button>
+          <button type="button" class="pv-choice-card" data-value="zoom-out" title="Zoom out">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M8 11h6"/></svg>
+            <span>Zoom Out</span>
+          </button>
+          <button type="button" class="pv-choice-card" data-value="pan-lr" title="Pan left to right">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            <span>Pan →</span>
+          </button>
+          <button type="button" class="pv-choice-card" data-value="pan-rl" title="Pan right to left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg>
+            <span>Pan ←</span>
+          </button>
+          <button type="button" class="pv-choice-card" data-value="pan-ud" title="Pan top to bottom">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m18 13-6 6-6-6"/></svg>
+            <span>Pan ↓</span>
+          </button>
+          <button type="button" class="pv-choice-card" data-value="static" title="No motion">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+            <span>Static</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="pv-divider">Timing</div>
+      <div class="pv-row">
+        <div class="pv-field">
+          <label for="pv-duration">Seconds / photo <span class="pv-hint" id="pv-duration-val">3.0s</span></label>
+          <input type="range" id="pv-duration" min="1" max="10" step="0.5" value="3">
+        </div>
+        <div class="pv-field">
+          <label for="pv-transition">Crossfade <span class="pv-hint" id="pv-transition-val">0.6s</span></label>
+          <input type="range" id="pv-transition" min="0" max="2" step="0.1" value="0.6">
+        </div>
+      </div>
+
+      <div class="pv-divider">Export</div>
+      <p class="pv-note">Renders in real time — a 20-second slideshow takes about 20 seconds to render, since it's actually playing while it's captured.</p>
+      <button type="button" class="pv-btn pv-btn--primary pv-download" id="pv-render" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Render Video (WebM)
+      </button>
+      <p class="pv-note" id="pv-render-status" hidden></p>
+    </div>
+
+    <div class="pv-card pv-stage">
+      <div class="pv-canvas-wrap">
+        <canvas id="pv-canvas" width="1280" height="720"></canvas>
+      </div>
+      <div class="pv-transport">
+        <button type="button" class="pv-zoom-btn" id="pv-play" aria-label="Play" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <input type="range" id="pv-scrub" min="0" max="1000" step="1" value="0" disabled>
+        <span class="pv-status" id="pv-time">0.0s / 0.0s</span>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    (function () {
+      var v = Date.now();
+      document.write('<script src="app.js?v=' + v + '"><' + '/script>');
+    })();
+  </script>
+</body>
+</html>
