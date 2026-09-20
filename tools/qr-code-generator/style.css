@@ -15,6 +15,14 @@
 
 * { box-sizing: border-box; }
 
+/* Any author CSS `display` declaration beats the browser's built-in
+   `[hidden] { display: none }` at equal importance, regardless of
+   selector specificity — origin is compared before specificity in the
+   cascade. .qr-gradient-row (and similar) both set `display` and get
+   toggled with the `hidden` attribute, so without this override a
+   "hidden" one stays visible. */
+[hidden] { display: none !important; }
+
 html, body {
   margin: 0;
   padding: 0;

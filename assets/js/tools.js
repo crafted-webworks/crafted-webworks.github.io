@@ -268,6 +268,7 @@
     "qr-code-generator": { render: framedTool.render, mount: framedTool.mount },
     "png-brusher": { render: framedTool.render, mount: framedTool.mount },
     "color-magic": { render: framedTool.render, mount: framedTool.mount },
+    "photo-merge": { render: framedTool.render, mount: framedTool.mount },
 
     /* ---------------------------------------------------------------- */
     "json-formatter": {

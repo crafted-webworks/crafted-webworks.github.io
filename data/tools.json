@@ -110,6 +110,29 @@
       "featured": true,
       "active": true,
       "order": 3
+    },
+    {
+      "id": "photo-merge",
+      "title": "Photo Merge",
+      "slug": "photo-merge",
+      "category": "image",
+      "description": "Combine multiple photos as layers — crop, zoom, position each one and blend between them with a brush — then export one PNG.",
+      "icon": "layers",
+      "url": "/pages/tools.html#photo-merge",
+      "src": "/tools/photo-merge/index.html",
+      "fullscreen": true,
+      "tags": [
+        "merge",
+        "layers",
+        "combine",
+        "crop",
+        "blend",
+        "image"
+      ],
+      "status": "live",
+      "featured": true,
+      "active": true,
+      "order": 4
     }
   ]
 }

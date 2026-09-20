@@ -65,6 +65,14 @@ html, body {
   .pb-toolbar { flex-basis: auto; min-width: 0; }
 }
 
+/* Any author CSS `display` declaration beats the browser's built-in
+   `[hidden] { display: none }` at equal importance, regardless of
+   selector specificity — origin is compared before specificity in the
+   cascade. Several elements here are toggled with the `hidden`
+   attribute while also carrying a class that sets `display`, so without
+   this override a "hidden" element stays visible. */
+[hidden] { display: none !important; }
+
 .pb-field {
   display: flex;
   flex-direction: column;

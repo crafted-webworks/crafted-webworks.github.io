@@ -100,6 +100,15 @@ Rules that follow from this:
   square vs dot). Flattening those would misrepresent the option, not just restyle it.
 - No icon font, no CSS framework. Inline SVG for icons — a small inline `<svg>` with
   `currentColor` stroke, sized to the surrounding text.
+- **`[hidden] { display: none !important; }` goes in every tool's stylesheet, near the top.**
+  This isn't defensive paranoia — it's required by §4's own hidden-toggle pattern. The browser's
+  built-in rule is `[hidden] { display: none }`, but *any* plain author rule that sets `display`
+  on that same element (e.g. `.some-row { display: flex }`) overrides it regardless of selector
+  specificity, because CSS compares origin (author vs. user-agent) before specificity — an
+  author rule always wins over a user-agent rule at equal weight. Any element that both gets
+  `hidden` toggled *and* carries a class setting `display` silently ignores `hidden` without
+  this line. Found live in two tools before being made a standing rule; check for it before
+  assuming a `hidden` toggle bug is anywhere else.
 
 ## 4. Interaction patterns (reuse these shapes rather than inventing new ones)
 
