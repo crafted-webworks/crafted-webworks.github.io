@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Color Magic — Remove Background, Remove Color, Recolor</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <header class="app-header">
+      <h1 class="app-title">Color Magic</h1>
+      <div class="pill-tabs" id="modeTabs">
+        <button class="pill-tab is-active" data-mode="remove-bg" type="button">Remove Background</button>
+        <button class="pill-tab" data-mode="remove-color" type="button">Remove a Color</button>
+        <button class="pill-tab" data-mode="recolor" type="button">Change a Color</button>
+      </div>
+      <div class="header-right">
+        <button class="btn btn-secondary btn-compact" id="chooseImageBtn" type="button">Choose Image</button>
+        <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+      </div>
+    </header>
+
+    <main class="app-main">
+
+      <!-- Upload state -->
+      <section class="upload-zone" id="uploadZone">
+        <div class="upload-card" id="uploadCard">
+          <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 16V4m0 0-4 4m4-4 4 4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <p class="upload-title">Drop an image here</p>
+          <p class="upload-sub">or click to choose a file — PNG or JPG</p>
+        </div>
+      </section>
+
+      <!-- Editor state -->
+      <section class="editor" id="editor" hidden>
+
+        <div class="canvas-pane">
+          <div class="canvas-frame" id="canvasFrame">
+            <canvas id="viewCanvas"></canvas>
+            <div class="brush-cursor" id="brushCursor" hidden></div>
+            <div class="selection-overlay" id="selectionOverlay" hidden></div>
+          </div>
+          <p class="canvas-hint" id="canvasHint">Click the image to pick a color</p>
+        </div>
+
+        <aside class="controls-pane">
+
+          <!-- Transform controls -->
+          <div class="control-group">
+            <span class="field-label">Transform</span>
+            <div class="btn-row">
+              <button class="btn btn-secondary" id="rotateLeftBtn" type="button" title="Rotate left">⟲ Rotate</button>
+              <button class="btn btn-secondary" id="rotateRightBtn" type="button" title="Rotate right">⟳ Rotate</button>
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-secondary" id="flipHBtn" type="button">⇋ Flip H</button>
+              <button class="btn btn-secondary" id="flipVBtn" type="button">⇵ Flip V</button>
+            </div>
+            <button class="btn btn-secondary" id="cropBtn" type="button" style="width:100%">Crop to Selection</button>
+          </div>
+
+          <!-- Selection controls -->
+          <div class="control-group">
+            <span class="field-label">Selection</span>
+            <p class="control-label">Draw a rectangle to limit edits to just that area.</p>
+            <div class="btn-row">
+              <button class="btn btn-secondary" id="selectToolBtn" type="button">Select Area</button>
+              <button class="btn btn-ghost" id="clearSelectionBtn" type="button">Clear</button>
+            </div>
+          </div>
+
+          <!-- Remove background controls -->
+          <div class="control-group" data-for-mode="remove-bg">
+            <p class="control-label">Detects the background from the image corners automatically.</p>
+            <button class="btn btn-secondary" id="resampleBgBtn" type="button">Re-sample corners</button>
+
+            <label class="field">
+              <span class="field-label">Tolerance</span>
+              <input type="range" id="bgTolerance" min="1" max="120" value="40">
+            </label>
+          </div>
+
+          <!-- Remove color controls -->
+          <div class="control-group" data-for-mode="remove-color" hidden>
+            <span class="field-label">Color to remove</span>
+            <div class="swatch-row" id="removeSwatchRow">
+              <button class="swatch swatch-custom" id="removeCustomSwatch" type="button" title="Pick a custom color">
+                <input type="color" id="removeColorInput" value="#ffffff">
+              </button>
+            </div>
+            <button class="btn btn-secondary" id="removeEyedropperBtn" type="button">Pick from image</button>
+
+            <label class="field">
+              <span class="field-label">Tolerance</span>
+              <input type="range" id="removeTolerance" min="1" max="150" value="40">
+            </label>
+          </div>
+
+          <!-- Recolor controls -->
+          <div class="control-group" data-for-mode="recolor" hidden>
+            <span class="field-label">Color to replace</span>
+            <div class="swatch-row" id="fromSwatchRow">
+              <button class="swatch swatch-custom" id="fromCustomSwatch" type="button" title="Pick a custom color">
+                <input type="color" id="fromColorInput" value="#e2972e">
+              </button>
+            </div>
+            <button class="btn btn-secondary" id="fromEyedropperBtn" type="button">Pick from image</button>
+
+            <span class="field-label field-label-spaced">New color</span>
+            <div class="swatch-row" id="toSwatchRow">
+              <button class="swatch swatch-custom" id="toCustomSwatch" type="button" title="Pick a custom color">
+                <input type="color" id="toColorInput" value="#2e7de2">
+              </button>
+            </div>
+
+            <label class="field">
+              <span class="field-label">Tolerance</span>
+              <input type="range" id="recolorTolerance" min="1" max="150" value="40">
+            </label>
+          </div>
+
+          <div class="control-group brush-group">
+            <span class="field-label">Manual Brush</span>
+            <p class="control-label">Paint directly to fix spots the automatic detection got wrong.</p>
+
+            <div class="pill-tabs brush-tabs" id="brushToolTabs">
+              <button class="pill-tab is-active" data-brush="off" type="button">Off</button>
+              <button class="pill-tab" data-brush="apply" type="button" id="brushApplyTab">Erase</button>
+              <button class="pill-tab" data-brush="restore" type="button">Restore</button>
+            </div>
+
+            <label class="field">
+              <span class="field-label">Brush size</span>
+              <input type="range" id="brushSize" min="4" max="150" value="40">
+            </label>
+            <label class="field">
+              <span class="field-label">Brush hardness</span>
+              <input type="range" id="brushHardness" min="0" max="100" value="60">
+            </label>
+
+            <div class="btn-row">
+              <button class="btn btn-ghost" id="undoStrokeBtn" type="button">Undo stroke</button>
+              <button class="btn btn-ghost" id="clearBrushBtn" type="button">Clear edits</button>
+            </div>
+          </div>
+
+          <details class="advanced">
+            <summary>Advanced</summary>
+            <label class="field">
+              <span class="field-label">Edge softness</span>
+              <input type="range" id="feather" min="0" max="60" value="18">
+            </label>
+            <label class="field field-checkbox">
+              <input type="checkbox" id="showOriginal">
+              <span class="field-label">Show original image</span>
+            </label>
+          </details>
+
+          <div class="actions">
+            <button class="btn btn-ghost" id="resetBtn" type="button">Start over</button>
+            <button class="btn btn-primary" id="downloadBtn" type="button">Download PNG</button>
+          </div>
+
+        </aside>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

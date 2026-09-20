@@ -1694,6 +1694,13 @@ textarea.form-control { min-height: 7.5rem; resize: vertical; }
   margin: 0 auto;
 }
 
+/* Inside a multi-column collection grid, a lone state card would otherwise
+   only center within its own narrow column track — span every column so
+   the auto-margins actually center it across the full row. */
+.grid > .state {
+  grid-column: 1 / -1;
+}
+
 .state > * {
   max-width: 100%;
 }
@@ -1852,6 +1859,92 @@ textarea.form-control { min-height: 7.5rem; resize: vertical; }
 
 .ui-modal.is-open .ui-modal-dialog { transform: translateY(0) scale(1); }
 .ui-modal-dialog--wide { width: min(980px, 100%); }
+
+/* Fullscreen: the dialog takes the whole viewport, the title bar goes
+   away, and a small pair of edge controls (restore + close) replaces it
+   — no header padding, no wasted chrome, all the room for the tool. */
+.ui-modal--fullscreen { padding: 0; }
+
+.ui-modal-dialog--fullscreen {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  border: 0;
+  border-radius: 0;
+}
+
+.ui-modal-dialog--fullscreen .ui-modal-head { display: none; }
+.ui-modal-dialog--fullscreen .ui-modal-body { padding: 0; flex: 1; }
+
+/* A tool popup always fills the whole viewport — width AND height —
+   whether it's showing its fullscreen chrome (no header, edge controls)
+   or its "restored" chrome (normal header). Restoring only swaps which
+   chrome is visible, it never actually shrinks the dialog. Putting the
+   dialog in a plain block parent (instead of the centering grid) avoids
+   the percentage-sizing quirks a non-stretching grid item has with a
+   100% width/height child. Scoped to this one dialog variant so the
+   lightbox/demo modals (also --wide) don't pick up either change. */
+.ui-modal--tool {
+  display: block;
+  padding: 0;
+}
+
+.ui-modal-dialog--tool {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  border-radius: 4px;
+}
+
+.ui-modal-dialog--tool .ui-modal-body {
+  padding: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+.ui-modal-dialog--tool .tool-panel { height: 100%; }
+
+.ui-modal-dialog--tool .tool-frame-wrap {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+
+.ui-modal-dialog--tool .tool-frame { height: 100%; max-height: none; }
+
+.ui-modal-dialog--tool.ui-modal-dialog--fullscreen { border-radius: 0; }
+.ui-modal-dialog--tool.ui-modal-dialog--fullscreen .tool-frame-wrap,
+.ui-modal-dialog--tool.ui-modal-dialog--fullscreen .tool-frame { border-radius: 0; }
+
+.ui-modal-edge-controls {
+  display: none;
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  z-index: 5;
+  gap: 0.5rem;
+}
+
+.ui-modal-dialog--fullscreen .ui-modal-edge-controls { display: flex; }
+
+.ui-modal-edge-btn {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  background: rgba(10, 12, 18, 0.72);
+  color: #fff;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.ui-modal-edge-btn svg { width: 15px; height: 15px; }
+.ui-modal-edge-btn:hover { background: rgba(10, 12, 18, 0.9); transform: scale(1.06); }
 
 .ui-modal-head {
   display: flex;
@@ -2283,7 +2376,6 @@ textarea.form-control { min-height: 7.5rem; resize: vertical; }
 /* ==========================================================================
    TOOL PANEL — the working surface inside the modal
    ========================================================================== */
-.ui-modal-dialog--wide { width: min(1040px, 100%); }
 
 .tool-panel .form-control,
 .tool-panel .form-select { font-size: var(--fs-base); }
@@ -2391,6 +2483,29 @@ textarea.form-control { min-height: 7.5rem; resize: vertical; }
 
 .tool-preview--qr { background-image: none; background: var(--color-background-deep); }
 .tool-preview--qr canvas { background: #fff; padding: 0; }
+
+/* A framed, self-contained tool (its own HTML/CSS/JS, e.g. the QR code
+   generator). The iframe is resized in JS to match its own content
+   height exactly (see tools.js), so the modal never has to scroll two
+   surfaces at once — this is just a sane height before that measurement
+   lands, and a ceiling so a runaway page can't blow out the modal. */
+.tool-frame-wrap {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* Sizing for a framed tool inside its modal is handled once, up in the
+   .ui-modal-dialog--tool rules — it always fills the dialog exactly,
+   in both the fullscreen and restored chrome. */
+
+.tool-frame {
+  display: block;
+  width: 100%;
+  height: 480px;
+  max-height: 80vh;
+  border: 0;
+}
 
 /* ==========================================================================
    TOOL SURFACES — contrast preview and colour ramp

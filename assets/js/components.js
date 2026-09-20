@@ -653,18 +653,36 @@
     closeModal();
 
     var el = document.createElement("div");
-    el.className = "ui-modal";
+    /* Mirrored onto the outer overlay too (not just the dialog) — some of
+       these need the *overlay's* own layout to change (e.g. dropping its
+       centering so a 100%-width dialog isn't fighting a non-stretching
+       flex/grid parent), and a plain class is more reliable for that than
+       a :has() selector. */
+    el.className = "ui-modal" + (opts.fullscreen ? " ui-modal--fullscreen" : "") +
+      (opts.dialogClass ? " ui-modal--" + opts.dialogClass.replace(/^ui-modal-dialog--/, "") : "");
     el.setAttribute("role", "dialog");
     el.setAttribute("aria-modal", "true");
     el.setAttribute("aria-label", opts.title || "Dialog");
+
+    /* A fullscreen dialog drops the title bar entirely — a floating pair
+       of edge controls (restore + close) takes its place, so the content
+       gets the whole viewport instead of sharing it with a header. */
+    var dialogClass = "ui-modal-dialog" + (opts.wide ? " ui-modal-dialog--wide" : "") +
+      (opts.fullscreen ? " ui-modal-dialog--fullscreen" : "") +
+      (opts.dialogClass ? " " + opts.dialogClass : "");
+
     el.innerHTML =
-      '<div class="ui-modal-dialog' + (opts.wide ? " ui-modal-dialog--wide" : "") + '">' +
+      '<div class="' + dialogClass + '">' +
         '<div class="ui-modal-head">' +
           "<div>" +
             '<h2 class="ui-modal-title">' + U.escape(opts.title || "") + "</h2>" +
             (opts.subtitle ? '<p class="ui-modal-subtitle">' + U.escape(opts.subtitle) + "</p>" : "") +
           "</div>" +
           '<button type="button" class="ui-modal-close" aria-label="Close dialog">' + icon("x") + "</button>" +
+        "</div>" +
+        '<div class="ui-modal-edge-controls">' +
+          '<button type="button" class="ui-modal-edge-btn" data-modal-restore aria-label="Exit fullscreen">' + icon("minimize") + "</button>" +
+          '<button type="button" class="ui-modal-edge-btn" data-modal-close aria-label="Close dialog">' + icon("x") + "</button>" +
         "</div>" +
         '<div class="ui-modal-body">' + (opts.body || "") + "</div>" +
         (opts.footer ? '<div class="ui-modal-footer">' + opts.footer + "</div>" : "") +
@@ -677,6 +695,11 @@
       if (event.target === el) closeModal();
     });
     el.querySelector(".ui-modal-close").addEventListener("click", closeModal);
+    el.querySelector("[data-modal-close]").addEventListener("click", closeModal);
+    el.querySelector("[data-modal-restore]").addEventListener("click", function () {
+      el.classList.remove("ui-modal--fullscreen");
+      el.querySelector(".ui-modal-dialog").classList.remove("ui-modal-dialog--fullscreen");
+    });
 
     activeModal = el;
     el.__uiOnClose = typeof opts.onClose === "function" ? opts.onClose : null;

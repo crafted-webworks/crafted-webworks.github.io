@@ -197,9 +197,69 @@
   }
 
   /* ==================================================================
+     FRAMED TOOL — the standard shape for a standalone, dependency-free
+     mini app living under /tools/<id>/ (own HTML/CSS/JS), embedded here
+     through an iframe. See tools/STANDARDS.md for the full contract.
+     Nothing tool-specific lives here: the embed path, title and layout
+     mode all come from the tool's own tools.json entry ("src", "title",
+     "fullscreen"), so this one implementation is shared by every tool
+     built to that standard — qr-code-generator, png-brusher, and
+     whatever comes next.
+     ================================================================== */
+  var framedTool = {
+    render: function (tool) {
+      /* Sandboxed for defense in depth, even though every framed tool is
+         our own code: allow-scripts (the tool is a JS app) + allow-same-
+         origin (required for the height auto-fit below to reach
+         frame.contentDocument at all — without it, a sandboxed frame is
+         treated as opaque-origin even though the URL is same-origin) +
+         allow-downloads (every framed tool exports a file via a download
+         link). Everything else a sandboxed frame can't do by default —
+         top-level navigation, popups, pointer lock, plugins — none of
+         these tools need, so none of it is re-enabled. */
+      return '<div class="tool-frame-wrap">' +
+               '<iframe class="tool-frame" src="' + U.attr(U.url(tool.src)) + '" ' +
+                 'title="' + U.attr(tool.title) + '" loading="lazy" ' +
+                 'sandbox="allow-scripts allow-same-origin allow-downloads"></iframe>' +
+             "</div>";
+    },
+    mount: function (root, tool) {
+      /* Fullscreen tools get their height from CSS (the frame fills the
+         modal exactly, and the embedded page scrolls itself if needed).
+         A compact, non-fullscreen tool has no such fixed box to fill, so
+         it measures its real content height instead — same-origin, so
+         that's a direct read — leaving exactly one scrollable surface
+         (the modal) rather than two nested ones. */
+      if (tool && tool.fullscreen) return;
+
+      var frame = root.querySelector(".tool-frame");
+      if (!frame) return;
+
+      function fit() {
+        try {
+          var doc = frame.contentDocument;
+          if (!doc) return;
+          frame.style.height = doc.documentElement.scrollHeight + "px";
+        } catch (error) { /* cross-origin fallback: keep the CSS default */ }
+      }
+
+      frame.addEventListener("load", function () {
+        fit();
+        try {
+          new ResizeObserver(fit).observe(frame.contentDocument.body);
+        } catch (error) { /* ResizeObserver unavailable — static height still works */ }
+      });
+    }
+  };
+
+  /* ==================================================================
      TOOL REGISTRY
      ================================================================== */
   var REGISTRY = {
+
+    "qr-code-generator": { render: framedTool.render, mount: framedTool.mount },
+    "png-brusher": { render: framedTool.render, mount: framedTool.mount },
+    "color-magic": { render: framedTool.render, mount: framedTool.mount },
 
     /* ---------------------------------------------------------------- */
     "json-formatter": {
@@ -900,89 +960,6 @@
     },
 
     /* ================================================================
-       QR CODE GENERATOR
-       The encoder (Reed-Solomon, masking, version selection) is the one
-       piece here genuinely not worth hand-rolling — a subtly wrong QR
-       scans as garbage. A 4KB library is fetched the first time this
-       tool is opened and never on any other page.
-       ================================================================ */
-    "qr-code-generator": {
-      render: function () {
-        return field({ name: "qr-in", label: "Text or URL", type: "textarea", rows: 3,
-                       placeholder: "https://example.com" }) +
-               '<div class="tool-row">' +
-                 field({ name: "qr-size", label: "Size (px)", type: "number", value: "512", min: 128, max: 2048 }) +
-                 field({ name: "qr-ec", label: "Error correction", type: "select", value: "M", options: [
-                   { value: "L", label: "L — 7%" }, { value: "M", label: "M — 15%" },
-                   { value: "Q", label: "Q — 25%" }, { value: "H", label: "H — 30%" }
-                 ] }) +
-                 field({ name: "qr-margin", label: "Quiet zone", type: "number", value: "4", min: 0, max: 12 }) +
-               "</div>" +
-               '<div class="tool-preview tool-preview--qr" id="tool-qr-out"></div>' +
-               '<div class="tool-row"><button type="button" class="btn btn-primary" id="tool-qr-save" disabled>' +
-                 App.icons.render("download") + "Download PNG</button></div>";
-      },
-      mount: function (root) {
-        var canvas = null;
-        var out = get(root, "qr-out");
-        out.textContent = "Loading encoder…";
-
-        U.loadScript("https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js")
-          .then(function () { live(root, draw); })
-          .catch(function () {
-            out.textContent = "The QR encoder could not be loaded. Check your connection and reopen this tool.";
-            out.classList.add("is-error");
-          });
-
-        function draw() {
-          var text = value(root, "qr-in");
-          if (!text) { out.innerHTML = ""; get(root, "qr-save").disabled = true; return; }
-
-          try {
-            /* typeNumber 0 lets the library pick the smallest version that fits */
-            var qr = window.qrcode(0, value(root, "qr-ec"));
-            qr.addData(text);
-            qr.make();
-
-            var count = qr.getModuleCount();
-            var margin = parseInt(value(root, "qr-margin"), 10) || 0;
-            var size = U.clamp(parseInt(value(root, "qr-size"), 10) || 512, 128, 2048);
-            var cell = Math.floor(size / (count + margin * 2));
-            var dim = cell * (count + margin * 2);
-
-            canvas = document.createElement("canvas");
-            canvas.width = dim; canvas.height = dim;
-            var ctx = canvas.getContext("2d");
-            ctx.fillStyle = "#FFFFFF";
-            ctx.fillRect(0, 0, dim, dim);
-            ctx.fillStyle = "#000000";
-            for (var r = 0; r < count; r++) {
-              for (var c = 0; c < count; c++) {
-                if (qr.isDark(r, c)) {
-                  ctx.fillRect((c + margin) * cell, (r + margin) * cell, cell, cell);
-                }
-              }
-            }
-
-            out.classList.remove("is-error");
-            out.innerHTML = "";
-            out.appendChild(canvas);
-            get(root, "qr-save").disabled = false;
-          } catch (error) {
-            out.classList.add("is-error");
-            out.textContent = "That is too much data for one QR code — shorten the text or lower the error correction.";
-            get(root, "qr-save").disabled = true;
-          }
-        }
-
-        get(root, "qr-save").addEventListener("click", function () {
-          if (!canvas) return;
-          canvas.toBlob(function (blob) { U.download(blob, "qr-code.png"); });
-        });
-      }
-    },
-
-    /* ================================================================
        SITEMAP GENERATOR
        ================================================================ */
     "sitemap-generator": {
@@ -1555,14 +1532,14 @@
       title: tool.title,
       subtitle: tool.description,
       wide: true,
+      fullscreen: !!tool.fullscreen,
+      dialogClass: tool.fullscreen ? "ui-modal-dialog--tool" : undefined,
       autoFocus: "textarea, input:not([type=color]):not([type=checkbox]), select",
-      body: '<div class="tool-panel" data-tool-root>' + implementation.render() + "</div>" +
-            '<p class="form-help mt-md">' + App.icons.render("lock") +
-              " Runs entirely in your browser — nothing is uploaded.</p>",
+      body: '<div class="tool-panel" data-tool-root>' + implementation.render(tool) + "</div>",
 
       onOpen: function (modal) {
         var root = modal.querySelector("[data-tool-root]");
-        implementation.mount(root);
+        implementation.mount(root, tool);
         bindCopy(root);
 
         /* Deep link: the open tool becomes the URL, so a tool can be
