@@ -155,6 +155,29 @@
       "featured": true,
       "active": true,
       "order": 5
+    },
+    {
+      "id": "photo-filter-studio",
+      "title": "Photo Filter Studio",
+      "slug": "photo-filter-studio",
+      "category": "image",
+      "description": "Instagram-style filter presets with live thumbnail previews, plus brightness, contrast, saturation and vignette sliders, and a PNG export.",
+      "icon": "sparkle",
+      "url": "/pages/tools.html#photo-filter-studio",
+      "src": "/tools/photo-filter-studio/index.html",
+      "fullscreen": true,
+      "tags": [
+        "filter",
+        "photo",
+        "vintage",
+        "duotone",
+        "effects",
+        "image"
+      ],
+      "status": "live",
+      "featured": true,
+      "active": true,
+      "order": 6
     }
   ]
 }
