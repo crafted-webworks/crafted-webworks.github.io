@@ -274,20 +274,14 @@
 }
 
 .hero-code .ln { display: block; white-space: pre; }
-.hero-code .tok-tag { color: var(--blue-300); }
-.hero-code .tok-attr { color: var(--orange-300); }
-.hero-code .tok-str { color: var(--green-500); }
-.hero-code .tok-kw { color: var(--violet-500); }
-.hero-code .tok-fn { color: var(--blue-200); }
+.hero-code .tok-tag { color: var(--blue-700); }
+.hero-code .tok-attr { color: var(--orange-700); }
+.hero-code .tok-str { color: #12855D; }
+.hero-code .tok-kw { color: #6C4BD8; }
+.hero-code .tok-fn { color: var(--blue-600); }
 .hero-code .tok-com { color: var(--color-faint); font-style: italic; }
 .hero-code .tok-op,
 .hero-code .tok-txt { color: var(--color-text); }
-
-:root[data-theme="light"] .hero-code .tok-tag { color: var(--blue-700); }
-:root[data-theme="light"] .hero-code .tok-attr { color: var(--orange-700); }
-:root[data-theme="light"] .hero-code .tok-kw { color: #6C4BD8; }
-:root[data-theme="light"] .hero-code .tok-fn { color: var(--blue-600); }
-:root[data-theme="light"] .hero-code .tok-str { color: #12855D; }
 
 /* Metadata strips attached to the window edge rather than floating badges */
 .hero-card {

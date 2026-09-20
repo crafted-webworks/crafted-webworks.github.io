@@ -53,7 +53,7 @@ function interpolate(node, context) {
 
 function shell({ pageId, title, description, prefix }) {
   return `<!DOCTYPE html>
-<html lang="en" data-theme="dark" data-bs-theme="dark">
+<html lang="en" data-theme="light" data-bs-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -63,20 +63,11 @@ function shell({ pageId, title, description, prefix }) {
        runtime by assets/js/loader.js so they live in one place instead of
        being duplicated across every HTML page. -->
   <title>${escapeHtml(title)}</title>
-  
+
   <!-- Favicons -->
   <link rel="icon" type="image/x-icon" href="${prefix}favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="${prefix}assets/images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="64x64" href="${prefix}assets/images/favicon-64.png">
-
-  <script>
-    (function () {
-      try {
-        var t = localStorage.getItem("site:theme");
-        if (t) { document.documentElement.setAttribute("data-theme", t); document.documentElement.setAttribute("data-bs-theme", t); }
-      } catch (e) {}
-    })();
-  </script>
 </head>
 
 <body data-page="${pageId}">

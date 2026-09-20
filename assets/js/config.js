@@ -43,9 +43,6 @@ window.Site = (function () {
       request: {
         timeout: 12000,
         retries: 1
-      },
-      storageKeys: {
-        theme: "site:theme"
       }
     },
 
