@@ -10,7 +10,12 @@
   Fully self-contained tool — see tools/STANDARDS.md. Nothing here
   references the parent site's assets/js or assets/css.
 -->
-<link rel="stylesheet" href="style.css">
+<script>
+  /* Cache-busted on every load — see tools/qr-code-generator/index.html
+     for why (the short version: the iframe embedding this is itself
+     cache-busted; this is the other half, for the files it references). */
+  document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');
+</script>
 </head>
 <body>
 
@@ -174,6 +179,6 @@
 
   </main>
 
-<script src="app.js"></script>
+<script>document.write('<script src="app.js?v=' + Date.now() + '"><' + '/script>');</script>
 </body>
 </html>

@@ -217,8 +217,16 @@
          link). Everything else a sandboxed frame can't do by default —
          top-level navigation, popups, pointer lock, plugins — none of
          these tools need, so none of it is re-enabled. */
+      /* A cache-busting query string on the iframe's own document — every
+         time a tool is opened it's a genuinely fresh navigation, not a
+         cached response from a previous visit or a previous version of
+         the site. The tool's own index.html carries the same technique
+         for its style.css/app.js (see tools/STANDARDS.md), so opening a
+         tool always gets the current bytes for all three files, not just
+         whichever one happens to have a new URL. */
+      var bustedSrc = U.url(tool.src) + (tool.src.indexOf("?") === -1 ? "?" : "&") + "v=" + Date.now();
       return '<div class="tool-frame-wrap">' +
-               '<iframe class="tool-frame" src="' + U.attr(U.url(tool.src)) + '" ' +
+               '<iframe class="tool-frame" src="' + U.attr(bustedSrc) + '" ' +
                  'title="' + U.attr(tool.title) + '" loading="lazy" ' +
                  'sandbox="allow-scripts allow-same-origin allow-downloads"></iframe>' +
              "</div>";

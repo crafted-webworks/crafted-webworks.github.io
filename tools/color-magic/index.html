@@ -4,7 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Color Magic — Remove Background, Remove Color, Recolor</title>
-<link rel="stylesheet" href="style.css">
+<script>
+  /* Cache-busted on every load — see tools/qr-code-generator/index.html
+     for why (the short version: the iframe embedding this is itself
+     cache-busted; this is the other half, for the files it references). */
+  document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');
+</script>
 </head>
 <body>
   <div class="app">
@@ -172,6 +177,6 @@
     </main>
   </div>
 
-  <script src="app.js"></script>
+  <script>document.write('<script src="app.js?v=' + Date.now() + '"><' + '/script>');</script>
 </body>
 </html>

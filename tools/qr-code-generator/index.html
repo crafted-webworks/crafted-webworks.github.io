@@ -12,7 +12,14 @@
   project, opened directly from disk, or dropped into an <iframe> and it
   will keep working exactly as it does today.
 -->
-<link rel="stylesheet" href="style.css">
+<script>
+  /* Cache-busted on every load — this tool is opened inside an iframe
+     that's itself cache-busted (see tools.js → framedTool), and this is
+     the other half of that: without it, the *referenced* style.css/
+     app.js could still be served from an old cached copy even though the
+     document embedding them is fresh. See tools/STANDARDS.md. */
+  document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');
+</script>
 </head>
 <body>
 
@@ -285,7 +292,12 @@
 
   </main>
 
-<script src="qrcode-lib.js"></script>
-<script src="app.js"></script>
+<script>
+  (function () {
+    var v = Date.now();
+    document.write('<script src="qrcode-lib.js?v=' + v + '"><' + '/script>');
+    document.write('<script src="app.js?v=' + v + '"><' + '/script>');
+  })();
+</script>
 </body>
 </html>
