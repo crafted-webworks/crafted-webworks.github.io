@@ -28,7 +28,7 @@
     "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
     "language": "en",
     "locale": "en_IN",
-    "themeColor": "#070B16",
+    "themeColor": "#FBFAF8",
     "author": "{{site.name}}",
     "publisher": "{{site.name}}",
     "copyright": "© {{site.copyrightYear}} {{site.copyrightHolder}}. All rights reserved.",

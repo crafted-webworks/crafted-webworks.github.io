@@ -2,7 +2,7 @@
    App — the single entry point.
    --------------------------------------------------------------------------
    Boot order:
-       icons → core data → theme → navbar/footer → SEO → sections → behaviour
+       icons → core data → navbar/footer → SEO → sections → behaviour
 
    Everything after the data step is driven by pages.json, so adding a page
    means adding an HTML shell and a pages.json entry — nothing here changes.
@@ -67,9 +67,6 @@
 
         context.page = App.pages.configure(id, page, context);
 
-        /* Theme before paint-heavy work so there is no flash of the wrong one */
-        App.nav.initTheme();
-
         return App.renderer.renderComponents(context);
       })
       .then(function () {
@@ -90,19 +87,6 @@
       })
       .catch(fatal);
   }
-
-  /* --------------------------------------------------------------------
-     The theme is also applied as early as possible from an inline script in
-     each page's <head>; this is the belt-and-braces version for the case
-     where that snippet is removed.
-     -------------------------------------------------------------------- */
-  (function preTheme() {
-    var stored = U.storage.get(App.config.storageKeys.theme);
-    if (stored) {
-      document.documentElement.setAttribute("data-theme", stored);
-      document.documentElement.setAttribute("data-bs-theme", stored);
-    }
-  })();
 
   ready(boot);
 })(window.Site);

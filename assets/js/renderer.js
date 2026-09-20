@@ -146,7 +146,6 @@
 
   function buildNavbar(context) {
     var nav = App.data.get("navigation") || {};
-    var site = App.data.get("site") || {};
     var isHome = context.pageId === "home";
     var onHomeSections = U.get(nav, "settings.sectionLinksOnHome", true);
 
@@ -178,12 +177,6 @@
       }).join("");
     }
 
-    var themeToggle = U.get(site, "features.themeToggle", true)
-      ? '<button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch colour theme">' +
-          icon("moon", "icon-moon") + icon("sun", "icon-sun") +
-        "</button>"
-      : "";
-
     var ctaButton = nav.cta
       ? C.button({ label: nav.cta.label, url: nav.cta.url, icon: nav.cta.icon, variant: "btn-primary", size: "btn-sm", className: "btn-cta" })
       : "";
@@ -194,7 +187,6 @@
                  brandLink() +
                  '<ul class="navbar-nav">' + navItems() + "</ul>" +
                  '<div class="navbar-actions">' +
-                   themeToggle +
                    ctaButton +
                    '<button type="button" class="navbar-toggle" data-nav-toggle aria-expanded="false"' +
                      ' aria-controls="nav-drawer" aria-label="Open menu">' +

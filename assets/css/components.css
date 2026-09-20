@@ -937,21 +937,17 @@
 .navbar-brand-mark { width: 2rem; height: 2rem; flex-shrink: 0; }
 .navbar-brand-text { white-space: nowrap; }
 
-/* The logo PNG is cut out (transparent ground), so on the dark theme it sits
-   straight on the page. The mark contains white strokes, so in light mode it
-   gets its dark ground back as a deliberate badge instead of disappearing. */
+/* The logo PNG is cut out (transparent ground) and contains white strokes,
+   so on the light paper ground it gets its dark ground back as a deliberate
+   badge instead of disappearing. */
 .navbar-brand-mark img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-}
-
-:root[data-theme="light"] .navbar-brand-mark img {
   padding: 2px;
   border-radius: var(--radius-sm);
   background: var(--ink-900);
 }
-.navbar-brand-mark img { width: 100%; height: 100%; object-fit: contain; }
 .navbar-brand-text .accent { color: var(--color-accent); }
 .navbar-brand:hover .navbar-brand-mark { animation: ui-nudge var(--dur-slow) var(--ease-out); }
 
@@ -995,23 +991,6 @@
 }
 
 .navbar-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
-
-.theme-toggle {
-  display: grid;
-  place-items: center;
-  width: 2.4rem;
-  height: 2.4rem;
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  background: transparent;
-  color: var(--color-muted);
-  transition: var(--transition-colors);
-}
-
-.theme-toggle:hover { color: var(--color-accent); border-color: var(--color-accent-line); }
-.theme-toggle .icon-sun { display: none; }
-:root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
-:root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
 
 .navbar-toggle {
   display: none;

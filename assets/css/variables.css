@@ -80,43 +80,46 @@
   --teal-500:  #2BC5D4;
 
   /* ----------------------------------------------------------------------
-     2. SEMANTIC COLOUR  (dark is the default theme)
+     2. SEMANTIC COLOUR  (single light theme — warm paper rather than pure
+     white, so the serif keeps its weight)
      ---------------------------------------------------------------------- */
-  --color-background:      var(--ink-900);
-  --color-background-deep: var(--ink-950);
-  --color-background-alt:  #0E1017;   /* a touch further from --color-background so the torn edge reads */
+  color-scheme: light;
 
-  --color-surface:      #0C0E14;
-  --color-surface-2:    #111319;
-  --color-surface-3:    #171A22;
-  --color-surface-glass: rgba(12, 14, 20, 0.78);
+  --color-background:      #FBFAF8;
+  --color-background-deep: #F3F1ED;
+  --color-background-alt:  #F2EFE9;   /* a touch further from --color-background so the torn edge reads */
 
-  --color-border:        rgba(255, 255, 255, 0.08);
-  --color-border-strong: rgba(255, 255, 255, 0.16);
-  --color-border-subtle: rgba(255, 255, 255, 0.045);
+  --color-surface:      #FFFFFF;
+  --color-surface-2:    #F6F4F1;
+  --color-surface-3:    #EEEBE6;
+  --color-surface-glass: rgba(251, 250, 248, 0.82);
 
-  --color-heading: #F5F6F8;
-  --color-text:    #C9CDD5;
-  --color-muted:   #8A9099;
-  --color-faint:   #797E89;   /* 4.7:1 on the page ground — AA for body text */
+  --color-border:        rgba(20, 18, 14, 0.11);
+  --color-border-strong: rgba(20, 18, 14, 0.22);
+  --color-border-subtle: rgba(20, 18, 14, 0.06);
 
-  --color-primary:       var(--blue-500);
-  --color-primary-hover: var(--blue-400);
-  --color-primary-soft:  rgba(43, 127, 255, 0.12);
-  --color-primary-line:  rgba(43, 127, 255, 0.34);
+  --color-heading: #14120E;
+  --color-text:    #35322C;
+  --color-muted:   #6B675F;
+  --color-faint:   #6E6A61;   /* 5.2:1 on warm paper */
+
+  --color-primary:       var(--blue-700);
+  --color-primary-hover: var(--blue-800);
+  --color-primary-soft:  rgba(12, 79, 191, 0.08);
+  --color-primary-line:  rgba(12, 79, 191, 0.26);
   --color-on-primary:    var(--white);
   /* The blue a solid button fills with. --color-primary is tuned for text and
      hairlines on the page ground; as a full field behind white it only reaches
      3.8:1, so button fills step down to a deeper blue that clears 7:1. */
-  --color-primary-deep:  var(--blue-700);
+  --color-primary-deep:  var(--blue-700);   /* already deep on paper — unchanged */
 
-  --color-accent:        var(--orange-500);
-  --color-accent-hover:  var(--orange-400);
-  --color-accent-soft:   rgba(255, 138, 30, 0.11);
-  --color-accent-line:   rgba(255, 138, 30, 0.34);
-  --color-on-accent:     #1A0D02;
+  --color-accent:        var(--orange-700);
+  --color-accent-hover:  var(--orange-800);
+  --color-accent-soft:   rgba(197, 87, 5, 0.09);
+  --color-accent-line:   rgba(197, 87, 5, 0.28);
+  --color-on-accent:     var(--white);
 
-  --color-secondary:     var(--slate-50);
+  --color-secondary:     var(--ink-900);
 
   --color-success: var(--green-500);
   --color-warning: var(--amber-500);
@@ -151,12 +154,12 @@
                            var(--blue-700),
                            var(--blue-600) 38%,
                            var(--orange-800));
-  --gradient-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0));
+  --gradient-surface: linear-gradient(180deg, rgba(20, 18, 14, 0.022), rgba(20, 18, 14, 0));
   --gradient-fade-b: linear-gradient(to bottom, transparent, var(--color-background));
 
-  --grid-line: rgba(255, 255, 255, 0.032);
-  --grain-opacity: 0.035;
-  --vignette: radial-gradient(120% 90% at 50% 0%, transparent 40%, rgba(0, 0, 0, 0.5) 100%);
+  --grid-line: rgba(20, 18, 14, 0.05);
+  --grain-opacity: 0.022;
+  --vignette: radial-gradient(120% 90% at 50% 0%, transparent 45%, rgba(20, 18, 14, 0.07) 100%);
 
   /* ----------------------------------------------------------------------
      4. SPACING SCALE
@@ -197,7 +200,7 @@
      ---------------------------------------------------------------------- */
   /* Cormorant Garamond gives the display typography a more refined editorial
      feel without going overly decorative. It sits well with the cleaner sans
-     body type and keeps the large headline elegant on dark and light themes. */
+     body type and keeps the large headline elegant on the warm paper ground. */
   --font-display: "Cormorant Garamond", "Iowan Old Style", "Georgia", serif;
 
   /* Optical size + weight for the display face, tuned once */
@@ -260,12 +263,12 @@
   /* ----------------------------------------------------------------------
      8. ELEVATION — neutral and deep, never coloured
      ---------------------------------------------------------------------- */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.45);
-  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 12px 30px -12px rgba(0, 0, 0, 0.7);
-  --shadow-lg: 0 28px 60px -24px rgba(0, 0, 0, 0.85);
-  --shadow-xl: 0 48px 100px -32px rgba(0, 0, 0, 0.9);
-  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-xs: 0 1px 2px rgba(20, 18, 14, 0.05);
+  --shadow-sm: 0 2px 10px rgba(20, 18, 14, 0.06);
+  --shadow-md: 0 12px 30px -14px rgba(20, 18, 14, 0.16);
+  --shadow-lg: 0 28px 60px -28px rgba(20, 18, 14, 0.22);
+  --shadow-xl: 0 48px 100px -36px rgba(20, 18, 14, 0.24);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.8);
 
   /* ----------------------------------------------------------------------
      9. MOTION — one easing family, used everywhere
@@ -304,60 +307,6 @@
 }
 
 /* ==========================================================================
-   LIGHT THEME
-   Token overrides only — no structural CSS. The light side is warm paper
-   rather than pure white, so the serif keeps its weight.
-   ========================================================================== */
-:root[data-theme="light"] {
-  color-scheme: light;
-
-  --color-background:      #FBFAF8;
-  --color-background-deep: #F3F1ED;
-  --color-background-alt:  #F2EFE9;   /* a touch further from --color-background so the torn edge reads */
-
-  --color-surface:      #FFFFFF;
-  --color-surface-2:    #F6F4F1;
-  --color-surface-3:    #EEEBE6;
-  --color-surface-glass: rgba(251, 250, 248, 0.82);
-
-  --color-border:        rgba(20, 18, 14, 0.11);
-  --color-border-strong: rgba(20, 18, 14, 0.22);
-  --color-border-subtle: rgba(20, 18, 14, 0.06);
-
-  --color-heading: #14120E;
-  --color-text:    #35322C;
-  --color-muted:   #6B675F;
-  --color-faint:   #6E6A61;   /* 5.2:1 on warm paper */
-
-  --color-primary:       var(--blue-700);
-  --color-primary-hover: var(--blue-800);
-  --color-primary-soft:  rgba(12, 79, 191, 0.08);
-  --color-primary-line:  rgba(12, 79, 191, 0.26);
-  --color-primary-deep:  var(--blue-700);   /* already deep on paper — unchanged */
-
-  --color-accent:        var(--orange-700);
-  --color-accent-hover:  var(--orange-800);
-  --color-accent-soft:   rgba(197, 87, 5, 0.09);
-  --color-accent-line:   rgba(197, 87, 5, 0.28);
-  --color-on-accent:     var(--white);
-
-  --color-secondary: var(--ink-900);
-
-  --gradient-surface: linear-gradient(180deg, rgba(20, 18, 14, 0.022), rgba(20, 18, 14, 0));
-
-  --grid-line: rgba(20, 18, 14, 0.05);
-  --grain-opacity: 0.022;
-  --vignette: radial-gradient(120% 90% at 50% 0%, transparent 45%, rgba(20, 18, 14, 0.07) 100%);
-
-  --shadow-xs: 0 1px 2px rgba(20, 18, 14, 0.05);
-  --shadow-sm: 0 2px 10px rgba(20, 18, 14, 0.06);
-  --shadow-md: 0 12px 30px -14px rgba(20, 18, 14, 0.16);
-  --shadow-lg: 0 28px 60px -28px rgba(20, 18, 14, 0.22);
-  --shadow-xl: 0 48px 100px -36px rgba(20, 18, 14, 0.24);
-  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.8);
-}
-
-/* ==========================================================================
    BOOTSTRAP BRIDGE
    Bootstrap's utilities are !important, so the reliable way to keep them on
    our palette is to feed its variables rather than fight its specificity.
@@ -369,15 +318,11 @@
   --bs-border-color: var(--color-border);
   --bs-border-radius: var(--radius-md);
   --bs-primary: var(--color-primary);
-  --bs-primary-rgb: 43, 127, 255;
+  --bs-primary-rgb: 12, 79, 191;
   --bs-link-color: var(--color-primary);
   --bs-link-hover-color: var(--color-primary-hover);
   --bs-emphasis-color: var(--color-heading);
   --bs-secondary-color: var(--color-muted);
   --bs-tertiary-color: var(--color-faint);
   --bs-heading-color: var(--color-heading);
-}
-
-:root[data-theme="light"] {
-  --bs-primary-rgb: 12, 79, 191;
 }

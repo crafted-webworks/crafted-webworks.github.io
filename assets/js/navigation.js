@@ -1,6 +1,6 @@
 /* ==========================================================================
    Navigation — navbar state, mobile drawer, smooth scrolling, scroll spy,
-   theme toggle, scroll progress and back-to-top.
+   scroll progress and back-to-top.
    One implementation, used by every page.
    ========================================================================== */
 
@@ -19,33 +19,6 @@
     engaged: false,   /* pointer or focus is inside the header */
     hidden: false     /* current auto-hide state, tracked to avoid redundant writes */
   };
-
-  /* ==================================================================
-     THEME
-     ================================================================== */
-  function applyTheme(theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-    document.documentElement.setAttribute("data-bs-theme", theme);
-    var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) {
-      meta.setAttribute("content", theme === "light" ? "#FFFFFF" : "#070B16");
-    }
-    App.emit("theme:changed", theme);
-  }
-
-  function initTheme() {
-    var key = App.config.storageKeys.theme;
-    var stored = U.storage.get(key);
-    var fallback = App.data.get("site", "defaults.theme", "dark");
-    applyTheme(stored || fallback);
-
-    document.addEventListener("click", function (event) {
-      if (!event.target.closest("[data-theme-toggle]")) return;
-      var next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
-      applyTheme(next);
-      U.storage.set(key, next);
-    });
-  }
 
   /* ==================================================================
      HEADER STATE — auto-hide on scroll
@@ -384,8 +357,6 @@
       initHashLanding();
     },
 
-    initTheme: initTheme,
-    applyTheme: applyTheme,
     closeDrawer: closeDrawer,
     openDrawer: openDrawer
   };
