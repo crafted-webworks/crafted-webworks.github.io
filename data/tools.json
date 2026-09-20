@@ -245,6 +245,28 @@
       "featured": true,
       "active": true,
       "order": 9
+    },
+    {
+      "id": "logo-maker",
+      "title": "Logo Maker",
+      "slug": "logo-maker",
+      "category": "generator",
+      "description": "Combine a programmatic icon shape with a brand name, fonts and colors into a simple logo, then export as PNG or SVG.",
+      "icon": "sparkle",
+      "url": "/pages/tools.html#logo-maker",
+      "src": "/tools/logo-maker/index.html",
+      "fullscreen": true,
+      "tags": [
+        "logo",
+        "brand",
+        "icon",
+        "svg",
+        "design"
+      ],
+      "status": "live",
+      "featured": true,
+      "active": true,
+      "order": 10
     }
   ]
 }
