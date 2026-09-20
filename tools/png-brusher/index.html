@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PNG Brusher</title>
+<meta name="description" content="A small paint app for PNGs — brush, eraser, shapes and fill, with transparency, undo/redo and a PNG export. Runs entirely in your browser.">
+
+<!--
+  Fully self-contained tool — see tools/STANDARDS.md. Nothing here
+  references the parent site's assets/js or assets/css.
+-->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="pb">
+    <div class="pb-card pb-toolbar">
+
+      <div class="pb-field">
+        <label>Tool</label>
+        <div class="pb-card-group pb-card-group--compact" data-choice="tool">
+          <button type="button" class="pb-choice-card is-active" data-value="brush" title="Brush" aria-label="Brush">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.06 11.9l8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg>
+          </button>
+          <button type="button" class="pb-choice-card" data-value="eraser" title="Eraser" aria-label="Eraser">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 21-4.3-4.3a1 1 0 0 1 0-1.4l9.6-9.6a2 2 0 0 1 2.8 0l5.6 5.6a2 2 0 0 1 0 2.8L13.7 21H7Z"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
+          </button>
+          <button type="button" class="pb-choice-card" data-value="line" title="Line" aria-label="Line">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19 19 5"/></svg>
+          </button>
+          <button type="button" class="pb-choice-card" data-value="rect" title="Rectangle" aria-label="Rectangle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="1"/></svg>
+          </button>
+          <button type="button" class="pb-choice-card" data-value="ellipse" title="Ellipse" aria-label="Ellipse">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>
+          </button>
+          <button type="button" class="pb-choice-card" data-value="fill" title="Fill" aria-label="Fill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 11-8-8-8.5 8.5a2 2 0 0 0 0 2.82L7.68 19.5a2 2 0 0 0 2.82 0L19 11Z"/><path d="M5 2 3 4"/><path d="M19 11h2"/><path d="M2 22s3-1 4-3-1-4-1-4"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="pb-field" id="pb-brush-style-field">
+        <label>Brush Style</label>
+        <div class="pb-tabs" id="pb-preset-categories" role="tablist" aria-label="Brush category"></div>
+        <div class="pb-card-group pb-card-group--wrap" id="pb-preset-grid"></div>
+      </div>
+
+      <div class="pb-field" id="pb-shape-mode-field" hidden>
+        <label>Shape</label>
+        <div class="pb-fill-mode" data-fill-mode>
+          <button type="button" class="pb-mode-btn is-active" data-mode="stroke">Outline</button>
+          <button type="button" class="pb-mode-btn" data-mode="fill">Filled</button>
+        </div>
+      </div>
+
+      <div class="pb-row">
+        <div class="pb-field">
+          <label for="pb-size">Brush size <span class="pb-hint" id="pb-size-val">8px</span></label>
+          <input type="range" id="pb-size" min="1" max="80" step="1" value="8">
+        </div>
+        <div class="pb-field">
+          <label for="pb-opacity">Opacity <span class="pb-hint" id="pb-opacity-val">100%</span></label>
+          <input type="range" id="pb-opacity" min="5" max="100" step="1" value="100">
+        </div>
+      </div>
+
+      <details class="pb-advanced" id="pb-feel-field">
+        <summary>Brush Feel</summary>
+        <div class="pb-row">
+          <div class="pb-field">
+            <label for="pb-spread">Spread <span class="pb-hint" id="pb-spread-val">0%</span></label>
+            <input type="range" id="pb-spread" min="0" max="300" step="1" value="0">
+          </div>
+          <div class="pb-field">
+            <label for="pb-smoothing">Smoothing <span class="pb-hint" id="pb-smoothing-val">0%</span></label>
+            <input type="range" id="pb-smoothing" min="0" max="100" step="1" value="0">
+          </div>
+        </div>
+        <div class="pb-row">
+          <div class="pb-field">
+            <label for="pb-grain">Grain <span class="pb-hint" id="pb-grain-val">0%</span></label>
+            <input type="range" id="pb-grain" min="0" max="300" step="1" value="0">
+          </div>
+          <div class="pb-field">
+            <label for="pb-roughness">Roughness <span class="pb-hint" id="pb-roughness-val">0%</span></label>
+            <input type="range" id="pb-roughness" min="0" max="300" step="1" value="0">
+          </div>
+        </div>
+      </details>
+
+      <div class="pb-field">
+        <label>Color</label>
+        <div class="pb-swatch-row" data-swatches="color">
+          <button type="button" class="pb-swatch is-active" style="--sw:#111318" data-value="#111318" aria-label="Black"></button>
+          <button type="button" class="pb-swatch" style="--sw:#ffffff" data-value="#ffffff" aria-label="White"></button>
+          <button type="button" class="pb-swatch" style="--sw:#e0402b" data-value="#e0402b" aria-label="Red"></button>
+          <button type="button" class="pb-swatch" style="--sw:#e2972e" data-value="#e2972e" aria-label="Gold"></button>
+          <button type="button" class="pb-swatch" style="--sw:#1f9d55" data-value="#1f9d55" aria-label="Green"></button>
+          <button type="button" class="pb-swatch" style="--sw:#2b7fff" data-value="#2b7fff" aria-label="Blue"></button>
+          <button type="button" class="pb-swatch" style="--sw:#8b3dd1" data-value="#8b3dd1" aria-label="Purple"></button>
+          <button type="button" class="pb-swatch pb-swatch--custom" aria-label="Custom color">
+            <input type="color" id="pb-color-custom" value="#111318" tabindex="-1" aria-hidden="true">
+          </button>
+        </div>
+      </div>
+
+      <div class="pb-divider">Layers</div>
+
+      <button type="button" class="pb-btn pb-btn--ghost" id="pb-layer-add">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+        Add Layer
+      </button>
+      <div class="pb-layers" id="pb-layers"></div>
+
+      <div class="pb-divider">Canvas</div>
+
+      <div class="pb-row">
+        <button type="button" class="pb-btn pb-btn--ghost" id="pb-undo" disabled>Undo</button>
+        <button type="button" class="pb-btn pb-btn--ghost" id="pb-redo" disabled>Redo</button>
+      </div>
+
+      <div class="pb-field">
+        <label class="pb-drop" for="pb-open-file">
+          <span class="pb-drop-label">Open an image</span>
+          <span class="pb-drop-hint">PNG or JPG — replaces the canvas</span>
+          <input type="file" id="pb-open-file" accept="image/*" hidden>
+        </label>
+      </div>
+
+      <details class="pb-advanced">
+        <summary>New canvas</summary>
+        <div class="pb-row">
+          <div class="pb-field">
+            <label for="pb-new-w">Width</label>
+            <input type="number" id="pb-new-w" min="16" max="4000" value="900">
+          </div>
+          <div class="pb-field">
+            <label for="pb-new-h">Height</label>
+            <input type="number" id="pb-new-h" min="16" max="4000" value="600">
+          </div>
+        </div>
+        <label class="pb-check">
+          <input type="checkbox" id="pb-new-transparent" checked>
+          <span>Transparent background</span>
+        </label>
+        <button type="button" class="pb-btn pb-btn--ghost" id="pb-new-canvas">Start new canvas</button>
+      </details>
+
+      <button type="button" class="pb-btn pb-btn--ghost pb-btn--danger" id="pb-clear">Clear layer</button>
+
+      <button type="button" class="pb-btn pb-btn--primary pb-download" id="pb-download">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Download PNG
+      </button>
+    </div>
+
+    <div class="pb-card pb-stage">
+      <div class="pb-canvas-scroll" id="pb-canvas-scroll">
+        <div class="pb-canvas-wrap" id="pb-canvas-wrap">
+          <canvas id="pb-base" width="900" height="600"></canvas>
+          <canvas id="pb-overlay" width="900" height="600"></canvas>
+        </div>
+      </div>
+      <div class="pb-zoom-bar">
+        <button type="button" class="pb-zoom-btn" id="pb-zoom-out" aria-label="Zoom out">−</button>
+        <button type="button" class="pb-zoom-btn pb-zoom-value" id="pb-zoom-fit">Fit</button>
+        <span class="pb-zoom-pct" id="pb-zoom-pct">100%</span>
+        <button type="button" class="pb-zoom-btn" id="pb-zoom-in" aria-label="Zoom in">+</button>
+        <span class="pb-status" id="pb-status">900 × 600px</span>
+      </div>
+    </div>
+
+  </main>
+
+<script src="app.js"></script>
+</body>
+</html>

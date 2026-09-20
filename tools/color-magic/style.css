@@ -1,0 +1,393 @@
+:root {
+  --tool-page: #f6f4f0;
+  --tool-card: #ffffff;
+  --tool-border: #e7e2d8;
+  --tool-text: #1f1c17;
+  --tool-muted: #8b8477;
+  --tool-accent: #e2972e;
+  --tool-accent-ink: #4a2f06;
+}
+
+* { box-sizing: border-box; }
+
+/* Browser default hides [hidden] at very low specificity; our own
+   display:flex rules below tie that specificity and can win the cascade
+   order fight. Force it explicitly so toggling `hidden` always works. */
+[hidden] { display: none !important; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--tool-page);
+  color: var(--tool-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- header ---- */
+
+.app-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--tool-border);
+  background: var(--tool-card);
+}
+
+.app-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.pill-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--tool-page);
+  border: 1px solid var(--tool-border);
+  border-radius: 4px;
+  padding: 3px;
+}
+
+.pill-tab {
+  border: none;
+  background: transparent;
+  color: var(--tool-muted);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pill-tab.is-active {
+  background: var(--tool-accent);
+  color: var(--tool-accent-ink);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* When this tool is framed fullscreen (see tools/STANDARDS.md), a pair
+     of small edge controls float over the top-right corner — reserve
+     enough clearance that they never sit on top of this button's label. */
+  margin-right: 84px;
+}
+
+.btn-compact {
+  padding: 7px 12px;
+  font-size: 12px;
+}
+
+/* ---- main layout ---- */
+
+.app-main {
+  flex: 1;
+  display: flex;
+}
+
+/* ---- upload zone ---- */
+
+.upload-zone {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+.upload-card {
+  width: min(320px, 100%);
+  border: 2px dashed var(--tool-border);
+  border-radius: 4px;
+  background: var(--tool-card);
+  padding: 24px 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.upload-card.is-dragover {
+  border-color: var(--tool-accent);
+  background: #fff8ec;
+}
+
+.upload-icon {
+  width: 26px;
+  height: 26px;
+  color: var(--tool-muted);
+  margin-bottom: 8px;
+}
+
+.upload-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.upload-sub {
+  font-size: 13px;
+  color: var(--tool-muted);
+  margin: 0;
+}
+
+/* ---- editor ---- */
+
+.editor {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.canvas-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  min-width: 0;
+}
+
+.canvas-frame {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  position: relative;
+  background-image:
+    linear-gradient(45deg, #e7e2d8 25%, transparent 25%),
+    linear-gradient(-45deg, #e7e2d8 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e7e2d8 75%),
+    linear-gradient(-45deg, transparent 75%, #e7e2d8 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  border: 1px solid var(--tool-border);
+  border-radius: 4px;
+}
+
+.brush-cursor {
+  position: absolute;
+  pointer-events: none;
+  border: 1.5px solid var(--tool-accent);
+  border-radius: 50%;
+  background: rgba(226, 151, 46, 0.15);
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.selection-overlay {
+  position: absolute;
+  pointer-events: none;
+  border: 1.5px dashed var(--tool-accent);
+  background: rgba(226, 151, 46, 0.08);
+  display: none;
+}
+
+#viewCanvas {
+  max-width: 100%;
+  max-height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.canvas-hint {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--tool-muted);
+}
+
+.controls-pane {
+  width: 280px;
+  flex-shrink: 0;
+  border-left: 1px solid var(--tool-border);
+  background: var(--tool-card);
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.control-label {
+  font-size: 12px;
+  color: var(--tool-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.field-label {
+  font-weight: 500;
+  color: var(--tool-text);
+}
+
+.field-label-spaced {
+  margin-top: 4px;
+}
+
+.field-checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--tool-accent);
+}
+
+/* ---- swatches ---- */
+
+.swatch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid var(--tool-border);
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.swatch-custom {
+  background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red);
+}
+
+.swatch-custom input[type="color"] {
+  position: absolute;
+  inset: -4px;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  opacity: 0;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* ---- buttons ---- */
+
+.btn {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 14px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-primary {
+  background: var(--tool-accent);
+  color: var(--tool-accent-ink);
+}
+
+.btn-secondary {
+  background: var(--tool-page);
+  border-color: var(--tool-border);
+  color: var(--tool-text);
+}
+
+.btn-secondary.is-active {
+  background: var(--tool-accent);
+  border-color: var(--tool-accent);
+  color: var(--tool-accent-ink);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--tool-border);
+  color: var(--tool-muted);
+}
+
+/* ---- advanced ---- */
+
+.advanced {
+  border-top: 1px solid var(--tool-border);
+  padding-top: 14px;
+}
+
+.advanced summary {
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.advanced .field {
+  margin-top: 10px;
+}
+
+/* ---- actions ---- */
+
+.actions {
+  margin-top: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.actions .btn {
+  flex: 1;
+}
+
+.btn-row {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-row .btn {
+  flex: 1;
+  font-size: 12px;
+  padding: 8px 10px;
+}
+
+.brush-tabs {
+  align-self: flex-start;
+}
+
+/* ---- responsive ---- */
+
+@media (max-width: 720px) {
+  .editor {
+    flex-direction: column;
+  }
+  .controls-pane {
+    width: auto;
+    border-left: none;
+    border-top: 1px solid var(--tool-border);
+  }
+  .canvas-pane {
+    padding: 16px;
+  }
+}

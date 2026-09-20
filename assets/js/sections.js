@@ -94,6 +94,18 @@
         var all = U.activeSorted(source.items || []);
         var items = opts.mode === "all" ? all : U.featured(all, opts.limit);
 
+        /* A collection with nothing in it yet has nothing to filter or
+           search, so the toolbar (search box, category buttons, result
+           count) is dead weight — remove it and show a plain, honest
+           message instead of "0 total" and empty filter buttons. */
+        var hasItems = all.length > 0;
+        if (!hasItems) {
+          var toolbar = el.querySelector(".toolbar");
+          if (toolbar) toolbar.remove();
+        }
+
+        var defaultEmpty = { title: "Nothing found", text: "Try a different filter or search term." };
+
         App.filters.create({
           root: el,
           items: items,
@@ -102,14 +114,16 @@
           categoryOf: spec.categoryOf || function (item) { return item.category; },
           cardFn: spec.cardFn,
           searchFields: spec.searchFields || ["title", "description", "shortDescription", "tags"],
-          filters: opts.filters,
-          search: opts.search,
-          pagination: opts.pagination,
+          filters: hasItems && opts.filters,
+          search: hasItems && opts.search,
+          pagination: hasItems && opts.pagination,
           /* Only full listing pages get linkable filter state in the URL */
           urlSync: opts.mode === "all",
           label: spec.label,
           perPage: opts.perPage || U.get(source, "settings.itemsPerPage", 9),
-          empty: spec.empty || { title: "Nothing found", text: "Try a different filter or search term." }
+          empty: hasItems
+            ? (spec.empty || defaultEmpty)
+            : Object.assign({ action: null }, spec.emptyCollection || spec.empty || defaultEmpty)
         });
 
         if (typeof spec.afterMount === "function") spec.afterMount(el, opts);
@@ -1029,6 +1043,7 @@
     cardFn: C.toolCard,
     searchFields: ["title", "description", "tags"],
     empty: { title: "No tools found", text: "Try another category or search term." },
+    emptyCollection: { title: "No tools yet", text: "New tools are on the way — check back soon." },
     afterMount: function (el) {
       App.tools.bind(el);
     }
