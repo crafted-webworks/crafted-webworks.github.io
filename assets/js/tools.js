@@ -271,6 +271,7 @@
     "photo-merge": { render: framedTool.render, mount: framedTool.mount },
     "photo-to-video": { render: framedTool.render, mount: framedTool.mount },
     "photo-filter-studio": { render: framedTool.render, mount: framedTool.mount },
+    "meme-maker": { render: framedTool.render, mount: framedTool.mount },
 
     /* ---------------------------------------------------------------- */
     "json-formatter": {

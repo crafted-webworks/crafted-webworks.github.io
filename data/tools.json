@@ -178,6 +178,28 @@
       "featured": true,
       "active": true,
       "order": 6
+    },
+    {
+      "id": "meme-maker",
+      "title": "Meme Maker",
+      "slug": "meme-maker",
+      "category": "image",
+      "description": "Classic top/bottom caption memes plus draggable free text boxes, with font, color and outline controls and a PNG export.",
+      "icon": "type",
+      "url": "/pages/tools.html#meme-maker",
+      "src": "/tools/meme-maker/index.html",
+      "fullscreen": true,
+      "tags": [
+        "meme",
+        "caption",
+        "text",
+        "image",
+        "funny"
+      ],
+      "status": "live",
+      "featured": true,
+      "active": true,
+      "order": 7
     }
   ]
 }
