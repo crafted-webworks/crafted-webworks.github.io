@@ -1,14 +1,20 @@
 /* Self-contained styling — its own tokens, no dependency on a parent
-   stylesheet. See tools/STANDARDS.md. */
+   stylesheet. See tools/STANDARDS.md. Palette matches this site's actual
+   brand identity (dark ground, brand blue/orange) per §3 — literal values
+   duplicated here, not a reference to the parent site's stylesheet. */
 :root {
-  --pb-page: #f6f4f0;
-  --pb-card: #ffffff;
-  --pb-border: #e7e2d8;
-  --pb-text: #1f1c17;
-  --pb-muted: #8b8477;
-  --pb-accent: #e2972e;
-  --pb-accent-ink: #4a2f06;
-  --pb-danger: #c0392b;
+  --pb-page: #08090D;
+  --pb-card: #0C0E14;
+  --pb-card-2: #111319;
+  --pb-border: rgba(255, 255, 255, 0.08);
+  --pb-text: #F5F6F8;
+  --pb-text-body: #C9CDD5;
+  --pb-muted: #8A9099;
+  --pb-accent: #2B7FFF;
+  --pb-accent-hover: #4C8CFF;
+  --pb-accent-ink: #FFFFFF;
+  --pb-accent-2: #FF8A1E;
+  --pb-danger: #E8604C;
   --pb-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
@@ -107,7 +113,7 @@ input[type="range"] { width: 100%; accent-color: var(--pb-accent); }
 input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
 input[type="number"] {
   width: 100%;
-  background: #fbfaf7;
+  background: var(--pb-card-2);
   border: 1px solid var(--pb-border);
   border-radius: 4px;
   padding: 0.5rem 0.6rem;
@@ -162,7 +168,7 @@ input[type="number"] {
   padding: 0.55rem 0.3rem;
   border: 1px solid var(--pb-border);
   border-radius: 4px;
-  background: #fbfaf7;
+  background: var(--pb-card-2);
   color: var(--pb-muted);
   font-family: inherit;
   font-size: 0.72rem;
@@ -176,14 +182,14 @@ input[type="number"] {
 .pb-brush-preview {
   width: 3.4rem;
   height: 1.7rem;
-  background: #fff;
+  background: var(--pb-card);
   border-radius: 3px;
   border: 1px solid var(--pb-border);
 }
 .pb-choice-card:hover { border-color: var(--pb-accent); }
 .pb-choice-card.is-active {
   border-color: var(--pb-accent);
-  background: color-mix(in srgb, var(--pb-accent) 12%, #fff);
+  background: color-mix(in srgb, var(--pb-accent) 18%, var(--pb-card));
   color: var(--pb-text);
 }
 
@@ -204,7 +210,7 @@ input[type="number"] {
 
 .pb-tab {
   border: 1px solid var(--pb-border);
-  background: #fbfaf7;
+  background: var(--pb-card-2);
   color: var(--pb-muted);
   font-family: inherit;
   font-size: 0.74rem;
@@ -218,13 +224,13 @@ input[type="number"] {
 .pb-tab:hover { border-color: var(--pb-accent); }
 .pb-tab.is-active {
   border-color: var(--pb-accent);
-  background: color-mix(in srgb, var(--pb-accent) 14%, #fff);
+  background: color-mix(in srgb, var(--pb-accent) 20%, var(--pb-card));
   color: var(--pb-text);
 }
 
 .pb-mode-btn {
   border: 1px solid var(--pb-border);
-  background: #fbfaf7;
+  background: var(--pb-card-2);
   color: var(--pb-muted);
   font-family: inherit;
   font-size: 0.78rem;
@@ -238,7 +244,7 @@ input[type="number"] {
 .pb-mode-btn:hover { border-color: var(--pb-accent); }
 .pb-mode-btn.is-active {
   border-color: var(--pb-accent);
-  background: color-mix(in srgb, var(--pb-accent) 14%, #fff);
+  background: color-mix(in srgb, var(--pb-accent) 20%, var(--pb-card));
   color: var(--pb-text);
 }
 
@@ -328,10 +334,10 @@ input[type="number"] {
   padding: 0.4rem;
   border: 1px solid var(--pb-border);
   border-radius: 4px;
-  background: #fbfaf7;
+  background: var(--pb-card-2);
 }
 
-.pb-layer.is-active { border-color: var(--pb-accent); background: color-mix(in srgb, var(--pb-accent) 10%, #fff); }
+.pb-layer.is-active { border-color: var(--pb-accent); background: color-mix(in srgb, var(--pb-accent) 14%, var(--pb-card)); }
 
 .pb-layer-thumb {
   width: 2.4rem;
@@ -339,7 +345,7 @@ input[type="number"] {
   flex: 0 0 auto;
   border: 1px solid var(--pb-border);
   border-radius: 3px;
-  background: repeating-conic-gradient(#efece5 0% 25%, #f6f4f0 0% 50%) 0 0 / 8px 8px;
+  background: repeating-conic-gradient(rgba(255, 255, 255, 0.05) 0% 25%, rgba(255, 255, 255, 0.1) 0% 50%) 0 0 / 8px 8px;
   cursor: pointer;
 }
 
@@ -413,7 +419,7 @@ input[type="number"] {
   color: var(--pb-accent-ink);
 }
 
-.pb-btn--primary:hover { filter: brightness(1.05); }
+.pb-btn--primary:hover { background: var(--pb-accent-hover); border-color: var(--pb-accent-hover); }
 
 /* ------------------------------------------------------------------
    Canvas stage
@@ -443,7 +449,7 @@ input[type="number"] {
      transparent" without visually competing with whatever's drawn on
      top of it, which a busier, higher-contrast pattern (like a default
      20px black/white check) does at a glance. */
-  background: repeating-conic-gradient(#f0eee9 0% 25%, #f7f5f1 0% 50%) 0 0 / 14px 14px;
+  background: repeating-conic-gradient(rgba(255, 255, 255, 0.04) 0% 25%, rgba(255, 255, 255, 0.08) 0% 50%) 0 0 / 14px 14px;
   border-radius: 4px;
   border: 1px solid var(--pb-border);
 }

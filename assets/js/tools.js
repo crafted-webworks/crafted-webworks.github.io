@@ -270,11 +270,7 @@
     "color-magic": { render: framedTool.render, mount: framedTool.mount },
     "photo-merge": { render: framedTool.render, mount: framedTool.mount },
     "photo-to-video": { render: framedTool.render, mount: framedTool.mount },
-    "photo-filter-studio": { render: framedTool.render, mount: framedTool.mount },
-    "meme-maker": { render: framedTool.render, mount: framedTool.mount },
-    "gradient-palette-studio": { render: framedTool.render, mount: framedTool.mount },
-    "image-enhancer": { render: framedTool.render, mount: framedTool.mount },
-    "logo-maker": { render: framedTool.render, mount: framedTool.mount },
+    "creative-studio": { render: framedTool.render, mount: framedTool.mount },
 
     /* ---------------------------------------------------------------- */
     "json-formatter": {

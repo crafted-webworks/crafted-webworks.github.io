@@ -157,116 +157,29 @@
       "order": 5
     },
     {
-      "id": "photo-filter-studio",
-      "title": "Photo Filter Studio",
-      "slug": "photo-filter-studio",
+      "id": "creative-studio",
+      "title": "Creative Studio",
+      "slug": "creative-studio",
       "category": "image",
-      "description": "Instagram-style filter presets with live thumbnail previews, plus brightness, contrast, saturation and vignette sliders, and a PNG export.",
+      "description": "Five creative tools in one: meme captions with draggable text, photo filter presets, cinematic image enhancement with clarity/sharpen/upscale, gradient & palette building, and a logo maker with PNG/SVG export.",
       "icon": "sparkle",
-      "url": "/pages/tools.html#photo-filter-studio",
-      "src": "/tools/photo-filter-studio/index.html",
+      "url": "/pages/tools.html#creative-studio",
+      "src": "/tools/creative-studio/index.html",
       "fullscreen": true,
       "tags": [
+        "meme",
         "filter",
-        "photo",
-        "vintage",
-        "duotone",
-        "effects",
-        "image"
+        "enhance",
+        "gradient",
+        "palette",
+        "logo",
+        "image",
+        "design"
       ],
       "status": "live",
       "featured": true,
       "active": true,
       "order": 6
-    },
-    {
-      "id": "meme-maker",
-      "title": "Meme Maker",
-      "slug": "meme-maker",
-      "category": "image",
-      "description": "Classic top/bottom caption memes plus draggable free text boxes, with font, color and outline controls and a PNG export.",
-      "icon": "type",
-      "url": "/pages/tools.html#meme-maker",
-      "src": "/tools/meme-maker/index.html",
-      "fullscreen": true,
-      "tags": [
-        "meme",
-        "caption",
-        "text",
-        "image",
-        "funny"
-      ],
-      "status": "live",
-      "featured": true,
-      "active": true,
-      "order": 7
-    },
-    {
-      "id": "gradient-palette-studio",
-      "title": "Gradient & Palette Studio",
-      "slug": "gradient-palette-studio",
-      "category": "color",
-      "description": "Build multi-stop linear/radial gradients, generate harmonious color palettes, or extract a palette from an image — copy CSS or hex codes directly.",
-      "icon": "palette",
-      "url": "/pages/tools.html#gradient-palette-studio",
-      "src": "/tools/gradient-palette-studio/index.html",
-      "fullscreen": true,
-      "tags": [
-        "gradient",
-        "palette",
-        "color",
-        "css",
-        "design"
-      ],
-      "status": "live",
-      "featured": true,
-      "active": true,
-      "order": 8
-    },
-    {
-      "id": "image-enhancer",
-      "title": "Image Enhancer",
-      "slug": "image-enhancer",
-      "category": "image",
-      "description": "Cinematic color-grading looks, clarity/sharpness/denoise controls, and a crispness-preserving upscale — with a PNG export.",
-      "icon": "sparkle",
-      "url": "/pages/tools.html#image-enhancer",
-      "src": "/tools/image-enhancer/index.html",
-      "fullscreen": true,
-      "tags": [
-        "enhance",
-        "cinematic",
-        "clarity",
-        "sharpen",
-        "upscale",
-        "image"
-      ],
-      "status": "live",
-      "featured": true,
-      "active": true,
-      "order": 9
-    },
-    {
-      "id": "logo-maker",
-      "title": "Logo Maker",
-      "slug": "logo-maker",
-      "category": "generator",
-      "description": "Combine a programmatic icon shape with a brand name, fonts and colors into a simple logo, then export as PNG or SVG.",
-      "icon": "sparkle",
-      "url": "/pages/tools.html#logo-maker",
-      "src": "/tools/logo-maker/index.html",
-      "fullscreen": true,
-      "tags": [
-        "logo",
-        "brand",
-        "icon",
-        "svg",
-        "design"
-      ],
-      "status": "live",
-      "featured": true,
-      "active": true,
-      "order": 10
     }
   ]
 }
