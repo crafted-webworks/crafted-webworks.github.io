@@ -38,7 +38,8 @@
     audioEndVal: $("pv-audio-end-val"),
     audioVolume: $("pv-audio-volume"),
     audioVolumeVal: $("pv-audio-volume-val"),
-    audioRemove: $("pv-audio-remove")
+    audioRemove: $("pv-audio-remove"),
+    focalReset: $("pv-focal-reset")
   };
 
   var ctx = els.canvas.getContext("2d");
@@ -142,6 +143,9 @@
     if ((target = event.target.closest("[data-slide-delete]"))) { deleteSlide(target.getAttribute("data-slide-delete")); return; }
     if ((target = event.target.closest("[data-slide-select]"))) {
       activeSlideId = target.getAttribute("data-slide-select");
+      var index = slides.findIndex(function (s) { return s.id === activeSlideId; });
+      stopPlayback();
+      lastElapsed = index * state.duration;
       renderSlides();
     }
   });
@@ -153,6 +157,57 @@
       slide.motion = card.getAttribute("data-value");
       renderSlides();
     });
+  });
+
+  /* ------------------------------------------------------------------
+     Placement — drag directly on the preview (while paused) to set the
+     selected slide's focal point, the "place the image wherever I want"
+     control. Only active while paused: dragging during playback would
+     otherwise fight the scrub/transport controls for what the canvas is
+     showing.
+     ------------------------------------------------------------------ */
+  var positioning = false;
+
+  function canvasPoint(event) {
+    var rect = els.canvas.getBoundingClientRect();
+    return {
+      x: (event.clientX - rect.left) / rect.width,
+      y: (event.clientY - rect.top) / rect.height
+    };
+  }
+
+  els.canvas.addEventListener("pointerdown", function (event) {
+    var slide = activeSlide();
+    if (!slide || playing) return;
+    positioning = true;
+    els.canvas.setPointerCapture(event.pointerId);
+    setFocal(slide, canvasPoint(event));
+  });
+
+  els.canvas.addEventListener("pointermove", function (event) {
+    if (!positioning) return;
+    var slide = activeSlide();
+    if (!slide) return;
+    setFocal(slide, canvasPoint(event));
+  });
+
+  function endPositioning() { positioning = false; }
+  els.canvas.addEventListener("pointerup", endPositioning);
+  els.canvas.addEventListener("pointercancel", endPositioning);
+
+  function setFocal(slide, point) {
+    slide.focal = {
+      x: Math.max(0, Math.min(1, point.x)),
+      y: Math.max(0, Math.min(1, point.y))
+    };
+    drawCurrentFrame();
+  }
+
+  els.focalReset.addEventListener("click", function () {
+    var slide = activeSlide();
+    if (!slide) return;
+    slide.focal = { x: 0.5, y: 0.5 };
+    drawCurrentFrame();
   });
 
   /* ------------------------------------------------------------------
@@ -168,7 +223,7 @@
         var img = new Image();
         img.onload = function () {
           slideSeq++;
-          var slide = { id: "slide-" + slideSeq, name: file.name.replace(/\.[a-z0-9]+$/i, ""), img: img, motion: pickDefaultMotion(slideSeq) };
+          var slide = { id: "slide-" + slideSeq, name: file.name.replace(/\.[a-z0-9]+$/i, ""), img: img, motion: pickDefaultMotion(slideSeq), focal: { x: 0.5, y: 0.5 } };
           slides.push(slide);
           activeSlideId = slide.id;
           renderSlides();
@@ -205,11 +260,15 @@
      Ken Burns math — one function, shared by preview and export, so
      they can never draw two different things.
      ------------------------------------------------------------------ */
-  function motionRect(motion, progress) {
+  function motionRect(motion, progress, focal) {
     /* Every motion starts from a "cover" fit (like CSS object-fit:cover
        at zoom 1) so the photo always fills the frame with no letterbox,
-       then adds an animated zoom/pan on top of that baseline. */
-    var zoom = 1, panX = 0.5, panY = 0.5;
+       then adds an animated zoom/pan on top of that baseline, centered
+       on the slide's own focal point rather than always the middle of
+       the photo — that's what makes "drag to place it where I want"
+       actually affect the motion, not just a static frame. */
+    var f = focal || { x: 0.5, y: 0.5 };
+    var zoom = 1, panX = f.x, panY = f.y;
     switch (motion) {
       case "zoom-in": zoom = 1 + 0.18 * progress; break;
       case "zoom-out": zoom = 1.18 - 0.18 * progress; break;
@@ -221,9 +280,9 @@
     return { zoom: zoom, panX: panX, panY: panY };
   }
 
-  function drawSlideImage(context, img, motion, progress, alpha) {
+  function drawSlideImage(context, img, motion, progress, alpha, focal) {
     var base = Math.max(DOC_W / img.width, DOC_H / img.height);
-    var m = motionRect(motion, progress);
+    var m = motionRect(motion, progress, focal);
     var scale = base * m.zoom;
     var w = img.width * scale, h = img.height * scale;
     var x = -(w - DOC_W) * m.panX;
@@ -250,12 +309,12 @@
     var local = t - index * dur;
     var slide = slides[index];
 
-    drawSlideImage(context, slide.img, slide.motion, local / dur, 1);
+    drawSlideImage(context, slide.img, slide.motion, local / dur, 1, slide.focal);
 
     var next = slides[index + 1];
     if (next && trans > 0 && local > dur - trans) {
       var fade = (local - (dur - trans)) / trans;
-      drawSlideImage(context, next.img, next.motion, 0, fade);
+      drawSlideImage(context, next.img, next.motion, 0, fade, next.focal);
     }
   }
 
