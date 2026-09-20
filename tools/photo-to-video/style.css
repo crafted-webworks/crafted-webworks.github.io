@@ -1,19 +1,21 @@
 /* Self-contained styling — its own tokens, no dependency on a parent
    stylesheet. See tools/STANDARDS.md. Palette matches this site's actual
-   brand identity (dark ground, brand blue/orange) per §3 — literal values
-   duplicated here, not a reference to the parent site's stylesheet. */
+   brand identity (warm-paper light ground, brand blue/orange) per §3 —
+   literal values duplicated here, not a reference to the parent site's
+   stylesheet. */
 :root {
-  --pv-page: #08090D;
-  --pv-card: #0C0E14;
-  --pv-card-2: #111319;
-  --pv-border: rgba(255, 255, 255, 0.08);
-  --pv-text: #F5F6F8;
-  --pv-text-body: #C9CDD5;
-  --pv-muted: #8A9099;
-  --pv-accent: #2B7FFF;
-  --pv-accent-hover: #4C8CFF;
+  --pv-page: #FBFAF8;
+  --pv-card: #FFFFFF;
+  --pv-card-2: #F6F4F1;
+  --pv-border: rgba(20, 18, 14, 0.11);
+  --pv-text: #14120E;
+  --pv-muted: #6B675F;
+  --pv-accent: #0C4FBF;
+  --pv-accent-hover: #0A3B8F;
   --pv-accent-ink: #FFFFFF;
-  --pv-accent-2: #FF8A1E;
+  --pv-accent-2: #C55705;
+  --pv-checker-a: #F0EDE7;
+  --pv-checker-b: #E8E4DC;
   --pv-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
@@ -209,7 +211,7 @@ input[type="range"]:disabled { opacity: 0.4; }
   border: 1px solid var(--pv-border);
   border-radius: 3px;
   overflow: hidden;
-  background: repeating-conic-gradient(rgba(255, 255, 255, 0.05) 0% 25%, rgba(255, 255, 255, 0.1) 0% 50%) 0 0 / 8px 8px;
+  background: repeating-conic-gradient(var(--pv-checker-a) 0% 25%, var(--pv-checker-b) 0% 50%) 0 0 / 8px 8px;
 }
 
 .pv-slide-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
