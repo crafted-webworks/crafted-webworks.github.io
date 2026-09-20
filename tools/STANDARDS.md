@@ -79,21 +79,41 @@ The host site never hardcodes a tool's path. A tool is wired in purely through d
 ## 3. Design tokens
 
 Declare the tool's own palette as CSS custom properties at the top of its `style.css` — never
-scatter color literals through the rest of the file:
+scatter color literals through the rest of the file. These tokens must be the tool's own
+literal `:root` block, never a reference to the parent site's `assets/css/variables.css` file
+or its custom property names — a tool folder still has to work copy-pasted into another
+project with zero changes (see §1). What changes is the *values*: they should match this
+site's actual brand identity (dark ground, brand blue/orange) instead of an arbitrary palette
+invented per tool, so every tool reads as part of the same product family. Duplicate the literal
+hex values below into each tool's own token block — don't import or reference the parent file:
 ```css
 :root {
-  --tool-page: #f6f4f0;      /* page background */
-  --tool-card: #ffffff;      /* card surface */
-  --tool-border: #e7e2d8;
-  --tool-text: #1f1c17;
-  --tool-muted: #8b8477;
-  --tool-accent: #e2972e;    /* the one accent color, used for active states + primary button */
-  --tool-accent-ink: #4a2f06;/* text color that reads on top of --tool-accent */
+  --tool-page: #08090D;       /* site's --ink-900 background */
+  --tool-card: #0C0E14;       /* site's --color-surface */
+  --tool-card-2: #111319;     /* site's --color-surface-2, for nested panels */
+  --tool-border: rgba(255, 255, 255, 0.08);
+  --tool-text: #F5F6F8;       /* headings */
+  --tool-text-body: #C9CDD5;  /* body text */
+  --tool-muted: #8A9099;
+  --tool-accent: #2B7FFF;     /* site brand blue — used for active states + primary button */
+  --tool-accent-hover: #4C8CFF;
+  --tool-accent-ink: #FFFFFF; /* text color that reads on top of --tool-accent */
+  --tool-accent-2: #FF8A1E;   /* site brand orange — secondary/warning-style accent only */
 }
 ```
 Rules that follow from this:
 - **One accent color.** Active/selected states, the primary button, and any highlight all
-  reuse the same accent token. Don't introduce a second "brand" color without a reason.
+  reuse the same accent token — use the blue (`--tool-accent`). Don't introduce a second
+  "brand" color without a reason. `--tool-accent-2` (orange) exists only for a genuinely
+  distinct, secondary meaning a tool sometimes needs — a warning state, a "recording"/"live"
+  indicator, a highlight that must read as different from the primary action — never as a
+  second primary color or to split emphasis evenly between blue and orange. Most tools will
+  never touch `--tool-accent-2` at all, and that's correct, not incomplete.
+- **`tools/color-magic/` is exempt from this palette**, per §8 — it's an externally-authored
+  tool with its own visual language and should not be reskinned to match.
+- **A tool currently being rebuilt or merged with others** should adopt this palette as part of
+  that rebuild, not as a separate follow-up pass — don't schedule two edits to the same file
+  where one would do.
 - **Border radius capped at 4px**, everywhere in the tool's own chrome (cards, buttons, tabs,
   inputs, tiles). The one exception: a control whose *shape itself* is the information — a
   circular color swatch, or a preview icon literally depicting a shape option (rounded vs
