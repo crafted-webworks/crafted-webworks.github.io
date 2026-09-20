@@ -272,6 +272,8 @@
     "photo-to-video": { render: framedTool.render, mount: framedTool.mount },
     "photo-filter-studio": { render: framedTool.render, mount: framedTool.mount },
     "meme-maker": { render: framedTool.render, mount: framedTool.mount },
+    "gradient-palette-studio": { render: framedTool.render, mount: framedTool.mount },
+    "image-enhancer": { render: framedTool.render, mount: framedTool.mount },
 
     /* ---------------------------------------------------------------- */
     "json-formatter": {

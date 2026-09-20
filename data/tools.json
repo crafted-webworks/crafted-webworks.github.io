@@ -200,6 +200,51 @@
       "featured": true,
       "active": true,
       "order": 7
+    },
+    {
+      "id": "gradient-palette-studio",
+      "title": "Gradient & Palette Studio",
+      "slug": "gradient-palette-studio",
+      "category": "color",
+      "description": "Build multi-stop linear/radial gradients, generate harmonious color palettes, or extract a palette from an image — copy CSS or hex codes directly.",
+      "icon": "palette",
+      "url": "/pages/tools.html#gradient-palette-studio",
+      "src": "/tools/gradient-palette-studio/index.html",
+      "fullscreen": true,
+      "tags": [
+        "gradient",
+        "palette",
+        "color",
+        "css",
+        "design"
+      ],
+      "status": "live",
+      "featured": true,
+      "active": true,
+      "order": 8
+    },
+    {
+      "id": "image-enhancer",
+      "title": "Image Enhancer",
+      "slug": "image-enhancer",
+      "category": "image",
+      "description": "Cinematic color-grading looks, clarity/sharpness/denoise controls, and a crispness-preserving upscale — with a PNG export.",
+      "icon": "sparkle",
+      "url": "/pages/tools.html#image-enhancer",
+      "src": "/tools/image-enhancer/index.html",
+      "fullscreen": true,
+      "tags": [
+        "enhance",
+        "cinematic",
+        "clarity",
+        "sharpen",
+        "upscale",
+        "image"
+      ],
+      "status": "live",
+      "featured": true,
+      "active": true,
+      "order": 9
     }
   ]
 }
