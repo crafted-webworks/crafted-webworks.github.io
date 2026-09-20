@@ -1,0 +1,544 @@
+/* Self-contained styling — its own tokens, no dependency on a parent
+   stylesheet, so this folder renders correctly on its own or in an iframe. */
+:root {
+  --gps-page: #f6f4f0;
+  --gps-card: #ffffff;
+  --gps-border: #e7e2d8;
+  --gps-text: #1f1c17;
+  --gps-muted: #8b8477;
+  --gps-accent: #e2972e;
+  --gps-accent-ink: #4a2f06;
+  --gps-radius-card: 4px;
+  --gps-radius-control: 4px;
+  --gps-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --gps-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+/* Any author CSS `display` declaration beats the browser's built-in
+   `[hidden] { display: none }` at equal importance, regardless of
+   selector specificity — origin is compared before specificity in the
+   cascade. Several elements here both set `display` and get toggled
+   with the `hidden` attribute, so without this override a "hidden" one
+   would stay visible. */
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--gps-page);
+  color: var(--gps-text);
+  font-family: var(--gps-font);
+}
+
+.gps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  width: 100%;
+  min-height: 100%;
+}
+
+/* ------------------------------------------------------------------
+   Header — this tool assumes fullscreen display; the host floats a
+   restore/close control pair over the top-right corner (~84px wide),
+   so the right-most header element reserves clearance for it.
+   ------------------------------------------------------------------ */
+.gps-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.gps-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.gps-header-right {
+  margin-right: 84px; /* clears the host's floating restore/close controls */
+}
+
+/* ------------------------------------------------------------------
+   Mode tabs / panes
+   ------------------------------------------------------------------ */
+.gps-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.gps-tabs--stack {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.gps-tabs--stack .gps-tab { width: 100%; text-align: left; }
+
+.gps-tab {
+  border: 1px solid var(--gps-border);
+  background: #fbfaf7;
+  color: var(--gps-muted);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.5rem 0.85rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.gps-tab:hover { border-color: var(--gps-accent); color: var(--gps-text); }
+
+.gps-tab.is-active {
+  background: var(--gps-text);
+  border-color: var(--gps-text);
+  color: #fff;
+}
+
+.gps-pane { display: none; }
+.gps-pane.is-active { display: block; }
+
+.gps-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+@media (max-width: 760px) {
+  .gps-grid { grid-template-columns: 1fr; }
+}
+
+.gps-card {
+  background: var(--gps-card);
+  border: 1px solid var(--gps-border);
+  border-radius: var(--gps-radius-card);
+  padding: 1.25rem;
+}
+
+.gps-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.gps-field:last-child { margin-bottom: 0; }
+
+.gps-field > label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gps-text);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.gps-inline-label { font-size: 0.76rem; font-weight: 600; color: var(--gps-muted); }
+.gps-hint { font-weight: 500; color: var(--gps-muted); }
+
+/* ------------------------------------------------------------------
+   Inputs
+   ------------------------------------------------------------------ */
+input[type="number"],
+input[type="text"] {
+  background: #fbfaf7;
+  border: 1px solid var(--gps-border);
+  border-radius: var(--gps-radius-control);
+  padding: 0.5rem 0.6rem;
+  color: var(--gps-text);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+input:focus { outline: 2px solid var(--gps-accent); outline-offset: 1px; }
+input[type="range"] { width: 100%; accent-color: var(--gps-accent); }
+
+/* ------------------------------------------------------------------
+   Choice cards (gradient type / radial shape)
+   ------------------------------------------------------------------ */
+.gps-card-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+}
+
+.gps-choice-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.7rem 0.4rem;
+  border: 1px solid var(--gps-border);
+  border-radius: var(--gps-radius-control);
+  background: #fbfaf7;
+  color: var(--gps-muted);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.gps-choice-card:hover { border-color: var(--gps-accent); }
+
+.gps-choice-card.is-active {
+  border-color: var(--gps-accent);
+  background: color-mix(in srgb, var(--gps-accent) 12%, #fff);
+  color: var(--gps-text);
+}
+
+.gps-choice-icon {
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+  background: repeating-conic-gradient(#e7e2d8 0% 25%, #f2efe8 0% 50%) 0 0 / 8px 8px;
+}
+
+.gps-choice-icon::before {
+  content: "";
+  width: 1.3rem;
+  height: 1.3rem;
+  background: linear-gradient(90deg, #2b7fff, #e2972e);
+}
+
+.gps-choice-icon[data-preview="radial"]::before,
+.gps-choice-icon[data-preview="circle"]::before {
+  background: radial-gradient(circle, #2b7fff, #e2972e);
+  border-radius: 50%;
+}
+
+.gps-choice-icon[data-preview="ellipse"]::before {
+  background: radial-gradient(ellipse, #2b7fff, #e2972e);
+  border-radius: 50%;
+  width: 1.6rem;
+  height: 1.1rem;
+}
+
+/* ------------------------------------------------------------------
+   Angle dial — click or drag anywhere on the face points the handle
+   straight at the pointer, atan2 convention, 0deg = east, clockwise.
+   ------------------------------------------------------------------ */
+.gps-angle-dial {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.gps-angle-face {
+  position: relative;
+  width: 2.4rem;
+  height: 2.4rem;
+  flex: 0 0 auto;
+  border: 1px solid var(--gps-border);
+  border-radius: 50%;
+  background: #fbfaf7;
+  cursor: grab;
+  touch-action: none;
+}
+
+.gps-angle-face:hover { border-color: var(--gps-accent); }
+.gps-angle-face:active { cursor: grabbing; }
+.gps-angle-face:focus-visible { outline: 2px solid var(--gps-accent); outline-offset: 2px; }
+
+.gps-angle-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin: -0.225rem 0 0 -0.225rem;
+  border-radius: 50%;
+  background: var(--gps-accent);
+  transform: rotate(var(--angle, 90deg)) translate(0.85rem);
+  pointer-events: none;
+}
+
+.gps-angle-value {
+  font-size: 0.8rem;
+  color: var(--gps-muted);
+  min-width: 2.6rem;
+}
+
+/* ------------------------------------------------------------------
+   Color swatches — one custom swatch: rainbow conic circle with a
+   fully transparent native <input type="color"> stretched over it.
+   ------------------------------------------------------------------ */
+.gps-swatch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gps-swatch {
+  position: relative;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  border: 2px solid var(--gps-card);
+  background: var(--sw, #ccc);
+  box-shadow: 0 0 0 1px var(--gps-border);
+  cursor: pointer;
+  padding: 0;
+}
+
+.gps-swatch.is-active { box-shadow: 0 0 0 2px var(--gps-accent); }
+
+.gps-swatch--custom {
+  background: conic-gradient(from 180deg, #ff4d4d, #ffd24d, #4dff88, #4dd2ff, #7a4dff, #ff4dd2, #ff4d4d);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.gps-swatch--custom input[type="color"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------------
+   Gradient stops bar
+   ------------------------------------------------------------------ */
+.gps-stops-bar {
+  position: relative;
+  height: 3rem;
+  border: 1px solid var(--gps-border);
+  border-radius: var(--gps-radius-control);
+  background: repeating-conic-gradient(#efece5 0% 25%, #f6f4f0 0% 50%) 0 0 / 12px 12px;
+  touch-action: none;
+}
+
+.gps-stops-track {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--gps-radius-control);
+}
+
+.gps-stop-handle {
+  position: absolute;
+  top: 50%;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-left: -0.55rem;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--gps-border), 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: grab;
+  background: var(--stop-color, #000);
+}
+
+.gps-stop-handle:active { cursor: grabbing; }
+.gps-stop-handle.is-active { box-shadow: 0 0 0 2px var(--gps-accent), 0 1px 3px rgba(0, 0, 0, 0.3); }
+
+.gps-stop-editor-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gps-stop-pos-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.gps-stop-pos-group input[type="number"] { width: 4.5rem; }
+
+/* ------------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------------ */
+.gps-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--gps-radius-control);
+  border: 1px solid transparent;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: filter 0.15s ease, background 0.15s ease;
+}
+
+.gps-btn--primary {
+  background: var(--gps-accent);
+  color: var(--gps-accent-ink);
+  width: 100%;
+}
+
+.gps-btn--primary:hover { filter: brightness(1.05); }
+
+.gps-btn--ghost {
+  background: transparent;
+  border-color: var(--gps-border);
+  color: var(--gps-text);
+  width: 100%;
+  margin-top: 0.75rem;
+}
+
+.gps-btn--ghost:hover { border-color: var(--gps-accent); }
+
+.gps-btn--small {
+  width: auto;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.78rem;
+  margin-top: 0;
+}
+
+/* ------------------------------------------------------------------
+   Status / notes
+   ------------------------------------------------------------------ */
+.gps-status {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--gps-muted);
+  text-align: center;
+  min-height: 1em;
+}
+
+.gps-status.is-error { color: #c0392b; }
+.gps-status.is-success { color: #1f9d55; }
+
+/* ------------------------------------------------------------------
+   Preview panel — gradient
+   ------------------------------------------------------------------ */
+.gps-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.gps-preview-box {
+  width: 100%;
+  min-height: 260px;
+  border-radius: var(--gps-radius-control);
+  border: 1px solid var(--gps-border);
+}
+
+.gps-css-output {
+  display: block;
+  background: #17140f;
+  color: #f6f4f0;
+  font-family: var(--gps-mono);
+  font-size: 0.8rem;
+  padding: 0.85rem;
+  border-radius: var(--gps-radius-control);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ------------------------------------------------------------------
+   Palette strips (generator + extract)
+   ------------------------------------------------------------------ */
+.gps-palette-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 0.6rem;
+}
+
+.gps-palette-swatch {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--gps-border);
+  border-radius: var(--gps-radius-control);
+  overflow: hidden;
+  cursor: pointer;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  text-align: left;
+}
+
+.gps-palette-swatch-color {
+  height: 90px;
+  width: 100%;
+}
+
+.gps-palette-swatch-hex {
+  padding: 0.5rem 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--gps-mono);
+  color: var(--gps-text);
+  background: #fbfaf7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+.gps-palette-swatch-hex .gps-copied {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--gps-accent-ink);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.gps-palette-swatch.is-copied .gps-copied { opacity: 1; }
+
+/* ------------------------------------------------------------------
+   Extract-from-image pane
+   ------------------------------------------------------------------ */
+.gps-drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  text-align: center;
+  border: 1px dashed var(--gps-border);
+  border-radius: var(--gps-radius-control);
+  padding: 0.9rem 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.gps-drop:hover { border-color: var(--gps-accent); background: color-mix(in srgb, var(--gps-accent) 8%, transparent); }
+.gps-drop.has-file { border-style: solid; border-color: var(--gps-accent); }
+.gps-drop-label { font-size: 0.88rem; font-weight: 600; }
+.gps-drop-hint { font-size: 0.76rem; color: var(--gps-muted); }
+
+.gps-image-preview-wrap {
+  width: 100%;
+  min-height: 180px;
+  border: 1px solid var(--gps-border);
+  border-radius: var(--gps-radius-control);
+  background: repeating-conic-gradient(#efece5 0% 25%, #f6f4f0 0% 50%) 0 0 / 12px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#gps-image-preview {
+  max-width: 100%;
+  max-height: 320px;
+  display: block;
+}
+
+.gps-empty-note {
+  margin: 0;
+  color: var(--gps-muted);
+  font-size: 0.85rem;
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image Enhancer</title>
+<meta name="description" content="Cinematic color-grading looks plus real clarity, sharpening, denoise and crispness-preserving upscale — entirely in your browser.">
+
+<!--
+  Fully self-contained tool. Nothing here references the parent site's
+  assets/js or assets/css — this whole folder can be copied into another
+  project, opened directly from disk, or dropped into an <iframe> and it
+  will keep working exactly as it does today. See tools/STANDARDS.md.
+-->
+<script>
+  /* Cache-busted on every load — see tools/STANDARDS.md. */
+  document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');
+</script>
+</head>
+<body>
+
+  <div class="ie">
+    <header class="ie-header">
+      <div class="ie-header-left">
+        <h1 class="ie-title">Image Enhancer</h1>
+        <p class="ie-subtitle">Cinematic color grading &amp; real quality enhancement</p>
+      </div>
+      <div class="ie-header-right">
+        <label class="ie-btn ie-btn--primary" for="ie-file">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+          Choose Image
+          <input type="file" id="ie-file" accept="image/*" hidden>
+        </label>
+      </div>
+    </header>
+
+    <main class="ie-main">
+      <aside class="ie-sidebar">
+        <div class="ie-tabs" data-tabs role="tablist" aria-label="Enhancement mode">
+          <button type="button" class="ie-tab is-active" data-tab="look" role="tab" aria-selected="true">Cinematic Look</button>
+          <button type="button" class="ie-tab" data-tab="clarity" role="tab" aria-selected="false">Clarity &amp; Sharpness</button>
+          <button type="button" class="ie-tab" data-tab="upscale" role="tab" aria-selected="false">Upscale</button>
+        </div>
+
+        <div class="ie-panes">
+
+          <div class="ie-pane is-active" data-pane="look">
+            <p class="ie-hint-text">Each look combines a color-filter pass with a hand-rolled per-pixel split-tone (shadows/highlights pushed toward different hues) — the classic technique behind a "teal &amp; orange" cinematic grade, not something <code>ctx.filter</code> alone can do.</p>
+            <div class="ie-look-grid" id="ie-look-grid"></div>
+          </div>
+
+          <div class="ie-pane" data-pane="clarity">
+            <p class="ie-hint-text">All three sliders run real per-pixel algorithms — a box-blur convolution underlies Clarity and Denoise, and Sharpen uses a standard 3×3 sharpen kernel.</p>
+
+            <div class="ie-field">
+              <label for="ie-clarity">Clarity <span class="ie-hint" id="ie-clarity-val">0%</span></label>
+              <input type="range" id="ie-clarity" min="0" max="100" step="1" value="0">
+              <p class="ie-field-note">Unsharp-mask style local contrast: blurs a copy, then pushes the original away from it — <code>original + strength × (original − blurred)</code>.</p>
+            </div>
+
+            <div class="ie-field">
+              <label for="ie-sharpen">Sharpen <span class="ie-hint" id="ie-sharpen-val">0%</span></label>
+              <input type="range" id="ie-sharpen" min="0" max="100" step="1" value="0">
+              <p class="ie-field-note">3×3 convolution kernel, blended in by strength.</p>
+            </div>
+
+            <div class="ie-field">
+              <label for="ie-denoise">Denoise / Smooth <span class="ie-hint" id="ie-denoise-val">0%</span></label>
+              <input type="range" id="ie-denoise" min="0" max="100" step="1" value="0">
+              <p class="ie-field-note">Box-blur convolution blended in by strength — the opposite direction from Sharpen.</p>
+            </div>
+          </div>
+
+          <div class="ie-pane" data-pane="upscale">
+            <p class="ie-hint-text">This is a crispness-preserving resize, not true AI super-resolution: the canvas is redrawn at a larger size, then an automatic sharpen pass counteracts the softness a naive upscale always produces.</p>
+            <div class="ie-choice-group" id="ie-upscale-grid" data-choice="upscale">
+              <button type="button" class="ie-choice-card is-active" data-value="1">
+                <span class="ie-scale-icon"><span class="ie-scale-box ie-scale-box--1"></span></span>
+                <span>1×</span>
+              </button>
+              <button type="button" class="ie-choice-card" data-value="2">
+                <span class="ie-scale-icon"><span class="ie-scale-box ie-scale-box--2"></span></span>
+                <span>2×</span>
+              </button>
+              <button type="button" class="ie-choice-card" data-value="3">
+                <span class="ie-scale-icon"><span class="ie-scale-box ie-scale-box--3"></span></span>
+                <span>3×</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <button type="button" class="ie-btn ie-btn--ghost ie-btn--block" id="ie-reset">Reset all</button>
+      </aside>
+
+      <section class="ie-stage">
+        <div class="ie-stage-toolbar">
+          <button type="button" class="ie-btn ie-btn--ghost" id="ie-toggle-before">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span id="ie-toggle-before-label">Show Original</span>
+          </button>
+          <span class="ie-status" id="ie-status" role="status" aria-live="polite"></span>
+          <button type="button" class="ie-btn ie-btn--primary" id="ie-download">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Export PNG
+          </button>
+        </div>
+
+        <div class="ie-canvas-scroll" id="ie-canvas-scroll">
+          <div class="ie-canvas-wrap">
+            <canvas id="ie-canvas" width="640" height="420"></canvas>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+<script>
+  (function () {
+    document.write('<script src="app.js?v=' + Date.now() + '"><' + '/script>');
+  })();
+</script>
+</body>
+</html>
