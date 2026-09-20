@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Photo Merge</title>
+<meta name="description" content="Merge multiple photos as layers — crop, zoom, position and brush-blend between them — and export a single PNG. Runs entirely in your browser.">
+
+<!--
+  Fully self-contained tool — see tools/STANDARDS.md. Nothing here
+  references the parent site's assets/js or assets/css.
+-->
+<script>
+  document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');
+</script>
+</head>
+<body>
+
+  <main class="pm">
+    <div class="pm-card pm-toolbar">
+
+      <button type="button" class="pm-btn pm-btn--primary" id="pm-add-image">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+        Add Image
+      </button>
+      <input type="file" id="pm-file-input" accept="image/png,image/jpeg,image/webp" multiple hidden>
+
+      <div class="pm-divider">Layer Tool</div>
+      <div class="pm-card-group" data-choice="tool">
+        <button type="button" class="pm-choice-card is-active" data-value="move" title="Move">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9 2 12l3 3"/><path d="M9 5l3-3 3 3"/><path d="M15 19l-3 3-3-3"/><path d="M19 9l3 3-3 3"/><path d="M2 12h20"/><path d="M12 2v20"/></svg>
+          <span>Move</span>
+        </button>
+        <button type="button" class="pm-choice-card" data-value="crop" title="Crop">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.5v14a1.5 1.5 0 0 0 1.5 1.5h14"/><path d="M2.5 6h14A1.5 1.5 0 0 1 18 7.5v14"/></svg>
+          <span>Crop</span>
+        </button>
+        <button type="button" class="pm-choice-card" data-value="brush" title="Blend brush">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.06 11.9l8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg>
+          <span>Blend</span>
+        </button>
+      </div>
+
+      <div class="pm-field" id="pm-zoom-field">
+        <label for="pm-layer-zoom">Layer zoom <span class="pm-hint" id="pm-layer-zoom-val">100%</span></label>
+        <input type="range" id="pm-layer-zoom" min="10" max="400" step="1" value="100">
+      </div>
+
+      <div class="pm-field" id="pm-crop-field" hidden>
+        <p class="pm-note">Drag on the canvas to draw a crop box, then apply it.</p>
+        <div class="pm-row">
+          <button type="button" class="pm-btn pm-btn--ghost" id="pm-crop-apply">Apply Crop</button>
+          <button type="button" class="pm-btn pm-btn--ghost" id="pm-crop-clear">Clear Crop</button>
+        </div>
+      </div>
+
+      <div class="pm-field" id="pm-brush-field" hidden>
+        <p class="pm-note">Paints away this layer to reveal what's underneath — like an eraser between photos.</p>
+        <div class="pm-row">
+          <div class="pm-field">
+            <label for="pm-brush-size">Size <span class="pm-hint" id="pm-brush-size-val">60px</span></label>
+            <input type="range" id="pm-brush-size" min="4" max="300" step="1" value="60">
+          </div>
+          <div class="pm-field">
+            <label for="pm-brush-hardness">Feather <span class="pm-hint" id="pm-brush-hardness-val">40%</span></label>
+            <input type="range" id="pm-brush-hardness" min="0" max="100" step="1" value="40">
+          </div>
+        </div>
+        <div class="pm-row">
+          <button type="button" class="pm-btn pm-btn--ghost" id="pm-brush-mode-erase" data-brush-mode="erase">Erase</button>
+          <button type="button" class="pm-btn pm-btn--ghost" id="pm-brush-mode-restore" data-brush-mode="restore">Restore</button>
+        </div>
+      </div>
+
+      <div class="pm-divider">Layers</div>
+      <p class="pm-note" id="pm-empty-note">Add an image to get started — each one becomes its own layer.</p>
+      <div class="pm-layers" id="pm-layers"></div>
+
+      <div class="pm-divider">Canvas</div>
+      <div class="pm-row">
+        <button type="button" class="pm-btn pm-btn--ghost" id="pm-undo" disabled>Undo</button>
+        <button type="button" class="pm-btn pm-btn--ghost" id="pm-redo" disabled>Redo</button>
+      </div>
+      <button type="button" class="pm-btn pm-btn--ghost pm-btn--danger" id="pm-reset">Start over</button>
+      <button type="button" class="pm-btn pm-btn--primary pm-download" id="pm-download">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Download PNG
+      </button>
+    </div>
+
+    <div class="pm-card pm-stage">
+      <div class="pm-canvas-scroll" id="pm-canvas-scroll">
+        <div class="pm-canvas-wrap" id="pm-canvas-wrap">
+          <canvas id="pm-base" width="1000" height="700"></canvas>
+          <canvas id="pm-overlay" width="1000" height="700"></canvas>
+        </div>
+      </div>
+      <div class="pm-zoom-bar">
+        <button type="button" class="pm-zoom-btn" id="pm-zoom-out" aria-label="Zoom out">−</button>
+        <button type="button" class="pm-zoom-btn pm-zoom-value" id="pm-zoom-fit">Fit</button>
+        <span class="pm-zoom-pct" id="pm-zoom-pct">100%</span>
+        <button type="button" class="pm-zoom-btn" id="pm-zoom-in" aria-label="Zoom in">+</button>
+        <span class="pm-status" id="pm-status">1000 × 700px</span>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    (function () {
+      var v = Date.now();
+      document.write('<script src="app.js?v=' + v + '"><' + '/script>');
+    })();
+  </script>
+</body>
+</html>
