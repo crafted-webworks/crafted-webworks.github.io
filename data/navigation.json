@@ -16,28 +16,8 @@
       }
     },
 
-    {
-      "id": "projects", "label": "Projects", "url": "/pages/projects.html", "section": "projects",
-      "menu": {
-        "source": "projects",
-        "layout": "feature",
-        "limit": 5,
-        "description": "Selected work, with the thinking behind each build.",
-        "footer": { "label": "All projects", "url": "/pages/projects.html" }
-      }
-    },
-
-    {
-      "id": "demos", "label": "Demos", "url": "/pages/demos.html", "section": "demos",
-      "menu": {
-        "source": "demos",
-        "layout": "columns",
-        "columns": 2,
-        "limit": 10,
-        "description": "Concept builds by industry, adaptable to your brand.",
-        "footer": { "label": "All demos", "url": "/pages/demos.html" }
-      }
-    },
+    { "id": "projects", "label": "Projects", "url": "/pages/projects.html", "section": "projects" },
+    { "id": "demos", "label": "Demos", "url": "/pages/demos.html", "section": "demos" },
 
     {
       "id": "resources", "label": "Resources", "url": "/pages/resources.html", "section": "resources",

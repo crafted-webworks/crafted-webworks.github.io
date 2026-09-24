@@ -229,7 +229,7 @@
     "Replace the placeholder domain in site.json before launch.",
     "Canonical URLs, Open Graph and Twitter tags are generated from site.json + pages.json by assets/js/seo.js.",
     "Never write meta tags by hand in a page — everything is data-driven from JSON.",
-    "All {{tokens}} are resolved at runtime from site.json and social.json.",
+    "All placeholder tokens are resolved at runtime from site.json and social.json.",
     "Structured data schemas are automatically generated based on page content and enabled flags.",
     "Remember to convert og-default.svg to PNG (1200×630) for social media compatibility."
   ]

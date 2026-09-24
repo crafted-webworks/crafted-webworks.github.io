@@ -1,0 +1,657 @@
+/* ==========================================================================
+   Watermark Adder — Standalone Tool Stylesheet
+   Follows tools/STANDARDS.md tokens and design standards.
+   ========================================================================== */
+
+:root {
+  --tool-page: #FBFAF8;
+  --tool-card: #FFFFFF;
+  --tool-card-2: #F6F4F1;
+  --tool-border: rgba(20, 18, 14, 0.11);
+  --tool-text: #14120E;
+  --tool-text-body: #35322C;
+  --tool-muted: #6B675F;
+  --tool-accent: #0C4FBF;
+  --tool-accent-hover: #0A3B8F;
+  --tool-accent-ink: #FFFFFF;
+  --tool-accent-2: #C55705;
+  --tool-accent-2-hover: #8F3F06;
+  --tool-danger: #E8604C;
+  --tool-checker-a: #F0EDE7;
+  --tool-checker-b: #E8E4DC;
+  --tool-radius: 4px;
+  --tool-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--tool-page);
+  color: var(--tool-text);
+  font-family: var(--tool-font);
+  overflow: hidden;
+}
+
+/* Enforce hidden elements are always display:none */
+[hidden] {
+  display: none !important;
+}
+
+.wm-app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding: 0.75rem;
+  gap: 0.75rem;
+}
+
+/* Header bar with clearance for host modal controls */
+.wm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.9rem;
+  background: var(--tool-card);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  flex: 0 0 auto;
+}
+
+.wm-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.wm-title-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--tool-text);
+}
+
+.wm-title-badge svg {
+  width: 18px;
+  height: 18px;
+  color: var(--tool-accent);
+}
+
+.wm-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+  background: var(--tool-card-2);
+  color: var(--tool-muted);
+  border: 1px solid var(--tool-border);
+}
+
+.wm-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 84px; /* Clears host fullscreen close/restore buttons */
+}
+
+/* Main workspace layout */
+.wm-main {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 0.75rem;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 860px) {
+  html, body {
+    overflow: auto;
+  }
+  .wm-app {
+    height: auto;
+    min-height: 100%;
+  }
+  .wm-main {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+  .wm-sidebar {
+    flex-basis: auto !important;
+    max-width: 100% !important;
+  }
+  .wm-header-right {
+    margin-right: 70px;
+  }
+}
+
+/* Sidebar panel */
+.wm-sidebar {
+  flex: 0 0 350px;
+  max-width: 380px;
+  min-width: 300px;
+  background: var(--tool-card);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.85rem;
+  gap: 0.85rem;
+}
+
+/* Stage / Preview Area */
+.wm-stage {
+  flex: 1 1 auto;
+  background: var(--tool-card);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.wm-canvas-container {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 1.5rem;
+  background: repeating-conic-gradient(var(--tool-checker-a) 0% 25%, var(--tool-checker-b) 0% 50%) 0 0 / 16px 16px;
+  position: relative;
+  user-select: none;
+}
+
+.wm-canvas-wrap {
+  position: relative;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  transition: transform 0.1s ease-out;
+  cursor: default;
+  display: inline-block;
+}
+
+.wm-canvas-wrap.is-draggable {
+  cursor: grab;
+}
+
+.wm-canvas-wrap.is-dragging {
+  cursor: grabbing;
+}
+
+#wm-main-canvas {
+  display: block;
+  max-width: none;
+}
+
+#wm-overlay-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Empty state overlay inside canvas */
+.wm-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  text-align: center;
+  padding: 2.5rem;
+  max-width: 380px;
+  background: var(--tool-card);
+  border: 1px dashed var(--tool-border);
+  border-radius: var(--tool-radius);
+  color: var(--tool-muted);
+}
+
+.wm-empty-state svg {
+  width: 48px;
+  height: 48px;
+  color: var(--tool-accent);
+  opacity: 0.8;
+}
+
+.wm-empty-state h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--tool-text);
+}
+
+.wm-empty-state p {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+/* Zoom & Stage Bar */
+.wm-zoom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.85rem;
+  border-top: 1px solid var(--tool-border);
+  background: var(--tool-card-2);
+  flex: 0 0 auto;
+}
+
+.wm-zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.wm-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  padding: 0;
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  background: var(--tool-card);
+  color: var(--tool-text);
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
+
+.wm-btn-icon:hover:not(:disabled) {
+  border-color: var(--tool-accent);
+  color: var(--tool-accent);
+}
+
+.wm-btn-icon:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.wm-zoom-pct {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--tool-muted);
+  min-width: 3rem;
+  text-align: center;
+}
+
+.wm-dimensions-tag {
+  font-size: 0.78rem;
+  color: var(--tool-muted);
+  font-family: monospace;
+}
+
+/* Sidebar Section & Controls */
+.wm-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.wm-section-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tool-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid var(--tool-border);
+}
+
+/* Upload Dropzone */
+.wm-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 0.6rem;
+  border: 1px dashed var(--tool-border);
+  border-radius: var(--tool-radius);
+  background: var(--tool-card-2);
+  cursor: pointer;
+  text-align: center;
+  gap: 0.35rem;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.wm-dropzone:hover, .wm-dropzone.is-dragover {
+  border-color: var(--tool-accent);
+  background: color-mix(in srgb, var(--tool-accent) 6%, var(--tool-card-2));
+}
+
+.wm-dropzone svg {
+  width: 24px;
+  height: 24px;
+  color: var(--tool-accent);
+}
+
+.wm-dropzone-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--tool-text);
+}
+
+.wm-dropzone-hint {
+  font-size: 0.72rem;
+  color: var(--tool-muted);
+}
+
+.wm-file-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.6rem;
+  background: var(--tool-card-2);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  font-size: 0.78rem;
+}
+
+.wm-file-info-name {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 170px;
+}
+
+.wm-file-info-meta {
+  color: var(--tool-muted);
+  font-size: 0.72rem;
+}
+
+/* Pill Tabs */
+.wm-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.3rem;
+  background: var(--tool-card-2);
+  padding: 0.25rem;
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+}
+
+.wm-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.5rem;
+  border: none;
+  border-radius: calc(var(--tool-radius) - 1px);
+  background: transparent;
+  color: var(--tool-muted);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wm-tab-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.wm-tab-btn.is-active {
+  background: var(--tool-card);
+  color: var(--tool-accent);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Form Controls */
+.wm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.wm-field-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wm-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--tool-text);
+}
+
+.wm-value-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--tool-muted);
+  font-family: monospace;
+}
+
+.wm-input, .wm-select, .wm-textarea {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  background: var(--tool-card);
+  color: var(--tool-text);
+  font-family: inherit;
+  font-size: 0.84rem;
+  transition: border-color 0.15s ease;
+}
+
+.wm-input:focus, .wm-select:focus, .wm-textarea:focus {
+  outline: none;
+  border-color: var(--tool-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tool-accent) 20%, transparent);
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--tool-accent);
+  margin: 0.2rem 0;
+  cursor: pointer;
+}
+
+/* 9-Point Position Grid */
+.wm-pos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.35rem;
+  background: var(--tool-card-2);
+  padding: 0.35rem;
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+}
+
+.wm-pos-btn {
+  aspect-ratio: 1.4;
+  border: 1px solid var(--tool-border);
+  border-radius: calc(var(--tool-radius) - 1px);
+  background: var(--tool-card);
+  color: var(--tool-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  transition: all 0.15s ease;
+  padding: 0.2rem;
+}
+
+.wm-pos-btn:hover {
+  border-color: var(--tool-accent);
+  color: var(--tool-accent);
+}
+
+.wm-pos-btn.is-active {
+  background: var(--tool-accent);
+  border-color: var(--tool-accent);
+  color: var(--tool-accent-ink);
+}
+
+/* Quick Snap Buttons Cluster */
+.wm-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.wm-chip-btn {
+  padding: 0.3rem 0.55rem;
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  background: var(--tool-card-2);
+  color: var(--tool-text-body);
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wm-chip-btn:hover {
+  border-color: var(--tool-accent);
+  color: var(--tool-accent);
+}
+
+.wm-chip-btn.is-active {
+  background: var(--tool-accent);
+  border-color: var(--tool-accent);
+  color: var(--tool-accent-ink);
+}
+
+/* Color swatch + picker */
+.wm-color-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.wm-color-input-wrap {
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--tool-radius);
+  border: 1px solid var(--tool-border);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.wm-color-input-wrap input[type="color"] {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+/* Two-column layout helper */
+.wm-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+/* Buttons */
+.wm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  background: var(--tool-card);
+  color: var(--tool-text);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+.wm-btn:hover:not(:disabled) {
+  border-color: var(--tool-accent);
+  color: var(--tool-accent);
+}
+
+.wm-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.wm-btn--primary {
+  background: var(--tool-accent);
+  border-color: var(--tool-accent);
+  color: var(--tool-accent-ink);
+}
+
+.wm-btn--primary:hover:not(:disabled) {
+  background: var(--tool-accent-hover);
+  border-color: var(--tool-accent-hover);
+  color: var(--tool-accent-ink);
+}
+
+.wm-btn--secondary {
+  background: var(--tool-card-2);
+}
+
+.wm-btn--ghost {
+  background: transparent;
+}
+
+.wm-btn--sm {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.76rem;
+}
+
+.wm-btn--block {
+  width: 100%;
+}
+
+.wm-help-hint {
+  font-size: 0.74rem;
+  color: var(--tool-muted);
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* Checkbox toggle */
+.wm-check-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.wm-check-row input[type="checkbox"] {
+  accent-color: var(--tool-accent);
+  cursor: pointer;
+}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JSON Toolkit</title>
+<meta name="description" content="Format, validate, auto-fix, search and browse JSON entirely in your browser — with plain-English error diagnosis pointing at the exact line and column.">
+
+<!--
+  Fully self-contained tool. Nothing here references the parent site's
+  assets/js or assets/css — this whole folder can be copied into another
+  project, opened directly from disk, or dropped into an <iframe> and it
+  will keep working exactly as it does today.
+-->
+<script>
+  /* Cache-busted on every load — this tool is opened inside an iframe
+     that's itself cache-busted (see tools.js -> framedTool), and this is
+     the other half of that: without it, the *referenced* style.css/
+     app.js could still be served from an old cached copy even though the
+     document embedding them is fresh. See tools/STANDARDS.md. */
+  document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');
+</script>
+</head>
+<body>
+
+  <div class="jt">
+
+    <header class="jt-header">
+      <div class="jt-header-left">
+        <h1>JSON Toolkit</h1>
+        <p class="jt-tagline">Format, validate, auto-fix &amp; explore JSON</p>
+      </div>
+      <div class="jt-header-right">
+        <label class="jt-btn jt-btn--ghost jt-upload-btn" for="jt-file-input">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+          Load .json file
+          <input type="file" id="jt-file-input" accept=".json,application/json" hidden>
+        </label>
+      </div>
+    </header>
+
+    <div class="jt-toolbar">
+      <div class="jt-toolbar-group">
+        <button type="button" class="jt-btn jt-btn--primary" id="jt-format-btn">Format</button>
+        <button type="button" class="jt-btn jt-btn--ghost" id="jt-minify-btn">Minify</button>
+        <button type="button" class="jt-btn jt-btn--ghost" id="jt-validate-btn">Validate</button>
+        <button type="button" class="jt-btn jt-btn--ghost" id="jt-autofix-btn">Auto-Fix</button>
+      </div>
+
+      <div class="jt-toolbar-group jt-toolbar-group--right">
+        <label class="jt-indent-label" for="jt-indent-select">Indent</label>
+        <select id="jt-indent-select">
+          <option value="2" selected>2 spaces</option>
+          <option value="4">4 spaces</option>
+          <option value="tab">Tab</option>
+        </select>
+        <button type="button" class="jt-btn jt-btn--ghost" id="jt-copy-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+        <button type="button" class="jt-btn jt-btn--ghost" id="jt-download-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          Download
+        </button>
+      </div>
+    </div>
+
+    <div class="jt-status-bar" id="jt-status-bar" role="status" aria-live="polite">
+      <span class="jt-status-icon" id="jt-status-icon" aria-hidden="true"></span>
+      <span id="jt-status-text">Paste or edit JSON, then Validate.</span>
+    </div>
+
+    <div class="jt-body">
+
+      <section class="jt-panel jt-panel--main">
+        <div class="jt-pill-tabs" data-view-tabs role="tablist" aria-label="View">
+          <button type="button" class="jt-pill is-active" data-view="text" role="tab" aria-selected="true">Text</button>
+          <button type="button" class="jt-pill" data-view="tree" role="tab" aria-selected="false">Tree</button>
+        </div>
+
+        <div class="jt-view is-active" data-view-pane="text">
+          <div class="jt-editor-wrap">
+            <div class="jt-gutter" id="jt-gutter" aria-hidden="true"></div>
+            <textarea id="jt-editor" spellcheck="false" wrap="off" autocomplete="off" autocapitalize="off"></textarea>
+          </div>
+        </div>
+
+        <div class="jt-view" data-view-pane="tree">
+          <div class="jt-tree-toolbar">
+            <button type="button" class="jt-btn jt-btn--ghost jt-btn--sm" id="jt-tree-expand">Expand all</button>
+            <button type="button" class="jt-btn jt-btn--ghost jt-btn--sm" id="jt-tree-collapse">Collapse all</button>
+          </div>
+          <div class="jt-tree" id="jt-tree" tabindex="0"></div>
+        </div>
+      </section>
+
+      <section class="jt-panel jt-panel--side">
+        <div class="jt-side-block">
+          <h2>Search</h2>
+          <div class="jt-search-row">
+            <input type="text" id="jt-search-input" placeholder="Find a key or value...">
+            <button type="button" class="jt-btn jt-btn--ghost jt-btn--sm" id="jt-search-btn">Find</button>
+          </div>
+          <div class="jt-results" id="jt-search-results"></div>
+        </div>
+
+        <div class="jt-side-block">
+          <h2>Path query <span class="jt-hint">(dot-path, [*] wildcard)</span></h2>
+          <div class="jt-search-row">
+            <input type="text" id="jt-query-input" placeholder="e.g. data.items[*].id">
+            <button type="button" class="jt-btn jt-btn--ghost jt-btn--sm" id="jt-query-btn">Run</button>
+          </div>
+          <pre class="jt-query-output" id="jt-query-output"></pre>
+        </div>
+
+        <div class="jt-side-block">
+          <h2>Fix report</h2>
+          <div class="jt-fix-report" id="jt-fix-report">
+            <p class="jt-muted-note">No auto-fix run yet.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+
+<script>
+  (function () {
+    var v = Date.now();
+    document.write('<script src="app.js?v=' + v + '"><' + '/script>');
+  })();
+</script>
+</body>
+</html>
