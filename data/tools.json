@@ -161,7 +161,7 @@
       "title": "Creative Studio",
       "slug": "creative-studio",
       "category": "image",
-      "description": "Five creative tools in one: meme captions, photo filters, cinematic image enhance, gradients & palettes, and logo maker.",
+      "description": "Four creative tools in one: meme captions, photo filters, cinematic image enhance, and gradient & palette studio.",
       "icon": "sparkle",
       "url": "/pages/tools.html#creative-studio",
       "src": "/tools/creative-studio/index.html",
@@ -172,7 +172,6 @@
         "enhance",
         "gradient",
         "palette",
-        "logo",
         "image",
         "design"
       ],
