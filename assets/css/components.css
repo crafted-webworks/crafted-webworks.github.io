@@ -593,7 +593,16 @@
 
 .tool-card-body { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
 .tool-card .card-title { font-size: var(--fs-md); }
-.tool-card .card-text { font-size: var(--fs-sm); }
+.tool-card .card-text {
+  font-size: var(--fs-sm);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+}
 
 .tool-card:hover .icon-tile {
   color: var(--color-accent);
@@ -2328,7 +2337,17 @@ textarea.form-control { min-height: 7.5rem; resize: vertical; }
 }
 
 .tool-card .card-title { font-size: var(--fs-md); }
-.tool-card .card-text { font-size: var(--fs-sm); margin-top: 0.2rem; }
+.tool-card .card-text {
+  font-size: var(--fs-sm);
+  margin-top: 0.2rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+}
 
 /* The arrow is the affordance — it tells you the card does something */
 .tool-card-go {

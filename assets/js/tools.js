@@ -271,6 +271,7 @@
     "photo-merge": { render: framedTool.render, mount: framedTool.mount },
     "photo-to-video": { render: framedTool.render, mount: framedTool.mount },
     "creative-studio": { render: framedTool.render, mount: framedTool.mount },
+    "watermark-adder": { render: framedTool.render, mount: framedTool.mount },
 
     /* ---------------------------------------------------------------- */
     "json-formatter": {

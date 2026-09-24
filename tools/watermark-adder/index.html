@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Watermark Adder — Add Single or Tiled Watermarks</title>
+  <meta name="description" content="Add single or repeating tiled watermarks to images with full position, angle, opacity, and scale controls — preserving maximum original clarity. Runs 100% locally in your browser.">
+
+  <!-- Standalone tool: see tools/STANDARDS.md -->
+  <script>
+    document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');
+  </script>
+</head>
+<body>
+
+  <div class="wm-app">
+    <!-- Header -->
+    <header class="wm-header">
+      <div class="wm-header-left">
+        <div class="wm-title-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="8" y="8" width="12.5" height="12.5" rx="2"></rect>
+            <path d="M16 4.5H5.5A1.5 1.5 0 0 0 4 6v10.5"></path>
+          </svg>
+          <span>Watermark Adder</span>
+        </div>
+        <span class="wm-badge" id="wm-badge-status">Ready</span>
+      </div>
+
+      <div class="wm-header-right">
+        <button type="button" class="wm-btn wm-btn--ghost wm-btn--sm" id="wm-btn-sample" title="Load a sample photo to test">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 3.5 1.8 4.7 4.7 1.8-4.7 1.8L11 16.5 9.2 11.8 4.5 10l4.7-1.8z"/><path d="m18 14.5.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/></svg>
+          Try Sample
+        </button>
+        <button type="button" class="wm-btn wm-btn--ghost wm-btn--sm" id="wm-btn-reset" title="Reset all settings">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20.5 4v4.5H16"/></svg>
+          Reset
+        </button>
+        <button type="button" class="wm-btn wm-btn--primary wm-btn--sm" id="wm-btn-download-top" disabled>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4 20h16"/></svg>
+          Download
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="wm-main">
+      <!-- Sidebar Controls -->
+      <aside class="wm-sidebar">
+        <!-- 1. Main Image Upload -->
+        <div class="wm-section">
+          <div class="wm-section-title">
+            <span>1. Main Photo</span>
+            <button type="button" class="wm-btn wm-btn--ghost wm-btn--sm" id="wm-btn-change-main" hidden>Change</button>
+          </div>
+
+          <div class="wm-dropzone" id="wm-main-dropzone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="12.5" rx="2.2"></rect>
+              <circle cx="8.5" cy="9" r="1.6"></circle>
+              <path d="m4.5 15 4-3.8 3 2.6"></path>
+              <path d="M17 15.5v5"></path>
+              <path d="m14.5 18.5 2.5 2.5 2.5-2.5"></path>
+            </svg>
+            <span class="wm-dropzone-label">Drop Main Image here</span>
+            <span class="wm-dropzone-hint">PNG, JPEG, WebP (up to 50MP)</span>
+            <input type="file" id="wm-main-file-input" accept="image/*" hidden>
+          </div>
+
+          <div class="wm-file-info" id="wm-main-file-info" hidden>
+            <span class="wm-file-info-name" id="wm-main-name">photo.jpg</span>
+            <span class="wm-file-info-meta" id="wm-main-meta">1920 × 1080</span>
+          </div>
+        </div>
+
+        <!-- 2. Watermark Type & Content -->
+        <div class="wm-section">
+          <div class="wm-section-title">
+            <span>2. Watermark Content</span>
+          </div>
+
+          <div class="wm-tabs" id="wm-type-tabs">
+            <button type="button" class="wm-tab-btn is-active" data-wm-type="image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2.2"/><circle cx="8.8" cy="9.8" r="1.8"/><path d="m5 17.5 4.5-4.3 3 2.8 3.5-3.5 4 4"/></svg>
+              <span>Image / Logo</span>
+            </button>
+            <button type="button" class="wm-tab-btn" data-wm-type="text">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 6.5V4.5h15v2"/><path d="M12 4.5v15"/><path d="M9 19.5h6"/></svg>
+              <span>Text</span>
+            </button>
+          </div>
+
+          <!-- Watermark Image Pane -->
+          <div id="wm-pane-image">
+            <div class="wm-dropzone" id="wm-logo-dropzone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+              <span class="wm-dropzone-label">Upload Watermark Logo</span>
+              <span class="wm-dropzone-hint">Transparent PNG, SVG or JPEG</span>
+              <input type="file" id="wm-logo-file-input" accept="image/*" hidden>
+            </div>
+
+            <div class="wm-file-info" id="wm-logo-file-info" hidden style="margin-top:0.4rem;">
+              <span class="wm-file-info-name" id="wm-logo-name">watermark.png</span>
+              <button type="button" class="wm-btn wm-btn--ghost wm-btn--sm" id="wm-btn-sample-logo" style="padding:0.15rem 0.4rem;font-size:0.7rem;">Use Sample Logo</button>
+            </div>
+          </div>
+
+          <!-- Watermark Text Pane -->
+          <div id="wm-pane-text" hidden>
+            <div class="wm-field">
+              <label class="wm-label" for="wm-text-input">Watermark Text</label>
+              <input type="text" class="wm-input" id="wm-text-input" value="© CRAFTED WEBWORKS" placeholder="e.g. Confidential, © Your Name">
+            </div>
+
+            <!-- Quick Text Presets -->
+            <div class="wm-cluster" style="margin-top:0.35rem;">
+              <button type="button" class="wm-chip-btn wm-text-preset" data-text="© COPYRIGHT">© Copyright</button>
+              <button type="button" class="wm-chip-btn wm-text-preset" data-text="CONFIDENTIAL">Confidential</button>
+              <button type="button" class="wm-chip-btn wm-text-preset" data-text="SAMPLE">Sample</button>
+              <button type="button" class="wm-chip-btn wm-text-preset" data-text="DO NOT COPY">Do Not Copy</button>
+            </div>
+
+            <div class="wm-grid-2" style="margin-top:0.5rem;">
+              <div class="wm-field">
+                <label class="wm-label" for="wm-text-font">Font</label>
+                <select class="wm-select" id="wm-text-font">
+                  <option value="sans-serif">Modern Sans</option>
+                  <option value="'Segoe UI', -apple-system, sans-serif">Clean UI</option>
+                  <option value="'Impact', 'Arial Black', sans-serif">Bold Impact</option>
+                  <option value="'Georgia', serif">Classic Serif</option>
+                  <option value="'Courier New', monospace">Monospace</option>
+                  <option value="'Trebuchet MS', sans-serif">Trebuchet</option>
+                </select>
+              </div>
+
+              <div class="wm-field">
+                <label class="wm-label">Text Color</label>
+                <div class="wm-color-row">
+                  <div class="wm-color-input-wrap">
+                    <input type="color" id="wm-text-color" value="#FFFFFF">
+                  </div>
+                  <input type="text" class="wm-input" id="wm-text-color-hex" value="#FFFFFF" style="text-transform:uppercase;">
+                </div>
+              </div>
+            </div>
+
+            <div class="wm-grid-2" style="margin-top:0.4rem;">
+              <label class="wm-check-row">
+                <input type="checkbox" id="wm-text-bold" checked>
+                <span>Bold</span>
+              </label>
+              <label class="wm-check-row">
+                <input type="checkbox" id="wm-text-shadow" checked>
+                <span>High-Contrast Shadow</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Placement Mode: Single vs Fill Grid -->
+        <div class="wm-section">
+          <div class="wm-section-title">
+            <span>3. Placement Mode</span>
+          </div>
+
+          <div class="wm-tabs" id="wm-mode-tabs">
+            <button type="button" class="wm-tab-btn is-active" data-wm-mode="single">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2"/></svg>
+              <span>Single Watermark</span>
+            </button>
+            <button type="button" class="wm-tab-btn" data-wm-mode="fill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg>
+              <span>Fill / Tile Pattern</span>
+            </button>
+          </div>
+
+          <!-- Single Mode Controls -->
+          <div id="wm-pane-single">
+            <div class="wm-field">
+              <div class="wm-field-header">
+                <span class="wm-label">Position Presets</span>
+                <span class="wm-value-tag" id="wm-pos-label">Bottom-Right</span>
+              </div>
+              <div class="wm-pos-grid">
+                <button type="button" class="wm-pos-btn" data-pos="top-left" title="Top Left">TL</button>
+                <button type="button" class="wm-pos-btn" data-pos="top-center" title="Top Center">TC</button>
+                <button type="button" class="wm-pos-btn" data-pos="top-right" title="Top Right">TR</button>
+                <button type="button" class="wm-pos-btn" data-pos="center-left" title="Center Left">CL</button>
+                <button type="button" class="wm-pos-btn" data-pos="center" title="Exact Center">Center</button>
+                <button type="button" class="wm-pos-btn" data-pos="center-right" title="Center Right">CR</button>
+                <button type="button" class="wm-pos-btn" data-pos="bottom-left" title="Bottom Left">BL</button>
+                <button type="button" class="wm-pos-btn" data-pos="bottom-center" title="Bottom Center">BC</button>
+                <button type="button" class="wm-pos-btn is-active" data-pos="bottom-right" title="Bottom Right">BR</button>
+              </div>
+              <p class="wm-help-hint" style="margin-top:0.25rem;">💡 Tip: You can also drag the watermark directly on the canvas preview to position it anywhere freely.</p>
+            </div>
+
+            <div class="wm-field" style="margin-top:0.4rem;">
+              <div class="wm-field-header">
+                <label class="wm-label" for="wm-single-margin">Edge Margin</label>
+                <span class="wm-value-tag" id="wm-single-margin-val">4%</span>
+              </div>
+              <input type="range" id="wm-single-margin" min="0" max="25" step="0.5" value="4">
+            </div>
+          </div>
+
+          <!-- Fill / Tile Pattern Controls -->
+          <div id="wm-pane-fill" hidden>
+            <div class="wm-field">
+              <div class="wm-field-header">
+                <label class="wm-label" for="wm-fill-density">Grid Density / Frequency</label>
+                <span class="wm-value-tag" id="wm-fill-density-val">4 × 4 (Medium)</span>
+              </div>
+              <input type="range" id="wm-fill-density" min="2" max="10" step="1" value="4">
+            </div>
+
+            <div class="wm-field" style="margin-top:0.4rem;">
+              <div class="wm-field-header">
+                <label class="wm-label" for="wm-fill-gap">Tile Spacing / Margin</label>
+                <span class="wm-value-tag" id="wm-fill-gap-val">40px</span>
+              </div>
+              <input type="range" id="wm-fill-gap" min="10" max="150" step="5" value="40">
+            </div>
+
+            <div class="wm-field" style="margin-top:0.4rem;">
+              <label class="wm-label">Tile Layout Pattern</label>
+              <div class="wm-cluster">
+                <button type="button" class="wm-chip-btn is-active" data-fill-pattern="staggered">Alternating (Brick)</button>
+                <button type="button" class="wm-chip-btn" data-fill-pattern="grid">Straight Grid</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Shared Appearance Controls (Size, Opacity, Rotation, Blend) -->
+        <div class="wm-section">
+          <div class="wm-section-title">
+            <span>4. Size, Angle &amp; Opacity</span>
+          </div>
+
+          <div class="wm-field">
+            <div class="wm-field-header">
+              <label class="wm-label" for="wm-scale">Watermark Size / Scale</label>
+              <span class="wm-value-tag" id="wm-scale-val">25%</span>
+            </div>
+            <input type="range" id="wm-scale" min="5" max="120" step="1" value="25">
+          </div>
+
+          <div class="wm-field" style="margin-top:0.4rem;">
+            <div class="wm-field-header">
+              <label class="wm-label" for="wm-opacity">Opacity</label>
+              <span class="wm-value-tag" id="wm-opacity-val">75%</span>
+            </div>
+            <input type="range" id="wm-opacity" min="5" max="100" step="1" value="75">
+          </div>
+
+          <div class="wm-field" style="margin-top:0.4rem;">
+            <div class="wm-field-header">
+              <label class="wm-label" for="wm-rotation">Rotation Angle</label>
+              <span class="wm-value-tag" id="wm-rotation-val">0°</span>
+            </div>
+            <input type="range" id="wm-rotation" min="-180" max="180" step="1" value="0">
+            <div class="wm-cluster" style="margin-top:0.25rem;">
+              <button type="button" class="wm-chip-btn" data-rot="0">0°</button>
+              <button type="button" class="wm-chip-btn" data-rot="-30">-30°</button>
+              <button type="button" class="wm-chip-btn" data-rot="-45">-45°</button>
+              <button type="button" class="wm-chip-btn" data-rot="30">+30°</button>
+              <button type="button" class="wm-chip-btn" data-rot="45">+45°</button>
+              <button type="button" class="wm-chip-btn" data-rot="90">90°</button>
+            </div>
+          </div>
+
+          <div class="wm-field" style="margin-top:0.4rem;">
+            <label class="wm-label" for="wm-blend-mode">Blend Mode</label>
+            <select class="wm-select" id="wm-blend-mode">
+              <option value="source-over">Normal (Standard)</option>
+              <option value="multiply">Multiply (Darken)</option>
+              <option value="screen">Screen (Lighten)</option>
+              <option value="overlay">Overlay (Vibrant)</option>
+              <option value="soft-light">Soft Light (Subtle)</option>
+              <option value="luminosity">Luminosity</option>
+              <option value="difference">Difference</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 5. Export Quality & Download -->
+        <div class="wm-section">
+          <div class="wm-section-title">
+            <span>5. Export &amp; Quality</span>
+          </div>
+
+          <div class="wm-grid-2">
+            <div class="wm-field">
+              <label class="wm-label" for="wm-export-format">Format</label>
+              <select class="wm-select" id="wm-export-format">
+                <option value="image/png">PNG (Lossless)</option>
+                <option value="image/jpeg" selected>JPEG (High Quality)</option>
+                <option value="image/webp">WebP</option>
+              </select>
+            </div>
+
+            <div class="wm-field" id="wm-jpeg-quality-wrap">
+              <label class="wm-label" for="wm-export-quality">Quality</label>
+              <select class="wm-select" id="wm-export-quality">
+                <option value="1.0">100% (Maximum)</option>
+                <option value="0.92" selected>92% (Crisp)</option>
+                <option value="0.85">85% (Optimized)</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="button" class="wm-btn wm-btn--primary wm-btn--block" id="wm-btn-download" disabled style="margin-top:0.6rem;padding:0.65rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4 20h16"/></svg>
+            Download Watermarked Image
+          </button>
+        </div>
+      </aside>
+
+      <!-- Stage / Live Preview -->
+      <section class="wm-stage">
+        <div class="wm-canvas-container" id="wm-canvas-container">
+          <!-- Canvas Wrapper (Zoomable & Interactive) -->
+          <div class="wm-canvas-wrap" id="wm-canvas-wrap" hidden>
+            <canvas id="wm-main-canvas"></canvas>
+            <canvas id="wm-overlay-canvas"></canvas>
+          </div>
+
+          <!-- Empty State (Shown initially before image is picked) -->
+          <div class="wm-empty-state" id="wm-empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4.5" width="18" height="15" rx="2.2"></rect>
+              <circle cx="8.8" cy="9.8" r="1.8"></circle>
+              <path d="m5 17.5 4.5-4.3 3 2.8 3.5-3.5 4 4"></path>
+            </svg>
+            <h3>No Main Photo Loaded</h3>
+            <p>Upload a photo or click below to load a sample image and start watermarking with crystal-clear quality.</p>
+            <button type="button" class="wm-btn wm-btn--primary wm-btn--sm" id="wm-empty-sample-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 3.5 1.8 4.7 4.7 1.8-4.7 1.8L11 16.5 9.2 11.8 4.5 10l4.7-1.8z"/></svg>
+              Load Sample Photo
+            </button>
+          </div>
+        </div>
+
+        <!-- Zoom Bar -->
+        <div class="wm-zoom-bar">
+          <div class="wm-zoom-controls">
+            <button type="button" class="wm-btn-icon" id="wm-zoom-out" title="Zoom Out" disabled>−</button>
+            <span class="wm-zoom-pct" id="wm-zoom-pct">100%</span>
+            <button type="button" class="wm-btn-icon" id="wm-zoom-in" title="Zoom In" disabled>+</button>
+            <button type="button" class="wm-btn wm-btn--ghost wm-btn--sm" id="wm-zoom-fit" style="margin-left:0.4rem;" disabled>Fit to Screen</button>
+            <button type="button" class="wm-btn wm-btn--ghost wm-btn--sm" id="wm-zoom-100" disabled>100%</button>
+          </div>
+
+          <div class="wm-dimensions-tag" id="wm-dimensions-tag">Ready</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var v = Date.now();
+      document.write('<script src="app.js?v=' + v + '"><' + '/script>');
+    })();
+  </script>
+</body>
+</html>

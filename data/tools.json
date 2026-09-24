@@ -161,7 +161,7 @@
       "title": "Creative Studio",
       "slug": "creative-studio",
       "category": "image",
-      "description": "Five creative tools in one: meme captions with draggable text, photo filter presets, cinematic image enhancement with clarity/sharpen/upscale, gradient & palette building, and a logo maker with PNG/SVG export.",
+      "description": "Five creative tools in one: meme captions, photo filters, cinematic image enhance, gradients & palettes, and logo maker.",
       "icon": "sparkle",
       "url": "/pages/tools.html#creative-studio",
       "src": "/tools/creative-studio/index.html",
@@ -180,6 +180,30 @@
       "featured": true,
       "active": true,
       "order": 6
+    },
+    {
+      "id": "watermark-adder",
+      "title": "Watermark Adder",
+      "slug": "watermark-adder",
+      "category": "image",
+      "description": "Add single or tiled watermark stamps with custom position, angle, density, and opacity — preserving full original image clarity.",
+      "icon": "square-stack",
+      "url": "/pages/tools.html#watermark-adder",
+      "src": "/tools/watermark-adder/index.html",
+      "fullscreen": true,
+      "tags": [
+        "watermark",
+        "protect",
+        "logo",
+        "tile",
+        "stamp",
+        "image",
+        "copyright"
+      ],
+      "status": "live",
+      "featured": true,
+      "active": true,
+      "order": 7
     }
   ]
 }
