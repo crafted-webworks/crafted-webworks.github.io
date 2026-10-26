@@ -1,0 +1,45 @@
+=================================================
+WHATSAPP BUSINESS PROFILE SETUP
+=================================================
+Use these details to set up your main WhatsApp Business Profile.
+
+1. BUSINESS CATEGORY:
+-------------------------------------------------
+Web Designer / Software Company
+
+10. BUSINESS DESCRIPTION (Copy & Paste):
+-------------------------------------------------
+[Single-Line Version]:
+🚀 Premium Web Development & Digital Solutions — High-converting, modern, and lightning-fast websites built for your business growth.
+
+[Full Detailed Version]:
+🚀 Premium Web Development & Digital Solutions 
+
+We craft high-converting, modern, and lightning-fast websites tailored for your business growth. From simple landing pages to complex custom web applications, we deliver premium code—no cheap templates.
+
+Services we specialize in:
+💻 Custom Web Applications (React, Node.js)
+⚡ High-Speed Static & Multi-page Websites
+🛠️ Custom WordPress Solutions
+📱 Portfolio & Personal Branding Sites
+
+✅ 100% Mobile Responsive
+✅ SEO Optimized & Fast Loading
+✅ Secure & Scalable Architecture
+
+Tap 'Catalog' above to explore our pricing and services! 
+💬 Send us a message today for a FREE project blueprint & quote.
+
+3. AUTOMATED GREETING MESSAGE (Copy & Paste):
+-------------------------------------------------
+Hi there! 👋 Welcome to Crafted Webworks. We specialize in building premium, high-speed websites and custom web applications. 
+
+How can we help you grow your business online today? Feel free to browse our Catalog for pricing and services!
+
+4. ADDITIONAL PROFILE SETTINGS:
+-------------------------------------------------
+• Profile Picture: Your clean, high-resolution logo icon (no small text).
+• Cover Photo: A dark-themed banner with your logo and "Premium Web Development" text.
+• Email Address: Make sure a professional email (e.g., hello@craftedwebworks.com) is linked.
+• Website Link: Add the link to your main portfolio.
+=================================================

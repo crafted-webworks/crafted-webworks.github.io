@@ -1,0 +1,73 @@
+=================================================
+WHATSAPP BUSINESS CATALOG ITEM — CUSTOM WEB APPLICATION
+=================================================
+
+Item Name: Custom Web Application (React, Node.js, etc.)
+Category: Advanced Web Development
+Price: ₹15,999 - ₹74,999 INR (Based on Scope & Features)
+
+-------------------------------------------------
+DESCRIPTION (Copy & paste into WhatsApp Catalog):
+-------------------------------------------------
+⚙️ Custom Web Application — Built Specifically for Your Needs!
+
+Need something beyond a standard website? We build fully custom web applications tailored to your exact business logic. Whether it's a dynamic React frontend, a secure Node.js backend, or a complex database system, we have you covered.
+
+What's Included:
+✅ 100% Custom Codebase (React.js, Node.js, Next.js, etc.)
+✅ Dynamic Dashboards & Admin Panels
+✅ Custom User Roles, Authentication & Login Systems
+✅ API Integrations (Payment Gateways, WhatsApp API, CRMs)
+✅ Advanced State Management & Data Handling
+✅ Scalable Architecture built for performance
+✅ Secure Database Setup (MongoDB, PostgreSQL, MySQL)
+
+Why Choose a Custom Web App?
+• 🚀 Blazing Fast — Single Page App (SPA) experience with React
+• 🔒 Secure — Built from scratch, no vulnerable plugins
+• 📈 Scalable — Grows with your business seamlessly
+• 🛠️ Fully Yours — No theme restrictions, completely bespoke
+
+Ideal For:
+• SaaS Platforms & Dashboards
+• Booking & Reservation Systems
+• Custom E-commerce or Marketplaces
+• Internal Business Management Tools
+
+🌐 Hosting Options:
+We deploy your custom stack to platforms like Vercel, Netlify, or dedicated VPS servers (AWS, DigitalOcean, Hostinger).
+
+🎁 Free Included Addons:
+✅ Floating WhatsApp Button (FREE)
+✅ Google SEO Setup (FREE) — Next.js SSR/SSG setup, Meta Tags, Schema Markup & Google Search Console Integration
+➕ Google Analytics — Full GA4 Custom Event Tracking & Conversion Dashboards
+
+⚙️ Other Available Add-ons:
+➕ Add an Extra Web Page (₹999+)
+➕ Logo & Favicon Design (₹1,999+)
+
+📌 *Note: Final pricing may vary based on the number of sections, specific features required, and custom design elements.*
+
+💬 Tap "Message Business" — share your custom requirements and we'll send a FREE project blueprint!
+-------------------------------------------------
+
+-------------------------------------------------
+IMAGE SUGGESTIONS (Create a 5-Image Carousel for WhatsApp):
+-------------------------------------------------
+To make Custom Web Application (React, Node.js, etc.) look incredibly premium and advanced, create these 5 square (1:1) images:
+
+1. 🌟 Main Cover Image: 
+A striking, dark-themed hero graphic. Big bold typography: "Custom Web Application (React, Node.js, etc.)". Use floating UI elements, glowing neon accents (blue/purple/green), and a sleek 3D laptop mockup in the center showing a modern website.
+
+2. 🚀 Key Features Breakdown: 
+A clean infographic slide. Title: "What You Get". Use premium custom icons for: Mobile Responsive, SEO Ready, Fast Loading, and Custom Design. Keep it minimal and tech-focused.
+
+3. 💼 The 'Why Us' / Value Slide: 
+A slide focusing on results. "Stop Losing Customers to Slow Websites". Show a before-and-after graphic or a glowing 5-star rating icon. Emphasize "Premium Code, No Cheap Templates".
+
+4. 🎁 Free Included Addons:
+A visual list showing the freebies! Use gift icons next to: "FREE SEO Setup", "FREE Google Analytics", and "FREE WhatsApp Chat Button". Make the word "FREE" pop in a neon accent color.
+
+5. 📲 Call to Action (CTA): 
+A conversion-focused final slide. Big text: "Ready to Start?". Below it: "Tap Message Business to get a FREE project blueprint & quote today!" Include a stylized arrow pointing down to where the WhatsApp message button is.
+=================================================

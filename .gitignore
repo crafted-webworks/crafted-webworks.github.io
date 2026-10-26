@@ -48,3 +48,8 @@ build/
 # the bundle is never requested, so it is not committed.
 #   Generate on demand:  node tools/build-bundle.mjs
 data/bundle.js
+__pycache__/
+*.pyc
+.pytest_cache/
+venv/
+.venv/

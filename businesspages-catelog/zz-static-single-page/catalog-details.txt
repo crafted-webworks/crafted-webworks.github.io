@@ -1,0 +1,71 @@
+=================================================
+WHATSAPP BUSINESS CATALOG ITEM — STATIC SINGLE PAGE
+=================================================
+
+Item Name: Static Single Page Showcase Website
+Category: Web Development — Static Sites
+Price: ₹3,999 - ₹8,999 INR
+
+-------------------------------------------------
+DESCRIPTION (Copy & paste into WhatsApp Catalog):
+-------------------------------------------------
+🌐 Static Single Page Showcase Website
+
+A clean, fast, and professionally designed single-page website — perfect to showcase your business, portfolio, or service online. Pure HTML, CSS & JS — no heavy frameworks, ultra-fast loading.
+
+What's Included:
+✅ One-Page Responsive Design (Mobile + Desktop + Tablet)
+✅ Sections: Hero Banner, About, Services, Gallery & Footer
+✅ WhatsApp Direct Chat Floating Button
+✅ Social Media Links & Basic SEO Meta Tags
+✅ Contact Form — All Inquiries Delivered to You as Excel Sheet (.xlsx) Monthly 📊
+
+📋 Contact Form Benefit:
+Every visitor who fills in your contact form will be tracked. At the end of each month, we send you a full Excel Sheet with:
+• Visitor Name, Phone, Email, Message & Date
+So you never miss a single lead!
+
+🌐 Hosting Options:
+Option A — We Host It: Standard charges apply
+Option B — You Host It: Buy your own cPanel hosting from GoDaddy / Hostinger / BigRock — we deploy & configure it FREE of charge!
+
+🎁 Free Included Addons:
+✅ Floating WhatsApp Button (FREE)
+✅ Google SEO Setup (FREE) — Meta Tags, Schema Markup, Sitemap & Google Search Console (Get found on Google!)
+➕ Google Analytics — GA4 Traffic Reports, Visitor Insights & Real-Time Monitoring
+
+
+
+⚙️ Other Available Add-ons:
+➕ Add an Extra Web Page (₹999+)
+➕ Logo & Favicon Design (₹1,999+)
+
+📌 *Note: Final pricing may vary based on the number of sections, specific features required, and custom design elements.*
+
+💬 Tap "Message Business" for a free quote & preview!
+-------------------------------------------------
+
+
+
+
+
+-------------------------------------------------
+IMAGE SUGGESTIONS (Create a 5-Image Carousel for WhatsApp):
+-------------------------------------------------
+To make Static Single Page Showcase Website look incredibly premium and advanced, create these 5 square (1:1) images:
+
+1. 🌟 Main Cover Image: 
+A striking, dark-themed hero graphic. Big bold typography: "Static Single Page Showcase Website". Use floating UI elements, glowing neon accents (blue/purple/green), and a sleek 3D laptop mockup in the center showing a modern website.
+
+2. 🚀 Key Features Breakdown: 
+A clean infographic slide. Title: "What You Get". Use premium custom icons for: Mobile Responsive, SEO Ready, Fast Loading, and Custom Design. Keep it minimal and tech-focused.
+
+3. 💼 The 'Why Us' / Value Slide: 
+A slide focusing on results. "Stop Losing Customers to Slow Websites". Show a before-and-after graphic or a glowing 5-star rating icon. Emphasize "Premium Code, No Cheap Templates".
+
+4. 🎁 Free Included Addons:
+A visual list showing the freebies! Use gift icons next to: "FREE SEO Setup", "FREE Google Analytics", and "FREE WhatsApp Chat Button". Make the word "FREE" pop in a neon accent color.
+
+5. 📲 Call to Action (CTA): 
+A conversion-focused final slide. Big text: "Ready to Start?". Below it: "Tap Message Business to get a FREE project blueprint & quote today!" Include a stylized arrow pointing down to where the WhatsApp message button is.
+=================================================
