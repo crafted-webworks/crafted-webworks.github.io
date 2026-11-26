@@ -51,11 +51,28 @@ function interpolate(node, context) {
   return node;
 }
 
-function shell({ pageId, title, description, prefix }) {
+/**
+ * Google tag (Tag Manager container) from data/site.json → analytics.gtmId.
+ * Google asks for it immediately after <head>, in the raw HTML of every page.
+ */
+function googleTag(gtmId) {
+  if (!/^GTM-[A-Z0-9]+$/.test(gtmId || "")) return "";
+  return `  <!-- Google tag (${gtmId}) -->
+  <script async src="https://www.googletagmanager.com/gtm.js?id=${gtmId}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
+
+`;
+}
+
+function shell({ pageId, title, description, prefix, gtmId }) {
   return `<!DOCTYPE html>
 <html lang="en" data-theme="light" data-bs-theme="light">
 <head>
-  <meta charset="utf-8">
+${googleTag(gtmId)}  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- GENERATED FILE — edit data/pages.json and run: node tools/build-pages.mjs
@@ -108,7 +125,8 @@ for (const [pageId, page] of Object.entries(pages)) {
     pageId,
     title,
     description: page.seo?.description || seo.defaults.description,
-    prefix
+    prefix,
+    gtmId: siteData.analytics?.gtmId
   });
 
   await writeFile(join(root, outputPath), html, "utf8");
